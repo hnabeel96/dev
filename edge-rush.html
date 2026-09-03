@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Edge Rush, a fast browser reflex game by Zunlo.">
+  <title>Edge Rush | Zunlo</title>
+  <link rel="stylesheet" href="edge-rush.css">
+</head>
+<body>
+  <main class="game-shell">
+    <a class="back" href="index.html">← Back to games</a>
+    <section class="game-head">
+      <div><p class="kicker">ZUNLO ORIGINAL</p><h1>Edge Rush</h1></div>
+      <div class="scoreboard"><div><span>Score</span><strong id="score">0</strong></div><div><span>Best</span><strong id="best">0</strong></div></div>
+    </section>
+    <section class="instructions"><span>Click the section the ball reaches.</span><span>Each hit gets faster.</span></section>
+    <section id="game" class="game" aria-label="Edge Rush game area">
+      <div id="edge-top" class="edge edge-top" aria-label="Top edge"></div>
+      <div id="edge-right" class="edge edge-right" aria-label="Right edge"></div>
+      <div id="edge-bottom" class="edge edge-bottom" aria-label="Bottom edge"></div>
+      <div id="edge-left" class="edge edge-left" aria-label="Left edge"></div>
+      <div id="ball" class="ball" aria-hidden="true"></div>
+      <div id="overlay" class="overlay"><div><p class="kicker">READY?</p><h2>Stay on the edge.</h2><p>Click Start, then catch the ball at the border.</p><button id="start" type="button">Start game <span>→</span></button></div></div>
+    </section>
+    <p id="message" class="message" aria-live="polite">Click start when you’re ready.</p>
+  </main>
+  <script src="edge-rush.js"></script>
+</body>
+</html>
