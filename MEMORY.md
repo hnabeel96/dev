@@ -24,6 +24,14 @@
 20. Git for Windows was installed at `C:\Program Files\Git\cmd\git.exe`. Initialized this folder as a new local Git repository on the `main` branch. Git author name and email are not configured yet, and no GitHub remote has been created.
 21. User provided `https://github.com/hnabeel96/dev`. GitHub authentication is required to access this remote, and a Git commit author name/email is still needed before the initial commit can be made.
 22. User supplied commit identity `hnabeel96 <nabeel96nn@gmail.com>` and completed GitHub sign-in. Publication is currently blocked because the active Codex shell user cannot write `.git/config.lock` in this repository; Git reports `Permission denied` when setting repository config. Run the Git commands in a user-owned Git Bash session or grant the Codex shell user write access to `.git`, then resume from this log.
+23. Publishing was completed manually in Git Bash. Repository: `https://github.com/hnabeel96/dev.git`; local branch: `main`; remote: `origin/main`. The local site commit `3e260a8` (`Build Zunlo and Edge Rush`) was merged with the remote initial commit and pushed as `3e05b4a`.
+
+## Resume checklist
+
+1. Work from `C:\Users\Nabeel\Desktop\dev\website`.
+2. The live source is tracked on GitHub at `hnabeel96/dev`, branch `main`.
+3. Edge Rush is launched from the first card on `index.html` and lives in `edge-rush.html`, `edge-rush.css`, and `edge-rush.js`.
+4. Before handing off after later changes, append a numbered entry to this file, then commit and push it with the website changes.
 
 ## Current state
 
