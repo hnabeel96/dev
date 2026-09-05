@@ -28,6 +28,10 @@
 
 24. Updated website branding from Zunlo to pineapp.win across `index.html` and `edge-rush.html`. Updated website description, hero copy, navigation, and section labels to shift away from first-person ('I', 'my') and focus on customer/player experience.
 
+## 2026-09-05
+
+25. Added Google Analytics tracking tag (gtag.js `G-WJCZS9H72H`) across the website in `<head>` of both `index.html` and `edge-rush.html`.
+
 ## Resume checklist
 
 1. Work from `C:\Users\Nabeel\Desktop\dev\website`.
@@ -37,7 +41,8 @@
 
 ## Current state
 
-- Branding is now pineapp.win.
-- Website description and copy updated to focus on customer/player experience (removed 'I' and 'my' references).
-- Working on branch `feature/projectpineapple`.
+- Branding is pineapp.win.
+- Website description and copy updated to focus on customer/player experience.
+- Google Analytics (`G-WJCZS9H72H`) is integrated on all site pages (`index.html`, `edge-rush.html`).
+- Working on branch `chore/update`.
 - Update this file after each material work step so another agent can resume from the current state.
