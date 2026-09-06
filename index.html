@@ -14,14 +14,16 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="Play original, instant browser games on pineapp.win — crafted for quick breaks and seamless fun anywhere.">
   <title>pineapp.win | Browser Games</title>
-  <link rel="stylesheet" href="styles.css?v=2">
+  <link rel="stylesheet" href="styles.css?v=3">
 </head>
 <body>
   <header>
     <a class="brand" href="#top">✦ pineapp.win</a>
     <nav>
+      <a href="pendulum.html">Chrono Pendulum</a>
+      <a href="edge-rush.html">Edge Rush</a>
       <a href="#about">About</a>
-      <a class="button small" href="edge-rush.html">Play now</a>
+      <a class="button small" href="pendulum.html">Play now</a>
     </nav>
   </header>
 
@@ -31,19 +33,49 @@
         <p class="eyebrow">PLAY. DISCOVER. REPEAT.</p>
         <h1>Small games.<br><em>Big fun.</em></h1>
         <p class="hero-copy">Quick, original browser games crafted for you to enjoy anytime, anywhere.</p>
-        <a class="button" href="edge-rush.html">Play Edge Rush <span>→</span></a>
       </div>
 
-      <!-- Arcade Selector (Maximized with glowing edges) -->
+      <!-- Scrollable Arcade Selector (Chrono Pendulum default, popping scroll buttons) -->
       <aside class="arcade-container" aria-label="Arcade game selector">
-        <a class="arcade-selector" href="edge-rush.html" aria-label="Play Edge Rush">
-          <div class="arcade-screen">
-            <span class="game-icon">🟢</span>
+        <div class="arcade-selector-frame">
+          <!-- Popping Scroll Buttons -->
+          <button type="button" class="arcade-scroll-btn prev-btn" id="arcade-prev" aria-label="Previous game" title="Previous game">‹</button>
+          <button type="button" class="arcade-scroll-btn next-btn" id="arcade-next" aria-label="Next game" title="Next game">›</button>
+
+          <!-- Scrollable Track with snap alignment -->
+          <div class="arcade-track" id="arcade-track" tabindex="0" aria-label="Arcade game track">
+            <!-- Game 1: Chrono Pendulum (Default) -->
+            <a class="arcade-card card-pendulum" href="pendulum.html" data-index="0" aria-label="Play Chrono Pendulum">
+              <div class="arcade-screen">
+                <div class="pendulum-graphic" aria-hidden="true">
+                  <div class="pendulum-pivot-point"></div>
+                  <div class="pendulum-chrome-rod"></div>
+                  <div class="pendulum-chrome-bob"></div>
+                  <div class="pendulum-target-ring"></div>
+                </div>
+              </div>
+              <div class="arcade-footer">
+                <h2 class="game-name">Chrono Pendulum</h2>
+              </div>
+            </a>
+
+            <!-- Game 2: Edge Rush -->
+            <a class="arcade-card card-edgerush" href="edge-rush.html" data-index="1" aria-label="Play Edge Rush">
+              <div class="arcade-screen">
+                <span class="game-icon">🟢</span>
+              </div>
+              <div class="arcade-footer">
+                <h2 class="game-name">Edge Rush</h2>
+              </div>
+            </a>
           </div>
-          <div class="arcade-footer">
-            <h2 class="game-name">Edge Rush</h2>
+
+          <!-- Position Indicators -->
+          <div class="arcade-indicators" id="arcade-indicators" aria-label="Arcade game indicators">
+            <button type="button" class="arcade-dot active" data-index="0" aria-label="Jump to Chrono Pendulum"></button>
+            <button type="button" class="arcade-dot" data-index="1" aria-label="Jump to Edge Rush"></button>
           </div>
-        </a>
+        </div>
       </aside>
     </section>
 
@@ -58,6 +90,6 @@
     © 2026 pineapp.win <span>Built for the web · <a href="mailto:hello@example.com">Contact</a></span>
   </footer>
 
-  <script src="script.js?v=2"></script>
+  <script src="script.js?v=3"></script>
 </body>
 </html>
