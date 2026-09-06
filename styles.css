@@ -397,24 +397,6 @@ nav a:hover {
   z-index: 3;
 }
 
-.pendulum-target-ring {
-  position: absolute;
-  bottom: -6px;
-  width: 88px;
-  height: 88px;
-  border-radius: 50%;
-  border: 2px dashed var(--lime);
-  box-shadow: 0 0 20px var(--lime);
-  animation: targetRingSpin 8s linear infinite;
-  pointer-events: none;
-  z-index: 1;
-}
-
-@keyframes targetRingSpin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
 /* Arcade Footer */
 .arcade-footer {
   padding: 34px 24px 38px;

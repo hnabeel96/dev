@@ -64,6 +64,7 @@
     - Added popping neon lime scroll buttons (`#arcade-prev`, `#arcade-next`) with high-intensity outer glows, scale animations, and dynamic boundary disabling.
     - Removed CTA buttons below "Small games. Big fun." in the hero section to focus visual attention on the glowing arcade console.
     - Incremented cache-busting version tags to `?v=3` in `index.html`.
+32. Removed the dotted target circle preview (`.pendulum-target-ring`) from the swinging pendulum preview in the home screen arcade selector, keeping a clean swinging metallic pendulum, and bumped asset cache-busting version tags to `?v=4` in `index.html`.
 
 ## Resume checklist
 
