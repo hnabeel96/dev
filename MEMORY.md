@@ -78,6 +78,15 @@
       - Guarded 3D tilt with `matchMedia('(hover: hover) and (pointer: fine)')` to prevent mobile touch devices from freezing tilted cards.
       - Improved mobile navigation styling in header under 700px.
       - Bumped cache-busting query strings (`styles.css?v=5`, `script.js?v=5`, `pendulum.css?v=2`, `pendulum.js?v=2`).
+34. Fixed mobile screen cutoff in Chrono Pendulum, updated back navigation text, and simplified top header nav:
+    - In `pendulum.html`: Replaced '← Back to Arcade' with '← Back to games' to unify back link text across all games.
+    - In `index.html`: Removed Chrono Pendulum and Edge Rush links from top header navigation, leaving only the 'About' link.
+    - Fixed mobile screen cutoff in Chrono Pendulum:
+      - Constrained pendulum swing length dynamically by arena width in `pendulum.js` (`safeHorizontalForBob` & `safeHorizontalForTarget`) so the bob and target circle never swing outside the horizontal canvas boundaries on narrow phone screens.
+      - Bounded target circle spawn angles within safe visible arc coordinates to guarantee the target circle is 100% on-screen.
+      - Restructured `.game-overlay` with `overflow-y: auto; -webkit-overflow-scrolling: touch;` and `.overlay-modal` with `margin: auto;` so modals are never cropped inside `.canvas-container`.
+      - Added compact 4-column HUD grid and responsive modal sizing for mobile (< 600px/480px) to keep the entire game fitting within mobile viewport height.
+      - Bumped cache-busting query strings (`styles.css?v=6`, `script.js?v=6`, `pendulum.css?v=3`, `pendulum.js?v=3`).
 
 ## Resume checklist
 
@@ -92,6 +101,6 @@
 - Branding is pineapp.win.
 - Website description and copy updated to focus on customer/player experience.
 - Google Analytics (`G-WJCZS9H72H`) is integrated on all site pages (`index.html`, `edge-rush.html`, `pendulum.html`).
-- Working on branch `feature/arcade-optimizations`.
+- Working on branch `feature/pendulum-mobile-fix`.
 - Update this file after each material work step so another agent can resume from the current state.
 
