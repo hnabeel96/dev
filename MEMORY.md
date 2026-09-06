@@ -88,30 +88,6 @@
       - Added compact 4-column HUD grid and responsive modal sizing for mobile (< 600px/480px) to keep the entire game fitting within mobile viewport height.
       - Bumped cache-busting query strings (`styles.css?v=6`, `script.js?v=6`, `pendulum.css?v=3`, `pendulum.js?v=3`).
 35. Added Google AdSense script (`ca-pub-6483520770446711`) into `<section class="ad-slot">` on homepage `index.html` on branch `feature/add-adsense`, verified via automated test script and local HTTP server.
-36. Prepared website for Google AdSense compliance and approved review standards:
-    - Added professional, substantive `about.html`, `contact.html`, `privacy.html`, and `terms.html` matching site dark/neon aesthetic.
-    - Integrated required AdSense disclosures in `privacy.html`: DART cookies, personalized advertising opt-out links (Google Ad Settings, AboutAds, NAI), Google Analytics, LocalStorage disclosures, COPPA, GDPR, and CCPA clauses.
-    - Created brand vector `favicon.svg` and linked across all pages.
-    - Added comprehensive Open Graph, Twitter card, Canonical, and theme-color metadata across all site pages.
-    - Integrated universal multi-column footer on home and content pages, plus subtle bottom navigation on game pages (`edge-rush.html`, `pendulum.html`).
-    - Standardized top header navigation across all pages (`Games`, `About`, `Contact`, `Privacy`).
-    - Removed placeholder email (`hello@example.com`) and established authentic contact channels with interactive contact form and FAQ.
-    - Upgraded `.ad-slot` styling to flexible height (`min-height: 90px; height: auto;`) with clear label to prevent ad cropping and accidental click violations.
-    - Preserved all game functionality, physics, audio synthesis, and event handlers 100% intact.
-    - Maintained omission of `ads.txt` per user instruction until actual publisher ID is supplied.
-37. Added `ads.txt` at domain root with user-provided AdSense publisher ID `pub-6483520770446711` (`google.com, pub-6483520770446711, DIRECT, f08c47fec0942fa0`).
-38. Optimized Edge Rush for mobile and fixed unequal tile dimensions:
-    - Resolved mobile tile sizing disparity where 16:10 aspect ratio and 6x4 tile counts created 58px top tiles vs tiny 27px side tiles.
-    - Restructured mobile arena in `edge-rush.css` to square `aspect-ratio: 1 / 1` with viewport ceiling `width: min(100%, calc(100dvh - 250px))`.
-    - Inset edge rails (`left: var(--tile-depth); right: var(--tile-depth)`) and added cyberpunk `.corner` caps in `edge-rush.html`.
-    - Implemented dynamic tile counts in `edge-rush.js` (4 tiles on all 4 sides on mobile <= 600px; 6x4 on desktop), guaranteeing 100.0% equal tile dimensions on mobile (~68px-75px length x 34px depth).
-    - Adapted mobile initial tile depth to 34px (from 48px) to keep arena spacious while providing comfortable touch targets.
-    - Mapped `segment()` hit detection strictly over active rail spans for 100% alignment between visual buttons and ball collisions.
-    - Added `touch-action: manipulation` and `-webkit-tap-highlight-color: transparent` to eliminate tap delays on mobile.
-39. Validated the live site after the AdSense/compliance pass using a local static server and Chromium headless smoke checks:
-    - Confirmed homepage, Edge Rush, and Chrono Pendulum load successfully via Playwright screenshots without browser rendering errors.
-    - Verified JavaScript syntax for `script.js`, `edge-rush.js`, and `pendulum.js` passes `node --check`.
-    - Prepared the branch for publication by updating the handoff log, staging the current website changes, and pushing the feature branch for review.
 
 ## Resume checklist
 
@@ -126,8 +102,5 @@
 - Branding is pineapp.win.
 - Website description and copy updated to focus on customer/player experience.
 - Google Analytics (`G-WJCZS9H72H`) is integrated on all site pages (`index.html`, `edge-rush.html`, `pendulum.html`).
-- Complete compliance pages added (`about.html`, `contact.html`, `privacy.html`, `terms.html`).
-- `ads.txt` configured at site root.
-- Edge Rush mobile arena optimized with uniform tile sizing and corner brackets.
 - Working on branch `feature/add-adsense`.
 - Update this file after each material work step so another agent can resume from the current state.
