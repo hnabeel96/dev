@@ -103,6 +103,12 @@
     - Simplified bottom footer across pages to keep only Contact and the email (`pineappwin@gmail.com`).
     - Added responsive styles in `styles.css?v=7` with centered footer and mobile breakpoints.
 38. Updated Chrono Pendulum game page HUD title from 'PENDULUM' to 'CHRONO PENDULUM' (`pendulum.html`, `pendulum.css?v=4`), with responsive typography clamp for mobile screens.
+39. Redesigned `about.html` and `privacy.html` with an elevated, modern aesthetic:
+    - Added glowing pill badges with pulsing status indicators (`.page-badge`, `.badge-dot`).
+    - Added stylized story card with gradient borders (`.story-card`) and 3-column values grid (`.values-grid`) on `about.html`.
+    - Transformed contact area into a high-tech Contact Station (`.contact-station`) with direct inbox status and interactive email chip.
+    - Upgraded `privacy.html` with glassmorphic policy cards (`.policy-card`), category tags, and external resource action buttons.
+    - Added active navigation tab highlight (`nav a.active`) and bumped to `styles.css?v=8`.
 
 ## Resume checklist
 
@@ -116,6 +122,6 @@
 
 - Branding is pineapp.win.
 - Website description and copy updated to focus on customer/player experience.
-- Google Analytics (`G-WJCZS9H72H`) is integrated on all site pages (`index.html`, `edge-rush.html`, `pendulum.html`, `about.html`).
+- Google Analytics (`G-WJCZS9H72H`) is integrated on all site pages (`index.html`, `edge-rush.html`, `pendulum.html`, `about.html`, `privacy.html`).
 - Working on branch `feature/addcontact`.
 - Update this file after each material work step so another agent can resume from the current state.
