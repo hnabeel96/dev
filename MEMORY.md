@@ -88,6 +88,13 @@
       - Added compact 4-column HUD grid and responsive modal sizing for mobile (< 600px/480px) to keep the entire game fitting within mobile viewport height.
       - Bumped cache-busting query strings (`styles.css?v=6`, `script.js?v=6`, `pendulum.css?v=3`, `pendulum.js?v=3`).
 35. Added Google AdSense script (`ca-pub-6483520770446711`) into `<section class="ad-slot">` on homepage `index.html` on branch `feature/add-adsense`, verified via automated test script and local HTTP server.
+36. Optimized Edge Rush mobile edge-brick geometry:
+    - Changed mobile arenas to a square responsive layout constrained by viewport height.
+    - Uses four equal-count segments on each side of the mobile arena instead of the desktop 6-by-4 layout.
+    - Inset top and bottom rails to match the side-rail span, so every mobile brick has equal length and depth.
+    - Updated hit detection to calculate the same inset playable span used by the visual rails.
+    - Added cache-busting query strings for the Edge Rush CSS and JavaScript assets.
+    - Verified the mobile and desktop renders with Chromium screenshots and passed `node --check edge-rush.js`.
 
 ## Resume checklist
 
