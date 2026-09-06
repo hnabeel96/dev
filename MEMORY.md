@@ -32,6 +32,23 @@
 
 25. Added Google Analytics tracking tag (gtag.js `G-WJCZS9H72H`) across the website in `<head>` of both `index.html` and `edge-rush.html`.
 
+## 2026-09-06
+
+26. Redesigned landing page hero layout and cleaned bottom game catalog:
+    - Replaced the static hero illustration (`.hero-art`) in the top right of `index.html` with an interactive, responsive scrollable game selector. It features horizontal snap scrolling, smooth-scroll arrow navigation, position indicators, live status pills, and direct game launch buttons.
+    - Removed unmade placeholder games (`Bubble Pop`, `Garden Quest`) from the bottom `#games` catalog in `script.js`; now only playable games (`Edge Rush`) are rendered and searchable at the bottom.
+    - Added styled custom scrollbar, card glow hover effects, and responsive breakpoints for mobile in `styles.css`.
+27. Transformed website theme to a dark aesthetic and simplified game selector cards:
+    - Applied a dark theme with background `#0b0f0d`, dark card surfaces, and high-contrast popping light typography (`#f5f9f6`, `#b0c2b7`) with electric neon lime (`#d9f36a`) accents, buttons, and glow effects.
+    - Removed all extra text from the scrollable game selector cards (no tags, pills, descriptions, or button text) leaving only the game name.
+    - Enlarged game names inside the selector to bold typography (`clamp(2.2rem, 4.5vw, 3rem)`) that highlights with neon glow on hover.
+28. Maximized glowing arcade selector and removed featured games section:
+    - Removed the bottom featured games section (`#games`) from `index.html`.
+    - Removed Starlight, Bubble Pop, and Garden Quest from the arcade selector, leaving only Edge Rush.
+    - Maximized the arcade section layout to become the dominant hero centerpiece (`min-height: 540px`, responsive wide layout).
+    - Added radiant multi-layered neon lime edge glow around the entire perimeter of the arcade selector.
+    - Enlarged the game name to display scale (`clamp(3rem, 6.5vw, 4.8rem)`) and added 3D perspective tilt in `script.js`.
+
 ## Resume checklist
 
 1. Work from `C:\Users\Nabeel\Desktop\dev\website`.
@@ -44,5 +61,6 @@
 - Branding is pineapp.win.
 - Website description and copy updated to focus on customer/player experience.
 - Google Analytics (`G-WJCZS9H72H`) is integrated on all site pages (`index.html`, `edge-rush.html`).
-- Working on branch `chore/update`.
+- Working on branch `feature/starlight`.
 - Update this file after each material work step so another agent can resume from the current state.
+
