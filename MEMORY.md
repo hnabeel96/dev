@@ -49,19 +49,36 @@
     - Added radiant multi-layered neon lime edge glow around the entire perimeter of the arcade selector.
     - Enlarged the game name to display scale (`clamp(3rem, 6.5vw, 4.8rem)`) and added 3D perspective tilt in `script.js`.
 29. Added cache-busting version query string (`?v=2`) to `styles.css` and `script.js` in `index.html` to bypass Cloudflare and browser disk cache.
+30. Built and integrated new arcade game 'Chrono Pendulum' (`pendulum.html`, `pendulum.css`, `pendulum.js`) on branch `feature/pendulum`:
+    - Metallic pendulum physics: realistic harmonic motion starting slow with a multi-stop 3D polished chrome bob, specular reflections, metallic gradient rod, and mechanical top bearing pivot.
+    - Random target circle placed along the pendulum's swing trajectory arc with rotating futuristic reticle brackets.
+    - Hit detection & dynamic scoring:
+      - Completely inside: 10 points with special effects (golden + cyan shockwaves, 45-particle spark burst, screen shake, golden perimeter flash, floating '+10 PERFECT!' text, and resonant procedural Web Audio crystal chime chord).
+      - Partially inside: 1 point with clean metallic ping chime, sparks, and '+1 GOOD' popup.
+      - Miss: deducts 1 shield (out of 3) with red warning flash, shake, and thud sound.
+    - Acceleration: each accurate tap increases pendulum swing velocity.
+    - Google Analytics (`G-WJCZS9H72H`) integrated in `<head>`.
+    - Linked in `index.html` header navigation and hero call-to-action buttons.
+31. Made arcade section scrollable with Chrono Pendulum as default:
+    - Added interactive carousel track to the glowing arcade selector featuring Chrono Pendulum (default at index 0 with animated swinging chrome pendulum preview) and Edge Rush.
+    - Added popping neon lime scroll buttons (`#arcade-prev`, `#arcade-next`) with high-intensity outer glows, scale animations, and dynamic boundary disabling.
+    - Removed CTA buttons below "Small games. Big fun." in the hero section to focus visual attention on the glowing arcade console.
+    - Incremented cache-busting version tags to `?v=3` in `index.html`.
+32. Removed the dotted target circle preview (`.pendulum-target-ring`) from the swinging pendulum preview in the home screen arcade selector, keeping a clean swinging metallic pendulum, and bumped asset cache-busting version tags to `?v=4` in `index.html`.
 
 ## Resume checklist
 
 1. Work from `C:\Users\Nabeel\Desktop\dev\website`.
 2. The live source is tracked on GitHub at `hnabeel96/dev`, branch `main`.
-3. Edge Rush is launched from the first card on `index.html` and lives in `edge-rush.html`, `edge-rush.css`, and `edge-rush.js`.
-4. Before handing off after later changes, append a numbered entry to this file, then commit and push it with the website changes.
+3. Edge Rush is launched from `edge-rush.html`, `edge-rush.css`, and `edge-rush.js`.
+4. Chrono Pendulum is launched from `pendulum.html`, `pendulum.css`, and `pendulum.js`.
+5. Before handing off after later changes, append a numbered entry to this file, then commit and push it with the website changes.
 
 ## Current state
 
 - Branding is pineapp.win.
 - Website description and copy updated to focus on customer/player experience.
-- Google Analytics (`G-WJCZS9H72H`) is integrated on all site pages (`index.html`, `edge-rush.html`).
-- Working on branch `main`.
+- Google Analytics (`G-WJCZS9H72H`) is integrated on all site pages (`index.html`, `edge-rush.html`, `pendulum.html`).
+- Working on branch `feature/pendulum`.
 - Update this file after each material work step so another agent can resume from the current state.
 
