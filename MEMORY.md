@@ -117,3 +117,4 @@
     - Mentioned Google Analytics and explained that future advertising/cookies will be documented if introduced.
     - Linked the About page from the homepage and added responsive content-page styling.
     - Verified the About page at desktop and mobile Chromium viewport sizes; text wraps cleanly and navigation remains usable.
+    - Removed About navigation and footer references from the homepage while retaining the standalone About page.
