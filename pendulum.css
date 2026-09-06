@@ -529,7 +529,8 @@ html, body {
   }
 
   .hud-title {
-    font-size: 1.15rem;
+    font-size: clamp(0.95rem, 3.8vw, 1.15rem);
+    letter-spacing: -0.02em;
   }
 
   .hud-stats {

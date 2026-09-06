@@ -96,6 +96,14 @@
     - Added cache-busting query strings for the Edge Rush CSS and JavaScript assets.
     - Verified the mobile and desktop renders with Chromium screenshots and passed `node --check edge-rush.js`.
 
+37. Created branch `feature/addcontact` from `main` and implemented separate About and Privacy Policy pages:
+    - Dedicated `about.html` containing exclusively "ABOUT PINEAPP.WIN", "Who Runs This Site", the creator story, and a Contact card featuring `pineappwin@gmail.com`.
+    - Dedicated `privacy.html` containing the Privacy Policy (Google Analytics tracking and advertising/cookies disclosures).
+    - Top navigation on `index.html`, `about.html`, and `privacy.html` includes distinct `About` and `Privacy Policy` tabs.
+    - Simplified bottom footer across pages to keep only Contact and the email (`pineappwin@gmail.com`).
+    - Added responsive styles in `styles.css?v=7` with centered footer and mobile breakpoints.
+38. Updated Chrono Pendulum game page HUD title from 'PENDULUM' to 'CHRONO PENDULUM' (`pendulum.html`, `pendulum.css?v=4`), with responsive typography clamp for mobile screens.
+
 ## Resume checklist
 
 1. Work from `C:\Users\Nabeel\Desktop\dev\website`.
@@ -108,6 +116,6 @@
 
 - Branding is pineapp.win.
 - Website description and copy updated to focus on customer/player experience.
-- Google Analytics (`G-WJCZS9H72H`) is integrated on all site pages (`index.html`, `edge-rush.html`, `pendulum.html`).
-- Working on branch `feature/add-adsense`.
+- Google Analytics (`G-WJCZS9H72H`) is integrated on all site pages (`index.html`, `edge-rush.html`, `pendulum.html`, `about.html`).
+- Working on branch `feature/addcontact`.
 - Update this file after each material work step so another agent can resume from the current state.
