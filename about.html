@@ -12,37 +12,67 @@
   </script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="About pineapp.win, who runs the site, and contact details.">
+  <meta name="description" content="About pineapp.win, who runs the site, our indie game design philosophy, and contact details.">
   <title>About | pineapp.win</title>
-  <link rel="stylesheet" href="styles.css?v=7">
+  <link rel="stylesheet" href="styles.css?v=8">
 </head>
 <body>
   <header>
     <a class="brand" href="index.html">✦ pineapp.win</a>
     <nav>
       <a href="index.html">Games</a>
-      <a href="about.html">About</a>
+      <a href="about.html" class="active">About</a>
       <a href="privacy.html">Privacy Policy</a>
     </nav>
   </header>
 
   <main class="content-page">
-    <section class="about-section">
-      <p class="eyebrow">ABOUT PINEAPP.WIN</p>
+    <div class="page-header">
+      <span class="page-badge"><span class="badge-dot"></span>ABOUT PINEAPP.WIN</span>
       <h1>Who Runs This Site</h1>
+    </div>
+
+    <!-- Story Card -->
+    <article class="story-card">
       <p>pineapp.win is an independent web games lab built and maintained by a solo creator. Every game is handcrafted from scratch with an emphasis on clean code, responsive controls, snappy physics, and zero bloat.</p>
       <p>The goal is simple: create delightful, frictionless browser games that load instantly and fit perfectly into a five-minute break.</p>
-    </section>
+    </article>
 
-    <!-- Contact section -->
+    <!-- Key Values / Pillars -->
+    <div class="values-grid">
+      <div class="value-item">
+        <div class="value-icon">⚡</div>
+        <h3>Zero Friction</h3>
+        <p>Instant play with zero sign-ups, no app downloads, and lightning-fast web loading.</p>
+      </div>
+      <div class="value-item">
+        <div class="value-icon">🕹️</div>
+        <h3>Custom Physics</h3>
+        <p>Handcrafted collision logic, satisfying audio synthesis, and responsive canvas mechanics.</p>
+      </div>
+      <div class="value-item">
+        <div class="value-icon">⏱️</div>
+        <h3>Five-Minute Breaks</h3>
+        <p>Bite-sized, high-replay loops designed to bring a quick spark of fun to your day.</p>
+      </div>
+    </div>
+
+    <!-- Contact Station -->
     <section class="contact-section" id="contact">
-      <div class="contact-card">
-        <p class="eyebrow">GET IN TOUCH</p>
+      <div class="contact-station">
+        <div class="station-header">
+          <span class="page-badge"><span class="badge-dot"></span>GET IN TOUCH</span>
+          <span class="station-status">● Direct creator inbox</span>
+        </div>
         <h2>Contact</h2>
-        <p>For inquiries, game feedback, or support, reach out directly at:</p>
-        <p class="contact-email">
-          <a href="mailto:pineappwin@gmail.com">pineappwin@gmail.com</a>
-        </p>
+        <p class="station-desc">For inquiries, game feedback, bug reports, or partnership opportunities, reach out directly:</p>
+        <div class="contact-action-box">
+          <a href="mailto:pineappwin@gmail.com" class="email-chip" title="Email pineappwin@gmail.com">
+            <span class="chip-icon">✉</span>
+            <span class="chip-address">pineappwin@gmail.com</span>
+            <span class="chip-arrow">→</span>
+          </a>
+        </div>
       </div>
     </section>
   </main>
