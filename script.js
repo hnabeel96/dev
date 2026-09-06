@@ -52,6 +52,17 @@
       });
     });
 
+    // Keyboard navigation for desktop web accessibility
+    track.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        track.scrollBy({ left: -getCardWidth(), behavior: 'smooth' });
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        track.scrollBy({ left: getCardWidth(), behavior: 'smooth' });
+      }
+    });
+
     let ticking = false;
     track.addEventListener('scroll', () => {
       if (!ticking) {
@@ -70,8 +81,9 @@
     updateActiveState();
   }
 
-  // 3D perspective tilt effect on arcade frame
-  if (frame) {
+  // 3D perspective tilt effect on arcade frame (only on devices with fine pointer and hover support)
+  const supportsHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (frame && supportsHover) {
     frame.addEventListener('mousemove', (e) => {
       // Avoid tilting if hovering directly over scroll buttons
       if (e.target.closest('.arcade-scroll-btn') || e.target.closest('.arcade-indicators')) {

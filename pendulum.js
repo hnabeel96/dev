@@ -144,14 +144,20 @@
     const rect = arenaContainer.getBoundingClientRect();
     canvasWidth = rect.width;
     canvasHeight = rect.height;
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
     canvas.width = Math.floor(canvasWidth * dpr);
     canvas.height = Math.floor(canvasHeight * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
+    // Responsive scaling for mobile and small screens
+    const scale = Math.max(0.72, Math.min(1.0, canvasWidth / 540));
+    pendulum.bobRadius = Math.round(26 * scale);
+    targetCircle.radius = Math.round(40 * scale);
+
     // Update pendulum length based on arena dimensions
     pendulum.length = canvasHeight * 0.65;
     pendulum.pivotX = canvasWidth / 2;
-    pendulum.pivotY = Math.max(50, canvasHeight * 0.12);
+    pendulum.pivotY = Math.max(42, canvasHeight * 0.12);
 
     if (!targetCircle.initialized) {
       spawnTargetCircle();
@@ -480,8 +486,8 @@
     if (distance + bobR <= targetR) {
       score += 10;
       perfectHitsCount++;
-      // Accelerate pendulum with accurate tap
-      speedMultiplier += 0.085;
+      // Accelerate pendulum with accurate tap (halved for smoother scaling)
+      speedMultiplier += 0.0425;
       triggerPerfectEffect(targetCircle.x, targetCircle.y);
       spawnTargetCircle();
     }
@@ -489,8 +495,8 @@
     // The bob intersects or overlaps partially: distance < bobR + targetR
     else if (distance < bobR + targetR) {
       score += 1;
-      // Accelerate pendulum with accurate tap
-      speedMultiplier += 0.045;
+      // Accelerate pendulum with accurate tap (halved for smoother scaling)
+      speedMultiplier += 0.0225;
       triggerGoodEffect(pendulum.bobX, pendulum.bobY);
       spawnTargetCircle();
     }
@@ -553,19 +559,22 @@
   // Event Listeners for Controls
   startBtn.addEventListener('click', (e) => {
     e.stopPropagation();
+    initAudio();
     startGame();
   });
 
   restartBtn.addEventListener('click', (e) => {
     e.stopPropagation();
+    initAudio();
     startGame();
   });
 
   arenaContainer.addEventListener('pointerdown', (e) => {
+    if (e.target.closest('button')) return;
+    e.preventDefault();
+    initAudio();
     if (!isPlaying) {
-      if (!startOverlay.classList.contains('hidden')) {
-        startGame();
-      } else if (!gameoverOverlay.classList.contains('hidden')) {
+      if (!startOverlay.classList.contains('hidden') || !gameoverOverlay.classList.contains('hidden')) {
         startGame();
       }
       return;
@@ -574,8 +583,9 @@
   });
 
   window.addEventListener('keydown', (e) => {
-    if (e.code === 'Space') {
+    if (e.code === 'Space' || e.code === 'Enter') {
       e.preventDefault();
+      initAudio();
       if (!isPlaying) {
         startGame();
       } else {
