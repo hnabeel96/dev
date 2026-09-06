@@ -102,6 +102,7 @@
     - Top navigation on `index.html`, `about.html`, and `privacy.html` includes distinct `About` and `Privacy Policy` tabs.
     - Simplified bottom footer across pages to keep only Contact and the email (`pineappwin@gmail.com`).
     - Added responsive styles in `styles.css?v=7` with centered footer and mobile breakpoints.
+38. Updated Chrono Pendulum game page HUD title from 'PENDULUM' to 'CHRONO PENDULUM' (`pendulum.html`, `pendulum.css?v=4`), with responsive typography clamp for mobile screens.
 
 ## Resume checklist
 
