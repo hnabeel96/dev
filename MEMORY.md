@@ -87,6 +87,7 @@
       - Restructured `.game-overlay` with `overflow-y: auto; -webkit-overflow-scrolling: touch;` and `.overlay-modal` with `margin: auto;` so modals are never cropped inside `.canvas-container`.
       - Added compact 4-column HUD grid and responsive modal sizing for mobile (< 600px/480px) to keep the entire game fitting within mobile viewport height.
       - Bumped cache-busting query strings (`styles.css?v=6`, `script.js?v=6`, `pendulum.css?v=3`, `pendulum.js?v=3`).
+35. Added Google AdSense script (`ca-pub-6483520770446711`) into `<section class="ad-slot">` on homepage `index.html` on branch `feature/add-adsense`, verified via automated test script and local HTTP server.
 
 ## Resume checklist
 
@@ -101,6 +102,5 @@
 - Branding is pineapp.win.
 - Website description and copy updated to focus on customer/player experience.
 - Google Analytics (`G-WJCZS9H72H`) is integrated on all site pages (`index.html`, `edge-rush.html`, `pendulum.html`).
-- Working on branch `feature/pendulum-mobile-fix`.
+- Working on branch `feature/add-adsense`.
 - Update this file after each material work step so another agent can resume from the current state.
-
