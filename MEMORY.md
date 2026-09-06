@@ -48,6 +48,7 @@
     - Maximized the arcade section layout to become the dominant hero centerpiece (`min-height: 540px`, responsive wide layout).
     - Added radiant multi-layered neon lime edge glow around the entire perimeter of the arcade selector.
     - Enlarged the game name to display scale (`clamp(3rem, 6.5vw, 4.8rem)`) and added 3D perspective tilt in `script.js`.
+29. Added cache-busting version query string (`?v=2`) to `styles.css` and `script.js` in `index.html` to bypass Cloudflare and browser disk cache.
 
 ## Resume checklist
 
@@ -61,6 +62,6 @@
 - Branding is pineapp.win.
 - Website description and copy updated to focus on customer/player experience.
 - Google Analytics (`G-WJCZS9H72H`) is integrated on all site pages (`index.html`, `edge-rush.html`).
-- Working on branch `feature/starlight`.
+- Working on branch `main`.
 - Update this file after each material work step so another agent can resume from the current state.
 
