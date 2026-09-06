@@ -99,6 +99,19 @@
     - Upgraded `.ad-slot` styling to flexible height (`min-height: 90px; height: auto;`) with clear label to prevent ad cropping and accidental click violations.
     - Preserved all game functionality, physics, audio synthesis, and event handlers 100% intact.
     - Maintained omission of `ads.txt` per user instruction until actual publisher ID is supplied.
+37. Added `ads.txt` at domain root with user-provided AdSense publisher ID `pub-6483520770446711` (`google.com, pub-6483520770446711, DIRECT, f08c47fec0942fa0`).
+38. Optimized Edge Rush for mobile and fixed unequal tile dimensions:
+    - Resolved mobile tile sizing disparity where 16:10 aspect ratio and 6x4 tile counts created 58px top tiles vs tiny 27px side tiles.
+    - Restructured mobile arena in `edge-rush.css` to square `aspect-ratio: 1 / 1` with viewport ceiling `width: min(100%, calc(100dvh - 250px))`.
+    - Inset edge rails (`left: var(--tile-depth); right: var(--tile-depth)`) and added cyberpunk `.corner` caps in `edge-rush.html`.
+    - Implemented dynamic tile counts in `edge-rush.js` (4 tiles on all 4 sides on mobile <= 600px; 6x4 on desktop), guaranteeing 100.0% equal tile dimensions on mobile (~68px-75px length x 34px depth).
+    - Adapted mobile initial tile depth to 34px (from 48px) to keep arena spacious while providing comfortable touch targets.
+    - Mapped `segment()` hit detection strictly over active rail spans for 100% alignment between visual buttons and ball collisions.
+    - Added `touch-action: manipulation` and `-webkit-tap-highlight-color: transparent` to eliminate tap delays on mobile.
+39. Validated the live site after the AdSense/compliance pass using a local static server and Chromium headless smoke checks:
+    - Confirmed homepage, Edge Rush, and Chrono Pendulum load successfully via Playwright screenshots without browser rendering errors.
+    - Verified JavaScript syntax for `script.js`, `edge-rush.js`, and `pendulum.js` passes `node --check`.
+    - Prepared the branch for publication by updating the handoff log, staging the current website changes, and pushing the feature branch for review.
 
 ## Resume checklist
 
@@ -114,5 +127,7 @@
 - Website description and copy updated to focus on customer/player experience.
 - Google Analytics (`G-WJCZS9H72H`) is integrated on all site pages (`index.html`, `edge-rush.html`, `pendulum.html`).
 - Complete compliance pages added (`about.html`, `contact.html`, `privacy.html`, `terms.html`).
+- `ads.txt` configured at site root.
+- Edge Rush mobile arena optimized with uniform tile sizing and corner brackets.
 - Working on branch `feature/add-adsense`.
 - Update this file after each material work step so another agent can resume from the current state.

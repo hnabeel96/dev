@@ -28,7 +28,7 @@
   <meta name="twitter:description" content="Fast-paced cyberpunk reflex arcade game. Catch the ball at the perimeter as speed accelerates and tiles shrink.">
 
   <title>Edge Rush | pineapp.win — Browser Games</title>
-  <link rel="stylesheet" href="edge-rush.css?v=2">
+  <link rel="stylesheet" href="edge-rush.css?v=3">
 </head>
 <body>
   <main class="game-shell">
@@ -39,6 +39,10 @@
     </section>
     <section class="instructions"><span>Click the section the ball reaches.</span><span>Each hit gets faster.</span></section>
     <section id="game" class="game" aria-label="Edge Rush game area">
+      <div class="corner corner-tl" aria-hidden="true"></div>
+      <div class="corner corner-tr" aria-hidden="true"></div>
+      <div class="corner corner-bl" aria-hidden="true"></div>
+      <div class="corner corner-br" aria-hidden="true"></div>
       <div id="edge-top" class="edge edge-top" aria-label="Top edge"></div>
       <div id="edge-right" class="edge edge-right" aria-label="Right edge"></div>
       <div id="edge-bottom" class="edge edge-bottom" aria-label="Bottom edge"></div>
@@ -60,6 +64,6 @@
       </nav>
     </footer>
   </main>
-  <script src="edge-rush.js"></script>
+  <script src="edge-rush.js?v=3"></script>
 </body>
 </html>

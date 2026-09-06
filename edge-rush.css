@@ -1,3 +1,440 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono&family=Orbitron:wght@500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
-:root{--void:#060611;--void-2:#10112b;--ink:#e9f7ff;--cyan:#35f6ff;--pink:#ff3cac;--purple:#9b5cff;--muted:#8491b8;--tile:#191a43}*{box-sizing:border-box}body{margin:0;min-height:100vh;overflow-x:hidden;background:radial-gradient(circle at 20% 5%,#28275c 0,transparent 31%),radial-gradient(circle at 85% 85%,#34144d 0,transparent 32%),var(--void);color:var(--ink);font-family:'Space Grotesk',sans-serif}.game-shell{width:min(950px,92vw);margin:0 auto;padding:34px 0 52px}.back{display:inline-block;color:var(--cyan);font:600 .78rem 'DM Mono',monospace;letter-spacing:.08em;margin-bottom:42px;text-decoration:none;text-transform:uppercase}.back:hover{color:#fff;text-shadow:0 0 12px var(--cyan)}.game-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:24px}.kicker{margin:0 0 10px;color:var(--pink);font:500 .68rem 'DM Mono',monospace;letter-spacing:.2em}.game-head h1{font:800 clamp(2.9rem,8vw,6rem) 'Orbitron',sans-serif;letter-spacing:-.08em;line-height:.82;margin:0;color:#fff;text-shadow:3px 0 var(--pink),-3px 0 var(--cyan),0 0 25px #9b5cff}.scoreboard{display:flex;gap:28px}.scoreboard div{display:grid;gap:5px;min-width:58px}.scoreboard span{color:var(--muted);font:500 .62rem 'DM Mono',monospace;letter-spacing:.15em;text-transform:uppercase}.scoreboard strong{color:var(--cyan);font:700 1.45rem 'Orbitron',sans-serif;text-shadow:0 0 12px var(--cyan)}.instructions{display:flex;justify-content:space-between;gap:20px;margin:0 0 18px;color:#aeb7d8;font:500 .78rem 'DM Mono',monospace;letter-spacing:.06em;text-transform:uppercase}.game{--tile-depth:48px;position:relative;aspect-ratio:16/10;overflow:hidden;background:linear-gradient(rgba(14,15,43,.78),rgba(5,6,17,.86)),linear-gradient(90deg,rgba(53,246,255,.12) 1px,transparent 1px),linear-gradient(rgba(53,246,255,.12) 1px,transparent 1px);background-size:auto,28px 28px,28px 28px;border:2px solid var(--cyan);box-shadow:0 0 0 5px rgba(53,246,255,.1),0 0 26px rgba(53,246,255,.55),0 0 70px rgba(155,92,255,.28);touch-action:manipulation}.game:after{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0 1px,transparent 1px 4px)}.edge{position:absolute;z-index:3;display:flex}.edge-top,.edge-bottom{height:var(--tile-depth);left:0;right:0}.edge-top{top:0}.edge-bottom{bottom:0}.edge-left,.edge-right{width:var(--tile-depth);top:var(--tile-depth);bottom:var(--tile-depth);flex-direction:column}.edge-left{left:0}.edge-right{right:0}.edge button{position:relative;flex:1;border:1px solid rgba(53,246,255,.55);background:linear-gradient(135deg,#212257,#10112c);cursor:pointer;overflow:hidden;transition:background .18s,transform .1s,height .25s,width .25s}.edge button:before{content:'';position:absolute;inset:20%;border:1px solid rgba(255,60,172,.68);clip-path:polygon(0 0,100% 0,100% 38%,78% 38%,78% 100%,0 100%)}.edge button:hover{background:#353675;box-shadow:inset 0 0 18px rgba(53,246,255,.28)}.edge button.target{background:linear-gradient(135deg,var(--pink),#842bff);border-color:#fff;box-shadow:inset 0 0 18px #fff,0 0 19px var(--pink);animation:pulse .38s infinite alternate}.edge button.target:before{border-color:#fff}.ball{position:absolute;z-index:2;width:22px;height:22px;margin:-11px;border-radius:50%;background:#fff;box-shadow:0 0 0 4px rgba(53,246,255,.7),0 0 16px 6px var(--cyan),0 0 34px var(--pink);left:50%;top:50%}.overlay{position:absolute;inset:0;z-index:4;display:grid;place-items:center;text-align:center;background:rgba(4,5,18,.88);color:var(--ink);backdrop-filter:blur(3px)}.overlay>div{max-width:310px}.overlay h2{font:700 clamp(1.8rem,5vw,3.5rem) 'Orbitron',sans-serif;letter-spacing:-.08em;line-height:.95;margin:0 0 16px;color:#fff;text-shadow:0 0 16px var(--pink)}.overlay p:not(.kicker){color:#b9c5e7;line-height:1.55;margin:0 0 25px}.overlay button{border:1px solid var(--cyan);padding:14px 19px;background:linear-gradient(90deg,var(--cyan),#a55cff);box-shadow:0 0 18px rgba(53,246,255,.5);color:#070715;font:700 .92rem 'Orbitron',sans-serif;cursor:pointer;text-transform:uppercase}.overlay button span{margin-left:18px}.overlay.hidden{display:none}.message{min-height:24px;margin:27px 0 0;color:#b8c2e3;text-align:center;font:500 .84rem 'DM Mono',monospace;letter-spacing:.06em}.message.danger{color:var(--pink);text-shadow:0 0 12px rgba(255,60,172,.7)}.message.success{color:var(--cyan);text-shadow:0 0 12px rgba(53,246,255,.6)}@keyframes pulse{to{filter:brightness(1.6);transform:scale(.94)}}@media(max-width:600px){.game-shell{padding-top:24px}.back{margin-bottom:30px}.scoreboard{gap:16px}.instructions{font-size:.65rem}.game{--tile-depth:40px;box-shadow:0 0 0 3px rgba(53,246,255,.12),0 0 20px rgba(53,246,255,.5)}.edge button:before{inset:16%}.edge button{border-width:1px}}.game-footer{margin-top:48px;padding-top:24px;border-top:1px solid rgba(53,246,255,.18);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;font:500 .8rem 'DM Mono',monospace;color:var(--muted)}.game-footer-brand{color:var(--cyan);font-weight:700}.game-footer-nav{display:flex;gap:18px;flex-wrap:wrap}.game-footer-nav a{color:var(--muted);text-decoration:none;transition:color .15s ease}.game-footer-nav a:hover{color:var(--cyan)}@media(max-width:600px){.game-footer{flex-direction:column;text-align:center}}
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500;600&family=Orbitron:wght@500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
+:root {
+  --void: #060611;
+  --void-2: #10112b;
+  --ink: #e9f7ff;
+  --cyan: #35f6ff;
+  --pink: #ff3cac;
+  --purple: #9b5cff;
+  --muted: #8491b8;
+  --tile: #191a43;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background: 
+    radial-gradient(circle at 20% 5%, #28275c 0, transparent 31%),
+    radial-gradient(circle at 85% 85%, #34144d 0, transparent 32%),
+    var(--void);
+  color: var(--ink);
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.game-shell {
+  width: min(950px, 92vw);
+  margin: 0 auto;
+  padding: 34px 0 52px;
+}
+
+.back {
+  display: inline-block;
+  color: var(--cyan);
+  font: 600 .78rem 'DM Mono', monospace;
+  letter-spacing: .08em;
+  margin-bottom: 42px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.back:hover {
+  color: #fff;
+  text-shadow: 0 0 12px var(--cyan);
+}
+
+.game-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 24px;
+}
+
+.kicker {
+  margin: 0 0 10px;
+  color: var(--pink);
+  font: 500 .68rem 'DM Mono', monospace;
+  letter-spacing: .2em;
+}
+
+.game-head h1 {
+  font: 800 clamp(2.9rem, 8vw, 6rem) 'Orbitron', sans-serif;
+  letter-spacing: -.08em;
+  line-height: .82;
+  margin: 0;
+  color: #fff;
+  text-shadow: 3px 0 var(--pink), -3px 0 var(--cyan), 0 0 25px #9b5cff;
+}
+
+.scoreboard {
+  display: flex;
+  gap: 28px;
+}
+
+.scoreboard div {
+  display: grid;
+  gap: 5px;
+  min-width: 58px;
+}
+
+.scoreboard span {
+  color: var(--muted);
+  font: 500 .62rem 'DM Mono', monospace;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+}
+
+.scoreboard strong {
+  color: var(--cyan);
+  font: 700 1.45rem 'Orbitron', sans-serif;
+  text-shadow: 0 0 12px var(--cyan);
+}
+
+.instructions {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin: 0 0 18px;
+  color: #aeb7d8;
+  font: 500 .78rem 'DM Mono', monospace;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+/* Arena Shell */
+.game {
+  --tile-depth: 48px;
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: 
+    linear-gradient(rgba(14, 15, 43, .78), rgba(5, 6, 17, .86)),
+    linear-gradient(90deg, rgba(53, 246, 255, .12) 1px, transparent 1px),
+    linear-gradient(rgba(53, 246, 255, .12) 1px, transparent 1px);
+  background-size: auto, 28px 28px, 28px 28px;
+  border: 2px solid var(--cyan);
+  box-shadow: 
+    0 0 0 5px rgba(53, 246, 255, .1),
+    0 0 26px rgba(53, 246, 255, .55),
+    0 0 70px rgba(155, 92, 255, .28);
+  touch-action: manipulation;
+}
+
+.game:after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: repeating-linear-gradient(0deg, rgba(255, 255, 255, .025) 0 1px, transparent 1px 4px);
+}
+
+/* Corner Caps */
+.corner {
+  position: absolute;
+  width: var(--tile-depth);
+  height: var(--tile-depth);
+  z-index: 3;
+  background: linear-gradient(135deg, #1b1c4b, #0c0d25);
+  border: 1px solid rgba(53, 246, 255, .4);
+  pointer-events: none;
+  box-sizing: border-box;
+}
+
+.corner:before {
+  content: '';
+  position: absolute;
+  inset: 22%;
+  border: 1px dashed rgba(53, 246, 255, .35);
+}
+
+.corner-tl { top: 0; left: 0; border-right: none; border-bottom: none; }
+.corner-tr { top: 0; right: 0; border-left: none; border-bottom: none; }
+.corner-bl { bottom: 0; left: 0; border-right: none; border-top: none; }
+.corner-br { bottom: 0; right: 0; border-left: none; border-top: none; }
+
+/* Edge Rails */
+.edge {
+  position: absolute;
+  z-index: 3;
+  display: flex;
+}
+
+.edge-top,
+.edge-bottom {
+  height: var(--tile-depth);
+  left: var(--tile-depth);
+  right: var(--tile-depth);
+}
+
+.edge-top { top: 0; }
+.edge-bottom { bottom: 0; }
+
+.edge-left,
+.edge-right {
+  width: var(--tile-depth);
+  top: var(--tile-depth);
+  bottom: var(--tile-depth);
+  flex-direction: column;
+}
+
+.edge-left { left: 0; }
+.edge-right { right: 0; }
+
+/* Edge Tiles */
+.edge button {
+  position: relative;
+  flex: 1;
+  border: 1px solid rgba(53, 246, 255, .55);
+  background: linear-gradient(135deg, #212257, #10112c);
+  cursor: pointer;
+  overflow: hidden;
+  transition: background .18s, transform .1s, height .25s, width .25s;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.edge button:before {
+  content: '';
+  position: absolute;
+  inset: 20%;
+  border: 1px solid rgba(255, 60, 172, .68);
+  clip-path: polygon(0 0, 100% 0, 100% 38%, 78% 38%, 78% 100%, 0 100%);
+}
+
+.edge button:hover {
+  background: #353675;
+  box-shadow: inset 0 0 18px rgba(53, 246, 255, .28);
+}
+
+.edge button.target {
+  background: linear-gradient(135deg, var(--pink), #842bff);
+  border-color: #fff;
+  box-shadow: inset 0 0 18px #fff, 0 0 19px var(--pink);
+  animation: pulse .38s infinite alternate;
+}
+
+.edge button.target:before {
+  border-color: #fff;
+}
+
+/* Ball */
+.ball {
+  position: absolute;
+  z-index: 2;
+  width: 22px;
+  height: 22px;
+  margin: -11px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 
+    0 0 0 4px rgba(53, 246, 255, .7),
+    0 0 16px 6px var(--cyan),
+    0 0 34px var(--pink);
+  left: 50%;
+  top: 50%;
+  pointer-events: none;
+}
+
+/* Modal Overlay */
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  background: rgba(4, 5, 18, .88);
+  color: var(--ink);
+  backdrop-filter: blur(3px);
+}
+
+.overlay > div {
+  max-width: 310px;
+}
+
+.overlay h2 {
+  font: 700 clamp(1.8rem, 5vw, 3.5rem) 'Orbitron', sans-serif;
+  letter-spacing: -.08em;
+  line-height: .95;
+  margin: 0 0 16px;
+  color: #fff;
+  text-shadow: 0 0 16px var(--pink);
+}
+
+.overlay p:not(.kicker) {
+  color: #b9c5e7;
+  line-height: 1.55;
+  margin: 0 0 25px;
+}
+
+.overlay button {
+  border: 1px solid var(--cyan);
+  padding: 14px 19px;
+  background: linear-gradient(90deg, var(--cyan), #a55cff);
+  box-shadow: 0 0 18px rgba(53, 246, 255, .5);
+  color: #070715;
+  font: 700 .92rem 'Orbitron', sans-serif;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.overlay button span {
+  margin-left: 18px;
+}
+
+.overlay.hidden {
+  display: none;
+}
+
+.message {
+  min-height: 24px;
+  margin: 27px 0 0;
+  color: #b8c2e3;
+  text-align: center;
+  font: 500 .84rem 'DM Mono', monospace;
+  letter-spacing: .06em;
+}
+
+.message.danger {
+  color: var(--pink);
+  text-shadow: 0 0 12px rgba(255, 60, 172, .7);
+}
+
+.message.success {
+  color: var(--cyan);
+  text-shadow: 0 0 12px rgba(53, 246, 255, .6);
+}
+
+@keyframes pulse {
+  to {
+    filter: brightness(1.6);
+    transform: scale(.94);
+  }
+}
+
+/* Non-intrusive Game Footer Navigation */
+.game-footer {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(53, 246, 255, .18);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  font: 500 .8rem 'DM Mono', monospace;
+  color: var(--muted);
+}
+
+.game-footer-brand {
+  color: var(--cyan);
+  font-weight: 700;
+}
+
+.game-footer-nav {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.game-footer-nav a {
+  color: var(--muted);
+  text-decoration: none;
+  transition: color .15s ease;
+}
+
+.game-footer-nav a:hover {
+  color: var(--cyan);
+}
+
+/* ==========================================================================
+   Mobile Optimization
+   ========================================================================== */
+@media (max-width: 600px) {
+  .game-shell {
+    width: min(440px, 94vw);
+    padding-top: 16px;
+    padding-bottom: 28px;
+  }
+
+  .back {
+    margin-bottom: 20px;
+    font-size: .72rem;
+  }
+
+  .game-head {
+    margin-bottom: 14px;
+  }
+
+  .game-head h1 {
+    font-size: clamp(2.1rem, 7.2vw, 3.2rem);
+  }
+
+  .scoreboard {
+    gap: 14px;
+  }
+
+  .scoreboard strong {
+    font-size: 1.25rem;
+  }
+
+  .instructions {
+    font-size: .68rem;
+    margin-bottom: 14px;
+  }
+
+  /* Square arena on mobile ensures identical tile sizes and maximum visibility */
+  .game {
+    --tile-depth: 34px;
+    aspect-ratio: 1 / 1;
+    width: min(100%, calc(100dvh - 250px));
+    margin: 0 auto;
+    box-shadow: 
+      0 0 0 3px rgba(53, 246, 255, .15),
+      0 0 22px rgba(53, 246, 255, .5);
+    border-radius: 4px;
+  }
+
+  .edge button {
+    border-width: 1px;
+    min-height: 34px;
+    min-width: 34px;
+  }
+
+  .edge button:before {
+    inset: 14%;
+  }
+
+  .ball {
+    width: 20px;
+    height: 20px;
+    margin: -10px;
+  }
+
+  .overlay > div {
+    max-width: 270px;
+  }
+
+  .overlay h2 {
+    font-size: clamp(1.6rem, 5.5vw, 2.5rem);
+  }
+
+  .message {
+    margin-top: 16px;
+    font-size: .78rem;
+  }
+
+  .game-footer {
+    margin-top: 28px;
+    padding-top: 18px;
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+  }
+}
