@@ -88,6 +88,11 @@
       - Added compact 4-column HUD grid and responsive modal sizing for mobile (< 600px/480px) to keep the entire game fitting within mobile viewport height.
       - Bumped cache-busting query strings (`styles.css?v=6`, `script.js?v=6`, `pendulum.css?v=3`, `pendulum.js?v=3`).
 35. Added Google AdSense script (`ca-pub-6483520770446711`) into `<section class="ad-slot">` on homepage `index.html` on branch `feature/add-adsense`, verified via automated test script and local HTTP server.
+36. Created branch `feature/about-contact-disclosures` from `main` and added About and Contact pages:
+    - Explained who runs pineapp.win and how to contact the site.
+    - Set the contact address to `pineappwin@gmail.com`.
+    - Disclosed Google Analytics usage and explained that future advertising/cookies will be documented when introduced.
+    - Added responsive content-page styling and linked the new pages from the homepage.
 36. Optimized Edge Rush mobile edge-brick geometry:
     - Changed mobile arenas to a square responsive layout constrained by viewport height.
     - Uses four equal-count segments on each side of the mobile arena instead of the desktop 6-by-4 layout.
