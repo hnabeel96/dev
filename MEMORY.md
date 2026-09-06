@@ -111,3 +111,8 @@
 - Google Analytics (`G-WJCZS9H72H`) is integrated on all site pages (`index.html`, `edge-rush.html`, `pendulum.html`).
 - Working on branch `feature/add-adsense`.
 - Update this file after each material work step so another agent can resume from the current state.
+
+37. Created branch `feature/about-page-disclosures` from `main` and added an About page:
+    - Explained who runs pineapp.win and provided `pineappwin@gmail.com` for contact.
+    - Mentioned Google Analytics and explained that future advertising/cookies will be documented if introduced.
+    - Linked the About page from the homepage and added responsive content-page styling.
