@@ -150,14 +150,26 @@
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
     // Responsive scaling for mobile and small screens
-    const scale = Math.max(0.72, Math.min(1.0, canvasWidth / 540));
-    pendulum.bobRadius = Math.round(26 * scale);
-    targetCircle.radius = Math.round(40 * scale);
+    const scale = Math.max(0.65, Math.min(1.0, canvasWidth / 520));
+    pendulum.bobRadius = Math.round(24 * scale);
+    targetCircle.radius = Math.round(38 * scale);
 
-    // Update pendulum length based on arena dimensions
-    pendulum.length = canvasHeight * 0.65;
+    // Dynamic horizontal & vertical reach constraints so the pendulum NEVER clips
     pendulum.pivotX = canvasWidth / 2;
-    pendulum.pivotY = Math.max(42, canvasHeight * 0.12);
+    pendulum.pivotY = Math.max(34, Math.round(canvasHeight * 0.10));
+
+    // Safe boundaries: pendulum swing must stay completely inside horizontal boundaries
+    const safeMargin = 16;
+    const safeHorizontalForBob = (canvasWidth / 2) - pendulum.bobRadius - safeMargin;
+    const safeHorizontalForTarget = (canvasWidth / 2) - targetCircle.radius - safeMargin;
+
+    const maxLenFromBob = safeHorizontalForBob / Math.sin(pendulum.maxAngle);
+    const maxLenFromTarget = safeHorizontalForTarget / Math.sin(pendulum.maxAngle * 0.78);
+    const maxLenFromWidth = Math.min(maxLenFromBob, maxLenFromTarget);
+
+    const maxLenFromHeight = canvasHeight - pendulum.pivotY - pendulum.bobRadius - 20;
+
+    pendulum.length = Math.round(Math.max(120, Math.min(maxLenFromWidth, maxLenFromHeight * 0.78, canvasHeight * 0.62)));
 
     if (!targetCircle.initialized) {
       spawnTargetCircle();
@@ -201,8 +213,13 @@
   function spawnTargetCircle() {
     targetCircle.initialized = true;
     // Pick an angle along the pendulum arc, ensuring it's not right on top of current bob
-    const minAngle = -pendulum.maxAngle * 0.78;
-    const maxAngle = pendulum.maxAngle * 0.78;
+    // Ensure candidate angle keeps target circle safely inside canvas horizontally
+    const safeHorizontalForTarget = (canvasWidth / 2) - targetCircle.radius - 16;
+    const maxSafeArcSin = Math.min(0.95, Math.max(0.1, safeHorizontalForTarget / Math.max(1, pendulum.length)));
+    const maxSafeTargetAngle = Math.min(pendulum.maxAngle * 0.78, Math.asin(maxSafeArcSin));
+
+    const minAngle = -maxSafeTargetAngle;
+    const maxAngle = maxSafeTargetAngle;
     let candidateAngle = 0;
     let attempts = 0;
 
