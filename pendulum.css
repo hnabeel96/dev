@@ -654,3 +654,46 @@ html, body {
     font-size: 1.15rem;
   }
 }
+
+.game-footer {
+  margin-top: 24px;
+  padding: 18px 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  font: 500 0.8rem 'DM Mono', monospace;
+  color: var(--text-muted, #788a80);
+}
+
+.game-footer-brand {
+  color: var(--lime, #d9f36a);
+  font-weight: 700;
+}
+
+.game-footer-nav {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.game-footer-nav a {
+  color: var(--text-muted, #788a80);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.game-footer-nav a:hover {
+  color: var(--lime, #d9f36a);
+}
+
+@media (max-width: 600px) {
+  .game-footer {
+    flex-direction: column;
+    text-align: center;
+    padding: 16px 12px;
+  }
+}
+
