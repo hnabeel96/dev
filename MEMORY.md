@@ -65,6 +65,19 @@
     - Removed CTA buttons below "Small games. Big fun." in the hero section to focus visual attention on the glowing arcade console.
     - Incremented cache-busting version tags to `?v=3` in `index.html`.
 32. Removed the dotted target circle preview (`.pendulum-target-ring`) from the swinging pendulum preview in the home screen arcade selector, keeping a clean swinging metallic pendulum, and bumped asset cache-busting version tags to `?v=4` in `index.html`.
+33. Relocated Play Now button, halved pendulum acceleration, and optimized for mobile and web:
+    - Removed 'Play now' button from top header navigation in `index.html`.
+    - Added glowing 'Play now →' button below the arcade screen in the arcade footer (`.arcade-play-btn`) for both Chrono Pendulum and Edge Rush cards.
+    - Halved pendulum speed increases in `pendulum.js`: perfect hit increment reduced from +0.085 to +0.0425, and good hit increment from +0.045 to +0.0225.
+    - Mobile and web optimizations:
+      - Capped devicePixelRatio to 2 to preserve mobile GPU resources and maintain high FPS on OLED/Retina displays.
+      - Implemented dynamic proportional scaling for bobRadius and targetRadius on narrow viewports.
+      - Switched canvas height to CSS clamp (`clamp(320px, 52vh, 420px)` on mobile) to keep game and HUD fully on-screen without vertical scrolling.
+      - Prevented touch default behaviors on canvas container (`touch-action: none;`) to eliminate tap delays and accidental viewport zoom.
+      - Added desktop keyboard navigation (ArrowLeft / ArrowRight) on arcade carousel track and Enter/Space support for pendulum.
+      - Guarded 3D tilt with `matchMedia('(hover: hover) and (pointer: fine)')` to prevent mobile touch devices from freezing tilted cards.
+      - Improved mobile navigation styling in header under 700px.
+      - Bumped cache-busting query strings (`styles.css?v=5`, `script.js?v=5`, `pendulum.css?v=2`, `pendulum.js?v=2`).
 
 ## Resume checklist
 
@@ -79,6 +92,6 @@
 - Branding is pineapp.win.
 - Website description and copy updated to focus on customer/player experience.
 - Google Analytics (`G-WJCZS9H72H`) is integrated on all site pages (`index.html`, `edge-rush.html`, `pendulum.html`).
-- Working on branch `feature/pendulum`.
+- Working on branch `feature/arcade-optimizations`.
 - Update this file after each material work step so another agent can resume from the current state.
 

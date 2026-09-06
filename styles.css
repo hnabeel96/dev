@@ -399,21 +399,24 @@ nav a:hover {
 
 /* Arcade Footer */
 .arcade-footer {
-  padding: 34px 24px 38px;
+  padding: 24px 20px 44px;
   background: var(--surface);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 16px;
   text-align: center;
   border-top: 1px solid var(--border);
+  position: relative;
 }
 
 /* BIG Game Name */
 .arcade-footer .game-name {
-  font-size: clamp(2.8rem, 6.2vw, 4.5rem);
+  font-size: clamp(2.4rem, 5.8vw, 4.2rem);
   font-weight: 800;
   letter-spacing: -0.04em;
-  line-height: 1;
+  line-height: 1.05;
   margin: 0;
   color: var(--text-primary);
   text-shadow: 0 4px 18px rgba(0, 0, 0, 0.75);
@@ -426,19 +429,46 @@ nav a:hover {
   transform: translateY(-2px);
 }
 
+/* Play Now button inside Arcade Footer */
+.arcade-play-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 32px;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 4px;
+  background: var(--lime);
+  color: var(--bg);
+  box-shadow: 0 0 20px rgba(217, 243, 106, 0.45);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  letter-spacing: 0.02em;
+}
+
+.arcade-card:hover .arcade-play-btn {
+  background: #e8ff7a;
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 0 32px rgba(217, 243, 106, 0.85);
+}
+
+.arcade-card:active .arcade-play-btn {
+  transform: scale(0.97);
+}
+
 /* Position Indicators */
 .arcade-indicators {
   position: absolute;
-  bottom: 14px;
+  bottom: 12px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   gap: 10px;
   z-index: 15;
-  background: rgba(11, 15, 13, 0.7);
-  padding: 5px 12px;
+  background: rgba(11, 15, 13, 0.85);
+  padding: 4px 10px;
   border-radius: 20px;
   border: 1px solid var(--border);
+  backdrop-filter: blur(4px);
 }
 
 .arcade-dot {
@@ -515,8 +545,8 @@ footer a:hover {
 @media (max-width: 900px) {
   .hero {
     grid-template-columns: 1fr;
-    padding: 50px 6vw 40px;
-    gap: 44px;
+    padding: 44px 5vw 36px;
+    gap: 36px;
     min-height: auto;
   }
 
@@ -525,7 +555,7 @@ footer a:hover {
   }
 
   .arcade-screen {
-    min-height: 320px;
+    min-height: 300px;
   }
 
   .arcade-scroll-btn {
@@ -544,20 +574,29 @@ footer a:hover {
 }
 
 @media (max-width: 700px) {
-  nav a:not(.button) {
-    display: none;
+  header {
+    height: 64px;
+    padding: 0 4vw;
+  }
+
+  nav {
+    gap: 16px;
+  }
+
+  nav a {
+    font-size: 0.84rem;
   }
 
   .about {
-    padding: 65px 7vw;
+    padding: 50px 5vw;
   }
 
   .ad-slot {
-    margin: 0 7vw;
+    margin: 0 5vw;
   }
 
   footer {
-    padding: 24px 7vw;
+    padding: 24px 5vw;
     display: block;
     text-align: center;
   }
@@ -565,5 +604,58 @@ footer a:hover {
   footer span {
     display: block;
     margin-top: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    padding: 28px 4vw 20px;
+    gap: 26px;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.3rem, 9.5vw, 3.2rem);
+    margin-bottom: 14px;
+  }
+
+  .hero-copy {
+    font-size: 0.98rem;
+  }
+
+  .arcade-selector-frame {
+    min-height: 400px;
+  }
+
+  .arcade-screen {
+    min-height: 250px;
+  }
+
+  .arcade-footer {
+    padding: 16px 12px 36px;
+    gap: 10px;
+  }
+
+  .arcade-footer .game-name {
+    font-size: clamp(1.75rem, 6.8vw, 2.4rem);
+  }
+
+  .arcade-play-btn {
+    padding: 10px 22px;
+    font-size: 0.9rem;
+    gap: 8px;
+  }
+
+  .arcade-scroll-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+  }
+
+  .arcade-scroll-btn.prev-btn {
+    left: 8px;
+  }
+
+  .arcade-scroll-btn.next-btn {
+    right: 8px;
   }
 }
