@@ -88,6 +88,17 @@
       - Added compact 4-column HUD grid and responsive modal sizing for mobile (< 600px/480px) to keep the entire game fitting within mobile viewport height.
       - Bumped cache-busting query strings (`styles.css?v=6`, `script.js?v=6`, `pendulum.css?v=3`, `pendulum.js?v=3`).
 35. Added Google AdSense script (`ca-pub-6483520770446711`) into `<section class="ad-slot">` on homepage `index.html` on branch `feature/add-adsense`, verified via automated test script and local HTTP server.
+36. Prepared website for Google AdSense compliance and approved review standards:
+    - Added professional, substantive `about.html`, `contact.html`, `privacy.html`, and `terms.html` matching site dark/neon aesthetic.
+    - Integrated required AdSense disclosures in `privacy.html`: DART cookies, personalized advertising opt-out links (Google Ad Settings, AboutAds, NAI), Google Analytics, LocalStorage disclosures, COPPA, GDPR, and CCPA clauses.
+    - Created brand vector `favicon.svg` and linked across all pages.
+    - Added comprehensive Open Graph, Twitter card, Canonical, and theme-color metadata across all site pages.
+    - Integrated universal multi-column footer on home and content pages, plus subtle bottom navigation on game pages (`edge-rush.html`, `pendulum.html`).
+    - Standardized top header navigation across all pages (`Games`, `About`, `Contact`, `Privacy`).
+    - Removed placeholder email (`hello@example.com`) and established authentic contact channels with interactive contact form and FAQ.
+    - Upgraded `.ad-slot` styling to flexible height (`min-height: 90px; height: auto;`) with clear label to prevent ad cropping and accidental click violations.
+    - Preserved all game functionality, physics, audio synthesis, and event handlers 100% intact.
+    - Maintained omission of `ads.txt` per user instruction until actual publisher ID is supplied.
 
 ## Resume checklist
 
@@ -102,5 +113,6 @@
 - Branding is pineapp.win.
 - Website description and copy updated to focus on customer/player experience.
 - Google Analytics (`G-WJCZS9H72H`) is integrated on all site pages (`index.html`, `edge-rush.html`, `pendulum.html`).
+- Complete compliance pages added (`about.html`, `contact.html`, `privacy.html`, `terms.html`).
 - Working on branch `feature/add-adsense`.
 - Update this file after each material work step so another agent can resume from the current state.

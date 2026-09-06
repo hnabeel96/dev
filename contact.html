@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WJCZS9H72H"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-WJCZS9H72H');
+  </script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0b0f0d">
+  <meta name="description" content="Get in touch with the pineapp.win team. Send gameplay feedback, report technical bugs, pitch game concepts, or ask support questions.">
+  <link rel="canonical" href="https://pineapp.win/contact.html">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://pineapp.win/contact.html">
+  <meta property="og:title" content="Contact & Support | pineapp.win">
+  <meta property="og:description" content="Contact the creators of pineapp.win for bug reports, game feedback, or partnership inquiries.">
+  <meta property="og:site_name" content="pineapp.win">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Contact & Support | pineapp.win">
+  <meta name="twitter:description" content="Contact the creators of pineapp.win for bug reports, game feedback, or partnership inquiries.">
+
+  <title>Contact Us & FAQ | pineapp.win</title>
+  <link rel="stylesheet" href="styles.css?v=7">
+</head>
+<body>
+  <header>
+    <a class="brand" href="index.html">✦ pineapp.win</a>
+    <nav>
+      <a href="index.html#arcade">Games</a>
+      <a href="about.html">About</a>
+      <a href="contact.html" class="active">Contact</a>
+      <a href="privacy.html">Privacy</a>
+    </nav>
+  </header>
+
+  <main class="page-shell">
+    <header class="page-header">
+      <span class="page-eyebrow">GET IN TOUCH</span>
+      <h1 class="page-title">Contact & Support</h1>
+      <p class="page-lead">
+        Have feedback, discovered a bug, or want to share ideas for our next browser game? We read every message and respond promptly.
+      </p>
+    </header>
+
+    <div class="contact-layout">
+      <!-- Left: Direct Channels & Guidance -->
+      <section class="content-card prose" style="margin-bottom: 0;">
+        <h2>Direct Inquiries</h2>
+        <p>
+          Whether you have gameplay feedback, a technical issue, or partnership questions, feel free to email our team directly:
+        </p>
+
+        <div class="contact-info-list">
+          <div class="contact-item">
+            <div class="contact-item-icon">✉️</div>
+            <div class="contact-item-body">
+              <strong>General & Support</strong>
+              <a href="mailto:contact@pineapp.win">contact@pineapp.win</a>
+              <p>Player feedback, inquiries, and general support</p>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-item-icon">🐛</div>
+            <div class="contact-item-body">
+              <strong>Bug & Glitch Reports</strong>
+              <a href="mailto:support@pineapp.win">support@pineapp.win</a>
+              <p>Please specify device model, browser version, and issue description</p>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-item-icon">🔒</div>
+            <div class="contact-item-body">
+              <strong>Privacy & Compliance</strong>
+              <a href="mailto:privacy@pineapp.win">privacy@pineapp.win</a>
+              <p>Data inquiries and privacy requests</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout-box" style="margin-top: 32px;">
+          <p>
+            <strong>Response Time:</strong> We typically respond within 24 to 48 hours on business days.
+          </p>
+        </div>
+      </section>
+
+      <!-- Right: Interactive Contact Form -->
+      <section class="content-card" style="margin-bottom: 0;">
+        <h2 style="margin-top: 0; font-size: 1.5rem; color: var(--text-primary);">Send a Message</h2>
+        <form id="contact-form" novalidate>
+          <div class="form-group">
+            <label class="form-label" for="contact-name">Your Name</label>
+            <input class="form-input" type="text" id="contact-name" name="name" placeholder="Alex Rivers" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="contact-email">Email Address</label>
+            <input class="form-input" type="email" id="contact-email" name="email" placeholder="alex@example.com" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="contact-topic">Reason for Contact</label>
+            <select class="form-select" id="contact-topic" name="topic" required>
+              <option value="feedback">General Gameplay Feedback</option>
+              <option value="bug">Bug or Glitch Report</option>
+              <option value="idea">New Game Suggestion</option>
+              <option value="business">Advertising or Partnership</option>
+              <option value="privacy">Privacy or Data Question</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="contact-message">Message</label>
+            <textarea class="form-textarea" id="contact-message" name="message" placeholder="Tell us what's on your mind..." required></textarea>
+          </div>
+
+          <button class="submit-btn" type="submit" id="submit-btn">
+            Send Message <span>→</span>
+          </button>
+
+          <p class="form-status" id="form-status" role="alert"></p>
+        </form>
+      </section>
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="content-card" id="faq" style="margin-top: 36px;">
+      <header style="border-bottom: 1px solid var(--border); padding-bottom: 18px; margin-bottom: 24px;">
+        <span class="page-eyebrow">QUICK ANSWERS</span>
+        <h2 style="font-size: 1.8rem; margin: 0; color: var(--text-primary);">Frequently Asked Questions</h2>
+      </header>
+
+      <div class="faq-list">
+        <div class="faq-item">
+          <h3 class="faq-question">Are the games on pineapp.win completely free to play?</h3>
+          <p class="faq-answer">
+            Yes, 100%. Every game on pineapp.win is freely accessible directly in your web browser. There are no subscriptions, pay-to-win mechanics, or locked levels.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <h3 class="faq-question">Do I need to install an app or create an account?</h3>
+          <p class="faq-answer">
+            No. pineapp.win operates with zero required installs and zero registrations. Simply open any game page and start playing immediately.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <h3 class="faq-question">How are my high scores and audio settings saved?</h3>
+          <p class="faq-answer">
+            Your high scores and sound settings are saved directly in your browser's local storage (<code>localStorage</code>). They stay securely on your personal device and persist across visits as long as you do not clear your browser cache.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <h3 class="faq-question">Can I play these games on smartphones and tablets?</h3>
+          <p class="faq-answer">
+            Yes! All our games are built with responsive layouts and touch-optimized controls supporting iOS Safari, Android Chrome, and modern mobile browsers.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <h3 class="faq-question">How does pineapp.win support ongoing development?</h3>
+          <p class="faq-answer">
+            We display minimal, non-intrusive web advertising (via Google AdSense) on selected landing areas. We never inject mid-action popups or deceptive ad placements that interfere with gameplay.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a class="brand" href="index.html">✦ pineapp.win</a>
+        <p class="footer-tagline">
+          Instant, handcrafted browser games designed for quick breaks. Pure web performance, zero installs.
+        </p>
+        <span class="footer-badge">● 100% Free to Play</span>
+      </div>
+
+      <div class="footer-col">
+        <h4>Arcade Games</h4>
+        <ul class="footer-links">
+          <li><a href="pendulum.html">Chrono Pendulum</a></li>
+          <li><a href="edge-rush.html">Edge Rush</a></li>
+          <li><a href="index.html#arcade">All Games</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Legal & Policy</h4>
+        <ul class="footer-links">
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms of Service</a></li>
+          <li><a href="contact.html#faq">FAQ</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>© 2026 pineapp.win. All rights reserved.</div>
+      <div class="footer-bottom-links">
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="contact.html">Support</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('contact-form')?.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const statusEl = document.getElementById('form-status');
+      const name = document.getElementById('contact-name').value.trim();
+      const email = document.getElementById('contact-email').value.trim();
+      const message = document.getElementById('contact-message').value.trim();
+
+      if (!name || !email || !message) {
+        statusEl.textContent = 'Please fill out all required fields before submitting.';
+        statusEl.className = 'form-status';
+        statusEl.style.display = 'block';
+        statusEl.style.color = '#ff6b6b';
+        return;
+      }
+
+      statusEl.textContent = '✦ Thank you, ' + name + '! Your message has been received. We will get back to you shortly.';
+      statusEl.className = 'form-status success';
+      this.reset();
+    });
+  </script>
+</body>
+</html>
