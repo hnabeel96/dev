@@ -31,18 +31,8 @@ jobs:
             [ -f public/index.html ] || { echo "public/index.html is missing; refusing to publish"; exit 1; }
             rsync -a --delete --chmod=D755,F644 --exclude='.well-known/' public/ /var/www/zunlo-site/
 
+      - name: Check out the code (for the checks below)
+        uses: actions/checkout@v4
+
       - name: Check that private files are not public
-        run: |
-          fail=0
-          for host in pineapp.win www.pineapp.win; do
-            for path in /.git/HEAD /.git/config /.github/workflows/deploy.yml /MEMORY.md /README.md /.env; do
-              # retry on network errors so a blip is not reported as a finding
-              code=$(curl -s -o /dev/null --connect-timeout 10 -m 30 --retry 3 --retry-all-errors --retry-delay 2 -w '%{http_code}' -H 'Cache-Control: no-cache' "https://${host}${path}")
-              case "$code" in
-                403|404) echo "ok       https://${host}${path} -> ${code}" ;;
-                000) echo "UNKNOWN  https://${host}${path} -> no response (could not verify; re-run)"; fail=1 ;;
-                *) echo "EXPOSED  https://${host}${path} -> ${code}"; fail=1 ;;
-              esac
-            done
-          done
-          exit $fail
+        run: bash .github/scripts/check-private-paths.sh https://pineapp.win https://www.pineapp.win
