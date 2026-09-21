@@ -17,6 +17,32 @@ jobs:
           username: root
           key: ${{ secrets.VPS_SSH_KEY }}
           port: 22
+          script_stop: true
           script: |
+            # Safety: pulling moves the site files into public/. Only do that once nginx
+            # serves the separate web root, or the live site would briefly lose its pages.
+            grep -q 'root /var/www/zunlo-site;' /etc/nginx/sites-available/zunlo || { echo "nginx is not serving /var/www/zunlo-site yet; refusing to deploy"; exit 1; }
+
             cd /var/www/zunlo
             git pull origin main
+
+            # Publish only public/ into the web root, which lives OUTSIDE the
+            # repository, so .git, .github and notes can never be served.
+            [ -f public/index.html ] || { echo "public/index.html is missing; refusing to publish"; exit 1; }
+            rsync -a --delete --chmod=D755,F644 --exclude='.well-known/' public/ /var/www/zunlo-site/
+
+      - name: Check that private files are not public
+        run: |
+          fail=0
+          for host in pineapp.win www.pineapp.win; do
+            for path in /.git/HEAD /.git/config /.github/workflows/deploy.yml /MEMORY.md /README.md /.env; do
+              # retry on network errors so a blip is not reported as a finding
+              code=$(curl -s -o /dev/null --connect-timeout 10 -m 30 --retry 3 --retry-all-errors --retry-delay 2 -w '%{http_code}' -H 'Cache-Control: no-cache' "https://${host}${path}")
+              case "$code" in
+                403|404) echo "ok       https://${host}${path} -> ${code}" ;;
+                000) echo "UNKNOWN  https://${host}${path} -> no response (could not verify; re-run)"; fail=1 ;;
+                *) echo "EXPOSED  https://${host}${path} -> ${code}"; fail=1 ;;
+              esac
+            done
+          done
+          exit $fail
