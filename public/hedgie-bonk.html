@@ -89,12 +89,12 @@ html,body{height:100%;margin:0;overflow:hidden;background:var(--hall);color:var(
 .back{width:36px;height:36px;display:grid;place-items:center;border-radius:999px;background:rgba(20,10,34,.8);border:1.5px solid #3a2457;color:var(--ink);font:600 18px/1 var(--body);text-decoration:none}
 .back:hover{border-color:var(--amber)}
 .back:focus-visible{outline:3px solid var(--cyan);outline-offset:4px}
-#getCoins{position:fixed;z-index:5;left:50%;transform:translateX(-50%);bottom:calc(env(safe-area-inset-bottom,0px) + 70px);display:inline-flex;align-items:center;gap:12px;
+#getCoins,#insertCoin{position:fixed;cursor:pointer;font-weight:400;z-index:5;left:50%;transform:translateX(-50%);bottom:calc(env(safe-area-inset-bottom,0px) + 70px);display:inline-flex;align-items:center;gap:12px;
   font-family:var(--display);font-size:20px;padding:12px 26px;border-radius:999px;border:3px solid #1a0b06;color:#1a0b06;text-decoration:none;
   background:radial-gradient(circle at 35% 30%,#ffe08a,var(--amber) 55%,#e58a00);box-shadow:0 6px 0 #8f5200,0 0 34px rgba(255,176,46,.45)}
-#getCoins .coin-icon{width:22px;height:22px}
-#getCoins .coin-icon::after{inset:6px}
-#getCoins:focus-visible{outline:3px solid var(--cyan);outline-offset:4px}
+#getCoins .coin-icon,#insertCoin .coin-icon{width:22px;height:22px}
+#getCoins .coin-icon::after,#insertCoin .coin-icon::after{inset:6px}
+#getCoins:focus-visible,#insertCoin:focus-visible{outline:3px solid var(--cyan);outline-offset:4px}
 </style>
 
 <canvas id="scene" tabindex="0" role="img" aria-label="A 3D arcade hall with the Hedgie Bonk cabinet. Hedgehogs pop out of nine holes; click, tap or press 1–9 to swing the hammer"></canvas>
@@ -111,6 +111,7 @@ html,body{height:100%;margin:0;overflow:hidden;background:var(--hall);color:var(
   <a class="back" href="index.html" aria-label="Back to games" title="Back to games">←</a>
   <a class="coin-chip" href="index.html#coin-machine" aria-label="Your coins"><span class="coin-icon" aria-hidden="true"></span><span data-coin-count>00</span></a>
 </div>
+<button id="insertCoin" type="button" hidden><span class="coin-icon" aria-hidden="true"></span><span>Insert coin</span></button>
 <a id="getCoins" href="index.html#coin-machine" hidden><span class="coin-icon" aria-hidden="true"></span><span>Get coins</span></a>
 
 
@@ -783,18 +784,24 @@ function endGame() {
   newBest = score > best; if (newBest) { best = score; try { localStorage.setItem('hedgieBonkBest', String(best)); } catch (e) {} }
   $('hTime').classList.remove('hurry');
   coinGate();
+  setTimeout(() => { if (state !== 'playing' && !$('insertCoin').hidden) $('insertCoin').focus({ preventScroll: true }); }, 1200);
 }
 /* ---------- coins (pineapp.win): 1 coin = 1 game ---------- */
 const Coins = window.Coins;
 let credit = Coins ? (Coins.takeCredit('hedgie-bonk') ? 1 : 0) : 1;
 const canPay = () => credit > 0 || !Coins || Coins.balance() > 0;
-function coinGate() { $('getCoins').hidden = state === 'playing' || canPay(); }
+function coinGate() {
+  const idle = state !== 'playing';
+  $('getCoins').hidden = !idle || canPay();
+  $('insertCoin').hidden = !idle || !canPay();
+}
 function payAndStart() {
   if (credit > 0) credit--;
   else if (Coins && !Coins.spend()) { coinGate(); return false; }
   startGame(); coinGate(); return true;
 }
 if (Coins) Coins.onChange(coinGate);
+$('insertCoin').addEventListener('click', () => { initAudio(); payAndStart(); });
 function onEscape() { if (state === 'playing') streak = 0; }
 function impact() {
   const target = hogAt(lockAim.x, lockAim.z, .85);
@@ -835,7 +842,7 @@ canvas.addEventListener('pointermove', e => { if (state === 'playing') pointerTo
 canvas.addEventListener('pointerdown', e => {
   if (e.pointerType === 'mouse' && e.button !== 0) return;
   initAudio();
-  if (state === 'over' || state === 'attract') { if (state === 'attract' || overT > 1.2) { e.preventDefault(); if (payAndStart()) pointerToAim(e); } return; }
+  if (state !== 'playing') return; // a new round only starts from the Insert coin button
   if (state !== 'playing') return;
   e.preventDefault(); pointerToAim(e); swing();
 });
@@ -843,7 +850,7 @@ canvas.addEventListener('contextmenu', e => e.preventDefault());
 const keyHole = { '7': 0, '8': 1, '9': 2, '4': 3, '5': 4, '6': 5, '1': 6, '2': 7, '3': 8, q: 0, w: 1, e: 2, a: 3, s: 4, d: 5, z: 6, x: 7, c: 8 };
 window.addEventListener('keydown', e => {
   if (document.activeElement !== muteBtn) initAudio();
-  if (state === 'over' || state === 'attract') { if ((state === 'attract' || overT > 1.2) && (e.key === 'Enter' || e.key === ' ' || e.key.toLowerCase() in keyHole) && document.activeElement !== muteBtn && !(document.activeElement && document.activeElement.closest && document.activeElement.closest('a'))) { e.preventDefault(); payAndStart(); } return; }
+  if (state !== 'playing') return; // a new round only starts from the Insert coin button
   if (state !== 'playing') return;
   const k = e.key.toLowerCase(); if (!(k in keyHole)) return;
   const h = hogs[keyHole[k]]; aim.set(h.x, BT, h.z); swing(); e.preventDefault();
@@ -904,9 +911,9 @@ function spawnLogic(dt) {
 
 function tickerText() {
   if (state === 'playing') return `BONK!  BONK!  BONK!     SCORE ${pad4(score)}     ×${mult()} COMBO     HI ${pad4(best)}`;
-  const again = canPay() ? 'BONK TO INSERT A COIN' : 'OUT OF COINS  ★  GET MORE AT THE COIN MACHINE';
+  const again = canPay() ? 'INSERT COIN TO PLAY AGAIN' : 'OUT OF COINS  ★  GET MORE AT THE COIN MACHINE';
   if (state === 'over') return newBest ? `NEW HI-SCORE ${pad4(score)}  ★  NEW HI-SCORE ${pad4(score)}  ★  ${again}` : `GAME OVER  ★  SCORE ${pad4(score)}  ★  HI-SCORE ${pad4(best)}  ★  ${again}`;
-  return canPay() ? `INSERT COIN  ★  HI-SCORE ${pad4(best)}  ★  BONK TO INSERT A COIN` : `INSERT COIN  ★  HI-SCORE ${pad4(best)}  ★  ${again}`;
+  return canPay() ? `INSERT COIN  ★  HI-SCORE ${pad4(best)}  ★  INSERT COIN` : `INSERT COIN  ★  HI-SCORE ${pad4(best)}  ★  ${again}`;
 }
 function loop() {
   requestAnimationFrame(loop);

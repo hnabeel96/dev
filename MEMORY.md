@@ -159,6 +159,8 @@
     - `hedgie-bonk.html` is Eko's Hedgie Bonk artifact (three.js r128 + postprocessing from cdnjs/jsDelivr) moved onto the site with its gameplay unchanged. Added: Google tag, meta description, back button and coin counter bottom-left (score bezels own the top), coins. A cabinet coin starts play immediately. Without one the cabinet waits in attract mode (ticker: INSERT COIN). After game over a bonk inserts a coin. When empty, the ticker says to get coins and a Get coins button appears. Best score key `hedgieBonkBest`.
     - Front page: pink Hedgie Bonk cabinet with an attract screen of hedgehogs popping from three holes and a plastic hammer bonking them. "Coming soon" machine changed to violet. Six machines fit in one row (`arcade.css?v=7`: cabinet unit capped at 0.88vw, gap 2.6em). Onlookers only shown at 1700px+.
 
+49. New rounds need an explicit coin: after game over, only the Insert coin button starts the next round in every game (taps, bonks and Space no longer restart and silently spend a coin). Hedgie Bonk got an Insert coin button (bottom centre, swaps with Get coins when empty) and its ticker now reads INSERT COIN TO PLAY AGAIN. The button takes keyboard focus after game over, so Enter works. (`pendulum.js?v=7`, `edge-rush.js?v=5`.)
+
 ## Resume checklist
 
 1. Work from `C:\Users\Nabeel\Desktop\dev\website`.
