@@ -110,6 +110,13 @@
     - Upgraded `privacy.html` with glassmorphic policy cards (`.policy-card`), category tags, and external resource action buttons.
     - Added active navigation tab highlight (`nav a.active`) and bumped to `styles.css?v=8`.
 
+40. Created branch `feature/arcade-theme` from `main` and turned the front page into an arcade hall:
+    - `index.html` hero/carousel replaced by a room scene: neon wall sign ("Small games. Big fun."), a row of three cabinets (Chrono Pendulum, Edge Rush, and a "Coming soon" machine showing static), perspective arcade carpet, light pooling under each machine, and two onlooker silhouettes in the foreground (desktop only).
+    - Each cabinet has a backlit marquee, CRT screen with a live attract-mode animation of its game, control panel and coin door. Screens power on in sequence on load; hover/focus lifts the machine; click plays a synthesized coin chime and flashes the screen before opening the game.
+    - New `arcade.css?v=1` and `arcade.js?v=1` (index only); `styles.css` is still shared by About/Privacy. Removed the unused carousel `script.js`.
+    - Phones and narrow windows: the cabinets become a swipeable aisle with snap; arrow keys move between machines. Reduced motion stops all animation.
+    - Verified with headless Chromium at 1440x900, 1280x720 and 390x844 (no horizontal page scroll, links open the games).
+
 ## Resume checklist
 
 1. Work from `C:\Users\Nabeel\Desktop\dev\website`.
@@ -123,5 +130,5 @@
 - Branding is pineapp.win.
 - Website description and copy updated to focus on customer/player experience.
 - Google Analytics (`G-WJCZS9H72H`) is integrated on all site pages (`index.html`, `edge-rush.html`, `pendulum.html`, `about.html`, `privacy.html`).
-- Working on branch `feature/addcontact`.
+- Working on branch `feature/arcade-theme`.
 - Update this file after each material work step so another agent can resume from the current state.
