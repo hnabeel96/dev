@@ -11,6 +11,8 @@
   const ctx = canvas.getContext('2d');
   const arenaContainer = document.getElementById('arena-container');
   const shieldsRow = document.getElementById('shields-display');
+  const currentScoreEl = document.getElementById('current-score');
+  const bestScoreEl = document.getElementById('best-score');
   const gameoverOverlay = document.getElementById('gameover-overlay');
   const restartBtn = document.getElementById('restart-btn');
   const soundToggleBtn = document.getElementById('sound-toggle');
@@ -458,6 +460,8 @@
 
   // Update HUD
   function updateHUD() {
+    if (currentScoreEl) currentScoreEl.textContent = String(score).padStart(6, '0');
+    if (bestScoreEl) bestScoreEl.textContent = String(bestScore).padStart(6, '0');
     // Shields display
     if (shieldsRow) {
       const pips = shieldsRow.querySelectorAll('.shield-pip');

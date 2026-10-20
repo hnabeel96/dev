@@ -12,14 +12,19 @@
   </script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#120a24">
   <meta name="description" content="Chrono Pendulum — a precision timing arcade game with metallic pendulum physics and instant reflex hits on pineapp.win.">
   <title>Chrono Pendulum | pineapp.win</title>
-  <link rel="stylesheet" href="pendulum.css?v=5">
+  <link rel="stylesheet" href="pendulum.css?v=6">
 </head>
 <body>
   <div class="game-wrapper">
     <header class="game-header">
       <a class="nav-back icon-only" href="index.html" aria-label="Back to games" title="Back to games">←</a>
+      <div class="scoreline" aria-live="polite">
+        <strong class="arcade-score" id="current-score" aria-label="Score">000000</strong>
+        <span class="arcade-best" aria-label="Best score"><span aria-hidden="true">★</span> <span id="best-score">000000</span></span>
+      </div>
       <div class="shields-row" id="shields-display" role="img" aria-label="3 lives left">
         <span class="shield-pip active"></span>
         <span class="shield-pip active"></span>
@@ -45,6 +50,6 @@
     </main>
   </div>
 
-  <script src="pendulum.js?v=4"></script>
+  <script src="pendulum.js?v=5"></script>
 </body>
 </html>

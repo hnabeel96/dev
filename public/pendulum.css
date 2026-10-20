@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500;700&family=Press+Start+2P&family=Space+Grotesk:wght@400;500;600;700;800&display=swap');
 
 :root {
   --bg: #0b0f0d;
@@ -733,4 +733,87 @@ html, body {
   .canvas-container { height: calc(100dvh - 70px); min-height: 340px; }
   .game-header .shield-pip { width: 11px; height: 11px; }
   .nav-back.icon-only, .control-btn { width: 34px; height: 34px; }
+}
+
+/* ==========================================================================
+   Arcade cabinet look (v6): matches the arcade-hall front page.
+   This machine's colour on the front page is cyan.
+   ========================================================================== */
+
+html, body {
+  background:
+    radial-gradient(ellipse 60% 40% at 50% 0%, rgba(54, 228, 255, 0.10), transparent 70%),
+    radial-gradient(ellipse 80% 60% at 50% 110%, rgba(120, 60, 220, 0.35), transparent 70%),
+    #120a24;
+}
+
+.game-header {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  gap: 14px;
+  border-bottom: 0;
+  margin-bottom: 10px;
+}
+
+.game-header .header-controls { justify-self: end; }
+
+.scoreline {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 18px;
+  font-family: 'Press Start 2P', monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+.arcade-score {
+  font-size: clamp(0.95rem, 3.4vw, 1.3rem);
+  font-weight: 400;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(54, 228, 255, 0.85);
+}
+
+.arcade-best {
+  font-size: clamp(0.55rem, 2vw, 0.72rem);
+  color: #ffd23f;
+  text-shadow: 0 0 8px rgba(255, 210, 63, 0.6);
+}
+
+.nav-back.icon-only,
+.control-btn {
+  background: #1a1030;
+  border-color: #3a2a66;
+  color: #f4efff;
+}
+
+/* The arena is the CRT inside a cabinet bezel */
+.canvas-container {
+  border: 14px solid #120b24;
+  border-radius: 22px / 26px;
+  background: radial-gradient(ellipse at 50% 45%, #0d1b33 0%, #04060f 85%);
+  box-shadow:
+    inset 0 0 0 3px #000,
+    inset 0 0 40px rgba(0, 0, 0, 0.9),
+    0 0 0 3px #36e4ff,
+    0 0 36px rgba(54, 228, 255, 0.35);
+}
+
+.canvas-container::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    radial-gradient(ellipse 80% 40% at 30% 10%, rgba(255, 255, 255, 0.06), transparent 70%),
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.22) 0 2px, transparent 2px 4px);
+  z-index: 5;
+}
+
+.game-overlay { z-index: 6; background: rgba(6, 4, 16, 0.72); }
+
+@media (max-width: 480px) {
+  .game-header { gap: 8px; }
+  .scoreline { gap: 10px; }
+  .canvas-container { border-width: 8px; }
 }

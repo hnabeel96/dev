@@ -123,11 +123,18 @@
     - New "tap now" cue: the target ring glows and thickens when the ball overlaps it, and turns gold with a ripple when the ball is fully inside.
     - Swing is centred vertically now that the arena fills the screen. Scoring and best score still run in the background but are not shown.
 
+42. Arcade cabinet look for both game pages, score back on Chrono Pendulum, and Edge Rush rebuilt:
+    - Both game pages now match the arcade hall: purple room background, the arena framed as a CRT inside a cabinet bezel in that machine's colour (Pendulum cyan, Edge Rush lime), and an arcade score line in Press Start 2P (6-digit zero-padded score, ★ best).
+    - Chrono Pendulum (`pendulum.css?v=6`, `pendulum.js?v=5`): score and best are shown again; still no other text.
+    - Edge Rush (`edge-rush.html`, `edge-rush.css?v=3`, `edge-rush.js?v=3`), new game: a square box with four paddles, one fixed to each side. Only the active paddle moves. Pick a paddle with W/A/S/D or by tapping/clicking near its side; slide it with the arrow keys, by dragging, or (mouse) by moving. Inactive paddles stay put but still block the ball. +1 per hit, ball speeds up 3.5% per hit (cap 1.25 box/s), paddles shrink slightly with score. Ball reaching a wall costs a life (3 lives), then re-serves from the centre. Best score kept in `edgeRushBest`, sound toggle in `edgeRushSound`.
+    - Front-page Edge Rush cabinet attract mode now shows four paddles sliding to meet the ball (`arcade.css?v=2`).
+    - Verified with headless Chromium (desktop + phone, no page errors) and a bot run that tracked the ball: 11 hits in 15s with no lives lost.
+
 ## Resume checklist
 
 1. Work from `C:\Users\Nabeel\Desktop\dev\website`.
 2. The live source is tracked on GitHub at `hnabeel96/dev`, branch `main`.
-3. Edge Rush is launched from `edge-rush.html`, `edge-rush.css`, and `edge-rush.js`.
+3. Edge Rush (four-paddle version) is launched from `edge-rush.html`, `edge-rush.css`, and `edge-rush.js`.
 4. Chrono Pendulum is launched from `pendulum.html`, `pendulum.css`, and `pendulum.js`.
 5. Before handing off after later changes, append a numbered entry to this file, then commit and push it with the website changes.
 
