@@ -150,6 +150,11 @@
 
 46. Front page made minimal (`arcade.css?v=6`): the neon sign plus one pixel-font line, "New games every day". Removed the longer intro paragraph and the "Made for a five-minute break" block from the front page (About is still in the header). Ad slot and footer unchanged.
 
+47. Coin polish (`coins.js?v=3`, `arcade.js?v=4`):
+    - A synthesized cash-register "ka-ching" plays when dispensed coins fly up to the counter.
+    - The cabinet-to-game credit now lives in localStorage `pineappCredit` as {game, at} and is only honoured for 2 minutes (sessionStorage was unreliable across page loads in some viewers).
+    - Hoop Rush: a coin inserted at the cabinet starts the game immediately, skipping the start card. Sound wakes on the first touch or key, since browsers block audio until then.
+
 ## Resume checklist
 
 1. Work from `C:\Users\Nabeel\Desktop\dev\website`.

@@ -17,7 +17,7 @@
   <title>Hoop Rush | pineapp.win</title>
   <style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
   <link rel="stylesheet" href="coins.css?v=1">
-  <script src="coins.js?v=2"></script>
+  <script src="coins.js?v=3"></script>
 </head>
 <body>
 
@@ -840,6 +840,12 @@ function payAndStart() {
 }
 if (Coins) Coins.onChange(() => { if (state !== 'play' && state !== 'ending') coinGate(); });
 coinGate();
+// Already paid at the cabinet: skip the start card and drop straight into the game.
+if (credit > 0) payAndStart();
+// Browsers keep sound paused until the player touches the page; wake it on the first touch or key.
+const wakeAudio = () => { initAudio(); if (ac && ac.state === 'suspended') ac.resume(); };
+addEventListener('pointerdown', wakeAudio, { capture: true });
+addEventListener('keydown', wakeAudio, { capture: true });
 $('startBtn').onclick = payAndStart; $('againBtn').onclick = payAndStart;
 
 // ---------- effects layer ----------
