@@ -161,6 +161,12 @@
 
 49. New rounds need an explicit coin: after game over, only the Insert coin button starts the next round in every game (taps, bonks and Space no longer restart and silently spend a coin). Hedgie Bonk got an Insert coin button (bottom centre, swaps with Get coins when empty) and its ticker now reads INSERT COIN TO PLAY AGAIN. The button takes keyboard focus after game over, so Enter works. (`pendulum.js?v=7`, `edge-rush.js?v=5`.)
 
+50. Added Water Ring Toss (branch `feature/water-ring-toss`):
+    - `water-ring-toss.html` is Eko's Water ring toss artifact (2D canvas, no libraries) with gameplay unchanged. Restyled to sit on the dark arcade floor; back button and coin counter top corners.
+    - Coins: one coin = one round (until all 8 rings are on). Pumps only work during a paid round. A cabinet coin starts play directly; otherwise the tank shows Insert coin (or Get coins when empty), as does the win screen. Removed the free "Shake up the rings" reset. Best time key `water-ring-toss-best`.
+    - Front page: blue "Ring Toss" cabinet (attract: bubbles rising, rings floating onto two pegs) at the end of the row, replacing the "Coming soon" machine (`arcade.css?v=8`).
+    - Fully play-tested in headless Chromium: cabinet coin, pumps, forced win, Insert coin replay costs 1, pumps locked after a win, Get coins at 0.
+
 ## Resume checklist
 
 1. Work from `C:\Users\Nabeel\Desktop\dev\website`.

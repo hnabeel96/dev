@@ -16,7 +16,7 @@
   <meta name="theme-color" content="#120a24">
   <title>pineapp.win | Browser Games</title>
   <link rel="stylesheet" href="styles.css?v=8">
-  <link rel="stylesheet" href="arcade.css?v=7">
+  <link rel="stylesheet" href="arcade.css?v=8">
   <link rel="stylesheet" href="coins.css?v=1">
 </head>
 <body class="arcade-page">
@@ -155,23 +155,31 @@
           <span class="cab__pool" aria-hidden="true"></span>
         </a>
 
-        <!-- Cabinet 5: next machine, still being wired up -->
-        <div class="cab cab--soon" style="--glow:#a259ff; --glow-rgb:162,89,255" aria-label="New game coming soon">
-          <span class="cab__marquee"><span class="cab__title">Coming<br>soon</span></span>
+        <!-- Cabinet 5: Water Ring Toss -->
+        <a class="cab cab--rings" href="water-ring-toss.html" data-game="water-ring-toss" style="--glow:#4f8bff; --glow-rgb:79,139,255" aria-label="Play Water Ring Toss">
+          <span class="cab__marquee"><span class="cab__title">Ring<br>Toss</span></span>
           <span class="cab__bezel">
             <span class="cab__screen">
-              <span class="attract attract--static" aria-hidden="true"></span>
-              <span class="cab__soon-text" aria-hidden="true">Being<br>wired up</span>
+              <span class="attract attract--rings" aria-hidden="true">
+                <span class="wr__water"></span>
+                <span class="wr__peg wr__peg--l"></span>
+                <span class="wr__peg wr__peg--r"></span>
+                <span class="wr__ring wr__ring--a"></span>
+                <span class="wr__ring wr__ring--b"></span>
+                <span class="wr__ring wr__ring--c"></span>
+                <span class="wr__bubbles"></span>
+              </span>
+              <span class="cab__start" aria-hidden="true">Press start</span>
             </span>
           </span>
           <span class="cab__panel" aria-hidden="true">
             <span class="stick"></span><span class="pbtn"></span><span class="pbtn pbtn--b"></span>
           </span>
           <span class="cab__body" aria-hidden="true">
-            <span class="coin-door"><span class="coin-slot"></span><span class="coin-label">Out of order</span></span>
+            <span class="coin-door"><span class="coin-slot"></span><span class="coin-label">Insert coin</span></span>
           </span>
           <span class="cab__pool" aria-hidden="true"></span>
-        </div>
+        </a>
       </div>
 
       <p class="hall-toast" id="hall-toast" role="status" aria-live="polite"></p>
