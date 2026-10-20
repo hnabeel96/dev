@@ -138,6 +138,11 @@
     - Ad rewards later: call `Coins.grant(n, 'ad')` or `Coins.dispense('ad')` from the rewarded-ad callback; counters update via `Coins.onChange`.
     - Verified end to end in headless Chromium: refuse at 0, dispense, spend at cabinet, replay costs 1, Get coins at 0, cabinet credit not double-charged.
 
+44. Coin rules tightened (`coins.js?v=2`, `arcade.js?v=3`, `arcade.css?v=4`):
+    - The coin machine only pays out when the wallet is at 0. With coins left, its button is dimmed, the readout says SPEND, and pressing it buzzes with a message.
+    - Coins expire 24 hours after the last payout (timestamp in localStorage `pineappCoinsAt`). The wallet is checked on every read and a timer wipes the counter if a page is open at expiry. `Coins.grant()` (machine or future ads) restarts the 24-hour clock.
+    - Verified in headless Chromium: refuse while holding coins, refill at 0, wiped after 25h, live wipe on an open page.
+
 ## Resume checklist
 
 1. Work from `C:\Users\Nabeel\Desktop\dev\website`.
@@ -151,5 +156,5 @@
 - Branding is pineapp.win.
 - Website description and copy updated to focus on customer/player experience.
 - Google Analytics (`G-WJCZS9H72H`) is integrated on all site pages (`index.html`, `edge-rush.html`, `pendulum.html`, `about.html`, `privacy.html`).
-- Working on branch `feature/arcade-theme`.
+- `feature/arcade-theme` merged into `main` (PR) on 2026-10-20.
 - Update this file after each material work step so another agent can resume from the current state.

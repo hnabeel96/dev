@@ -891,6 +891,11 @@
   to { transform: translateY(-14em) scale(0.5); opacity: 0; }
 }
 
+/* Wallet not empty: the button is dimmed and the machine refuses */
+.changer.locked .changer__btn-cap { filter: saturate(0.35) brightness(0.7); box-shadow: 0 0.55em 0 #4a3a10, 0 0.6em 1.4em rgba(0, 0, 0, 0.6); }
+.changer.locked .changer__display { color: #8a5a50; text-shadow: none; }
+.changer.refuse { animation: refuse 0.35s; }
+
 /* Out of coins: the machine calls for attention */
 .changer.call .changer__btn-cap { animation: callPulse 0.5s ease-in-out 4; }
 .changer.call .cab__marquee { filter: brightness(1.25); }
@@ -1084,5 +1089,5 @@
   .edge__tile--r { top: 60%; }
   .cab { transition: none; }
   .drop-coin, .slot-coin, .changer__display { animation-duration: 0.01s !important; }
-  .cab.no-coin, .changer.call .changer__btn-cap { animation: none; }
+  .cab.no-coin, .changer.call .changer__btn-cap, .changer.refuse { animation: none; }
 }

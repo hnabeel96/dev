@@ -32,6 +32,7 @@
   const sound = {
     insert: () => { beep(988, 0.2, 'square', 0.08); beep(1319, 0.22, 'square', 0.08, 0.07); },
     clink: () => beep(2200 + Math.random() * 500, 0.09, 'sine', 0.06),
+    buzz: () => beep(130, 0.25, 'sawtooth', 0.05),
     refuse: () => { beep(220, 0.12, 'square', 0.06); beep(165, 0.18, 'square', 0.06, 0.12); },
     jackpot: () => [523, 659, 784, 1047].forEach((f, i) => beep(f, 0.14, 'square', 0.06, i * 0.09))
   };
@@ -46,6 +47,7 @@
     const n = Coins.balance();
     chip.classList.toggle('empty', n === 0);
     chip.setAttribute('aria-label', `You have ${n} ${n === 1 ? 'coin' : 'coins'}`);
+    chip.title = n > 0 ? `Coins vanish in about ${hoursLeft()}` : 'Get coins from the coin machine';
   }
   function bumpChip() {
     if (!chip) return;
@@ -84,8 +86,30 @@
     }
   }
 
+  function idleReadout() {
+    if (dispensing || !Coins) return;
+    setReadout(Coins.canDispense() ? 'PUSH' : 'SPEND');
+    machine.classList.toggle('locked', !Coins.canDispense());
+  }
+
+  function hoursLeft() {
+    const ms = Coins.expiresAt() - Date.now();
+    const h = Math.max(1, Math.ceil(ms / 3600000));
+    return `${h} ${h === 1 ? 'hour' : 'hours'}`;
+  }
+
   function dispense() {
     if (dispensing || !Coins) return;
+    if (!Coins.canDispense()) {
+      // Only an empty wallet gets a payout.
+      sound.buzz();
+      machine.classList.remove('refuse');
+      void machine.offsetWidth;
+      machine.classList.add('refuse');
+      const n = Coins.balance();
+      say(`You still have ${n} ${n === 1 ? 'coin' : 'coins'}. The machine pays out when you hit 0.`);
+      return;
+    }
     dispensing = true;
     button.disabled = true;
     button.classList.add('is-pressed');
@@ -125,18 +149,22 @@
       coins.forEach((c) => c.classList.add('collect'));
       document.querySelectorAll('[data-coin-count]').forEach((el) => { el.textContent = Coins.format(Coins.balance()); });
       bumpChip();
-      say(`${amount} ${amount === 1 ? 'coin' : 'coins'} added. 1 coin = 1 game.`);
+      say(`${amount} ${amount === 1 ? 'coin' : 'coins'} added. 1 coin = 1 game. Unused coins vanish in 24 hours.`);
     }, landed + 650);
 
     setTimeout(() => {
       coins.forEach((c) => c.remove());
-      setReadout('PUSH');
       button.disabled = false;
       dispensing = false;
+      idleReadout();
     }, landed + 1400);
   }
 
-  if (button && tray) button.addEventListener('click', dispense);
+  if (button && tray) {
+    button.addEventListener('click', dispense);
+    if (Coins) Coins.onChange(idleReadout);
+    idleReadout();
+  }
 
   // ---------------------------------------------------------------- cabinets
   function callMachine() {
@@ -207,6 +235,7 @@
     document.querySelectorAll('.cab.is-coined').forEach((c) => c.classList.remove('is-coined'));
     document.querySelectorAll('[data-coin-count]').forEach((el) => { el.textContent = Coins ? Coins.format(Coins.balance()) : '00'; });
     paintChip();
+    if (button && tray) idleReadout();
   });
 
   // Arriving from a game with an empty wallet (index.html#coin-machine): point at the machine.

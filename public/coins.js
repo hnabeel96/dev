@@ -4,6 +4,8 @@
 //   - The coin machine in the arcade hall dispenses a random number of coins.
 //   - Clicking a cabinet spends a coin and hands that game a "credit" for one run.
 //   - Each replay on a game page spends another coin.
+//   - The machine only pays out when the wallet is empty.
+//   - Coins expire 24 hours after the machine (or an ad) last paid out.
 //
 // Coins live in this browser only (localStorage). They have no value outside the site.
 //
@@ -15,6 +17,8 @@
 
   const KEY = 'pineappCoins';
   const CREDIT_KEY = 'pineappCredit';
+  const STAMP_KEY = 'pineappCoinsAt';       // when the current coins were handed out
+  const LIFETIME_MS = 24 * 60 * 60 * 1000;  // coins are wiped a day after that
   const listeners = new Set();
 
   function read(store, key, fallback) {
@@ -26,9 +30,18 @@
 
   let memory = Math.max(0, parseInt(read(localStorage, KEY, '0'), 10) || 0);
 
+  function grantedAt() {
+    return parseInt(read(localStorage, STAMP_KEY, '0'), 10) || 0;
+  }
+
   function balance() {
     const stored = parseInt(read(localStorage, KEY, String(memory)), 10);
     memory = Number.isFinite(stored) ? Math.max(0, stored) : memory;
+    // A day after the last payout, whatever is left is wiped.
+    if (memory > 0 && Date.now() - grantedAt() >= LIFETIME_MS) {
+      memory = 0;
+      write(localStorage, KEY, '0');
+    }
     return memory;
   }
 
@@ -57,13 +70,28 @@
     /** Add coins. `source` is 'machine' today; use 'ad' for rewarded ads later. */
     grant(amount, source) {
       const n = Math.max(0, Math.floor(amount));
-      if (n) set(balance() + n, { type: 'grant', amount: n, source: source || 'machine' });
+      if (n) {
+        write(localStorage, STAMP_KEY, String(Date.now())); // starts the 24-hour clock
+        set(balance() + n, { type: 'grant', amount: n, source: source || 'machine' });
+        scheduleExpiry();
+      }
       return n;
     },
 
-    /** Roll a random payout and add it. Returns the number of coins given. */
+    /** The coin machine only pays out to an empty wallet. */
+    canDispense() {
+      return balance() === 0;
+    },
+
+    /** Roll a random payout and add it. Returns the number of coins given (0 if the wallet isn't empty). */
     dispense(source) {
+      if (!Coins.canDispense()) return 0;
       return Coins.grant(rollPayout(), source || 'machine');
+    },
+
+    /** When the current coins will be wiped (ms timestamp), or 0 if there are none. */
+    expiresAt() {
+      return balance() > 0 ? grantedAt() + LIFETIME_MS : 0;
     },
 
     /** Spend one coin. Returns false if the wallet is empty. */
@@ -93,6 +121,17 @@
     /** Format for display: 2 -> "02" */
     format(n) { return String(n).padStart(2, '0'); }
   };
+
+  // Wipe the counters on time if the page is still open when the coins expire.
+  let expiryTimer = 0;
+  function scheduleExpiry() {
+    clearTimeout(expiryTimer);
+    const at = Coins.expiresAt();
+    if (!at) return;
+    const wait = Math.min(at - Date.now() + 50, 2147483000);
+    expiryTimer = setTimeout(() => set(balance(), { type: 'expired' }), Math.max(0, wait));
+  }
+  scheduleExpiry();
 
   // Keep several open tabs in step.
   window.addEventListener('storage', (e) => {
