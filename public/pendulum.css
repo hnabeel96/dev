@@ -655,3 +655,82 @@ html, body {
     font-size: 1.15rem;
   }
 }
+
+/* ==========================================================================
+   Wordless layout (v5): no HUD, no start screen, the game fills the page.
+   ========================================================================== */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.nav-back.icon-only {
+  width: 38px;
+  height: 38px;
+  justify-content: center;
+  font: 700 1.3rem/1 'Space Grotesk', sans-serif;
+  border: 1px solid var(--border-light);
+  border-radius: 4px;
+  background: var(--surface);
+  letter-spacing: 0;
+}
+
+.nav-back.icon-only:focus-visible,
+.control-btn:focus-visible,
+.restart-btn:focus-visible {
+  outline: 2px solid var(--lime);
+  outline-offset: 3px;
+}
+
+.game-header .shields-row {
+  margin-top: 0;
+  gap: 8px;
+}
+
+.game-header .shield-pip {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+}
+
+.canvas-container {
+  height: clamp(420px, calc(100dvh - 110px), 820px);
+}
+
+.game-overlay {
+  align-items: center;
+  justify-content: center;
+  background: rgba(8, 12, 10, 0.72);
+}
+
+.restart-btn {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  border: 2px solid var(--lime);
+  background: rgba(217, 243, 106, 0.12);
+  color: var(--lime);
+  font: 700 3rem/1 'Space Grotesk', sans-serif;
+  cursor: pointer;
+  box-shadow: 0 0 24px var(--lime-glow), inset 0 0 18px rgba(217, 243, 106, 0.18);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.restart-btn:hover {
+  transform: rotate(-90deg) scale(1.06);
+  box-shadow: 0 0 36px var(--lime-glow-strong), inset 0 0 18px rgba(217, 243, 106, 0.25);
+}
+
+@media (max-width: 680px) {
+  .canvas-container { height: calc(100dvh - 96px); min-height: 360px; }
+}
+
+@media (max-width: 480px) {
+  .canvas-container { height: calc(100dvh - 70px); min-height: 340px; }
+  .game-header .shield-pip { width: 11px; height: 11px; }
+  .nav-back.icon-only, .control-btn { width: 34px; height: 34px; }
+}

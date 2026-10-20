@@ -10,21 +10,11 @@
   const canvas = document.getElementById('game-canvas');
   const ctx = canvas.getContext('2d');
   const arenaContainer = document.getElementById('arena-container');
-  const currentScoreEl = document.getElementById('current-score');
-  const bestScoreEl = document.getElementById('best-score');
-  const speedMeterEl = document.getElementById('speed-meter');
   const shieldsRow = document.getElementById('shields-display');
-  const startOverlay = document.getElementById('start-overlay');
   const gameoverOverlay = document.getElementById('gameover-overlay');
-  const startBtn = document.getElementById('start-btn');
   const restartBtn = document.getElementById('restart-btn');
   const soundToggleBtn = document.getElementById('sound-toggle');
   const soundIcon = document.getElementById('sound-icon');
-  const finalScoreEl = document.getElementById('final-score');
-  const summaryBestEl = document.getElementById('summary-best');
-  const summaryPerfectsEl = document.getElementById('summary-perfects');
-  const summarySpeedEl = document.getElementById('summary-speed');
-  const tapHint = document.getElementById('tap-hint');
 
   // Audio Context & Settings
   let audioCtx = null;
@@ -170,6 +160,10 @@
     const maxLenFromHeight = canvasHeight - pendulum.pivotY - pendulum.bobRadius - 20;
 
     pendulum.length = Math.round(Math.max(120, Math.min(maxLenFromWidth, maxLenFromHeight * 0.78, canvasHeight * 0.62)));
+
+    // With no HUD the arena is tall on phones: centre the swing vertically instead of
+    // hanging it from the top edge.
+    pendulum.pivotY = Math.max(pendulum.pivotY, Math.round((canvasHeight - pendulum.length) / 2 - pendulum.bobRadius));
 
     if (!targetCircle.initialized) {
       spawnTargetCircle();
@@ -412,7 +406,6 @@
     }
 
     // Floating text banner
-    popups.push(new TextPopup('+10 PERFECT!', x, y - 25, '#ffd15c', 32, true));
 
     // Screen shake and golden perimeter flash
     triggerScreenShake();
@@ -436,7 +429,6 @@
     }
 
     // Floating text
-    popups.push(new TextPopup('+1 GOOD', x, y - 20, '#d9f36a', 24, false));
   }
 
   function triggerMissEffect(x, y) {
@@ -450,7 +442,6 @@
     }
 
     // Floating Miss text
-    popups.push(new TextPopup('MISS!', x, y - 20, '#ff5252', 24, false));
 
     // Screen shake and red flash
     triggerScreenShake();
@@ -467,10 +458,6 @@
 
   // Update HUD
   function updateHUD() {
-    currentScoreEl.textContent = score;
-    bestScoreEl.textContent = bestScore;
-    speedMeterEl.textContent = `${speedMultiplier.toFixed(1)}x`;
-
     // Shields display
     if (shieldsRow) {
       const pips = shieldsRow.querySelectorAll('.shield-pip');
@@ -481,6 +468,7 @@
           pip.className = 'shield-pip lost';
         }
       });
+      shieldsRow.setAttribute('aria-label', `${shields} ${shields === 1 ? 'life' : 'lives'} left`);
     }
   }
 
@@ -551,9 +539,7 @@
     spawnTargetCircle();
     updateHUD();
 
-    startOverlay.classList.add('hidden');
     gameoverOverlay.classList.add('hidden');
-    if (tapHint) tapHint.style.display = 'block';
   }
 
   // Game Over
@@ -564,26 +550,21 @@
       localStorage.setItem('pendulum_best_score', bestScore);
     }
 
-    finalScoreEl.textContent = score;
-    summaryBestEl.textContent = bestScore;
-    summaryPerfectsEl.textContent = perfectHitsCount;
-    summarySpeedEl.textContent = `${speedMultiplier.toFixed(1)}x`;
-
+    restartLockUntil = performance.now() + 600; // the losing tap shouldn't instantly restart
     gameoverOverlay.classList.remove('hidden');
-    if (tapHint) tapHint.style.display = 'none';
   }
 
   // Event Listeners for Controls
-  startBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    initAudio();
+  let restartLockUntil = 0;
+  function tryRestart() {
+    if (performance.now() < restartLockUntil) return;
     startGame();
-  });
+  }
 
   restartBtn.addEventListener('click', (e) => {
     e.stopPropagation();
     initAudio();
-    startGame();
+    tryRestart();
   });
 
   arenaContainer.addEventListener('pointerdown', (e) => {
@@ -591,9 +572,7 @@
     e.preventDefault();
     initAudio();
     if (!isPlaying) {
-      if (!startOverlay.classList.contains('hidden') || !gameoverOverlay.classList.contains('hidden')) {
-        startGame();
-      }
+      tryRestart();
       return;
     }
     handleStrike();
@@ -604,7 +583,7 @@
       e.preventDefault();
       initAudio();
       if (!isPlaying) {
-        startGame();
+        tryRestart();
       } else {
         handleStrike();
       }
@@ -651,6 +630,45 @@
     const y = targetCircle.y;
     const r = targetCircle.radius;
     const pulseScale = 1 + Math.sin(targetCircle.pulsePhase) * 0.04;
+
+    // How far the bob is into the circle right now: 'in' = fully inside (best moment to tap),
+    // 'touch' = overlapping, null = clear of it.
+    const odx = pendulum.bobX - x;
+    const ody = pendulum.bobY - y;
+    const od = Math.sqrt(odx * odx + ody * ody);
+    const overlap = !isPlaying ? null
+      : (od + pendulum.bobRadius <= r ? 'in' : (od < pendulum.bobRadius + r ? 'touch' : null));
+
+    if (overlap) {
+      ctx.save();
+      ctx.translate(x, y);
+      const hot = overlap === 'in';
+      // Filled glow and a solid, thick ring: "tap now"
+      const glow = ctx.createRadialGradient(0, 0, 0, 0, 0, r * 1.9);
+      glow.addColorStop(0, hot ? 'rgba(255, 236, 160, 0.55)' : 'rgba(217, 243, 106, 0.28)');
+      glow.addColorStop(1, 'transparent');
+      ctx.fillStyle = glow;
+      ctx.beginPath();
+      ctx.arc(0, 0, r * 1.9, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = hot ? '#fff3c4' : '#e8ff7a';
+      ctx.lineWidth = hot ? 6 : 4;
+      ctx.shadowColor = hot ? '#ffd15c' : '#d9f36a';
+      ctx.shadowBlur = hot ? 30 : 18;
+      ctx.beginPath();
+      ctx.arc(0, 0, r * (hot ? 1.12 : 1.04), 0, Math.PI * 2);
+      ctx.stroke();
+      if (hot) {
+        // Tap ripple
+        const ripple = (performance.now() % 450) / 450;
+        ctx.globalAlpha = 1 - ripple;
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ctx.arc(0, 0, r * (1.15 + ripple * 0.6), 0, Math.PI * 2);
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
 
     ctx.save();
     ctx.translate(x, y);
@@ -871,7 +889,7 @@
   // Initialization
   window.addEventListener('resize', resizeCanvas);
   resizeCanvas();
-  updateHUD();
+  startGame(); // no start screen: the pendulum is already swinging when the page opens
   requestAnimationFrame(render);
 
 })();

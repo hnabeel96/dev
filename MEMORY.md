@@ -117,6 +117,12 @@
     - Phones and narrow windows: the cabinets become a swipeable aisle with snap; arrow keys move between machines. Reduced motion stops all animation.
     - Verified with headless Chromium at 1440x900, 1280x720 and 390x844 (no horizontal page scroll, links open the games).
 
+41. Chrono Pendulum game page made wordless (`pendulum.html`, `pendulum.css?v=5`, `pendulum.js?v=4`):
+    - Removed the HUD (title, score, best, speed), start screen, rules, tap hint, text popups and game-over summary. The game starts swinging as soon as the page opens.
+    - Header keeps only an icon back button, three life pips and the sound toggle. Game over shows a single ↺ button (tap anywhere or Space also restarts, after a 0.6s guard).
+    - New "tap now" cue: the target ring glows and thickens when the ball overlaps it, and turns gold with a ripple when the ball is fully inside.
+    - Swing is centred vertically now that the arena fills the screen. Scoring and best score still run in the background but are not shown.
+
 ## Resume checklist
 
 1. Work from `C:\Users\Nabeel\Desktop\dev\website`.
