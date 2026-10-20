@@ -148,6 +148,8 @@
     - Front page: Hoop Rush cabinet (amber) is the first game, right after the coin machine, with an attract screen of a ball arcing through a net (`arcade.css?v=5`). Cabinet size now also scales with window width so five machines fit in one row. Onlookers moved to the room edges and only shown at 1360px+.
     - The 3D game itself could not be run in Claude's sandbox (cdnjs blocked there); everything around it was checked in headless Chromium.
 
+46. Front page made minimal (`arcade.css?v=6`): the neon sign plus one pixel-font line, "New games every day". Removed the longer intro paragraph and the "Made for a five-minute break" block from the front page (About is still in the header). Ad slot and footer unchanged.
+
 ## Resume checklist
 
 1. Work from `C:\Users\Nabeel\Desktop\dev\website`.

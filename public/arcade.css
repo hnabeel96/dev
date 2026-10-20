@@ -166,11 +166,13 @@
 }
 
 .sign__copy {
-  margin: clamp(10px, 2vh, 18px) auto 0;
-  max-width: 44ch;
-  color: var(--copy);
-  font-size: clamp(0.95rem, 1.2vw, 1.08rem);
+  margin: clamp(12px, 2.4vh, 22px) auto 0;
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(0.62rem, 1.1vw, 0.8rem);
+  letter-spacing: 0.14em;
   line-height: 1.6;
+  color: var(--neon-cyan);
+  text-shadow: 0 0 10px rgba(54, 228, 255, 0.6);
 }
 
 @keyframes signOn {
