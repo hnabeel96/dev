@@ -248,3 +248,43 @@ body {
 
 /* The screen takes keyboard focus so arrow keys work; the cabinet glow already shows it */
 .screen:focus { outline: none; }
+
+/* Coin gate (v4) */
+.cab-top { grid-template-columns: auto 1fr auto auto auto; }
+
+.start-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: #160b2b;
+  background: var(--sun);
+  box-shadow: 0 5px 0 #8a6200, 0 0 22px rgba(255, 210, 63, 0.6);
+}
+
+.start-btn:active { box-shadow: 0 1px 0 #8a6200; }
+#again { font-size: clamp(0.7rem, 2.6vw, 0.9rem); padding: 14px 20px; }
+.start-btn[hidden], .get-coins[hidden] { display: none; }
+
+.get-coins {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  border-radius: 6px;
+  border: 2px solid var(--sun);
+  background: rgba(40, 24, 6, 0.7);
+  color: #ffe58a;
+  font: 400 clamp(0.7rem, 2.6vw, 0.9rem) 'Press Start 2P', monospace;
+  text-decoration: none;
+}
+
+.get-coins:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
+.start-btn .coin-icon, .get-coins .coin-icon { width: 22px; height: 22px; }
+.start-btn .coin-icon::after, .get-coins .coin-icon::after { inset: 6px; }
+
+@media (max-width: 480px) {
+  .cab-top .coin-chip { height: 30px; padding: 0 9px 0 6px; font-size: 0.6rem; gap: 6px; }
+  .cab-top .coin-chip .coin-icon { width: 14px; height: 14px; }
+  .cab-top .coin-chip .coin-icon::after { inset: 3.5px; }
+  .scoreline .best { display: none; }
+}

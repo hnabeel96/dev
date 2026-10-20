@@ -13,6 +13,12 @@
   const overCard = document.getElementById('over-card');
   const finalEl = document.getElementById('final');
   const soundBtn = document.getElementById('sound');
+  const startBtn = document.getElementById('start');
+  const againBtn = document.getElementById('again');
+  const startLabel = document.getElementById('start-label');
+  const Coins = window.Coins;
+  // A coin inserted at the cabinet in the arcade hall pays for the first game here.
+  let credit = Coins ? (Coins.takeCredit('edge-rush') ? 1 : 0) : 1;
 
   // ---- Geometry, all in "box units" where the arena is 1 x 1 ----
   const GAP = 0.035;         // space between the wall and a paddle
@@ -142,6 +148,7 @@
     }
     renderHUD();
     finalEl.textContent = pad6(S.score);
+    renderCoinGate();
     overCard.classList.remove('hidden');
     S.overAt = performance.now();
   }
@@ -414,7 +421,7 @@
       if (e.target.closest && e.target.closest('a, button')) return; // let the focused control handle it
       e.preventDefault();
       if (!overCard.classList.contains('hidden') && performance.now() - (S.overAt || 0) < 500) return;
-      startGame();
+      payAndStart();
       return;
     }
     if (PICK[k]) { setActive(PICK[k]); e.preventDefault(); return; }
@@ -454,8 +461,26 @@
   screen.addEventListener('pointerup', stopDrag);
   screen.addEventListener('pointercancel', stopDrag);
 
-  document.getElementById('start').addEventListener('click', startGame);
-  document.getElementById('again').addEventListener('click', startGame);
+  // ---------------------------------------------------------------- coins: 1 coin = 1 game
+  function renderCoinGate() {
+    const canPay = credit > 0 || !Coins || Coins.balance() > 0;
+    startLabel.textContent = credit > 0 ? 'Press start' : 'Insert coin';
+    startBtn.hidden = !canPay;
+    againBtn.hidden = !canPay;
+    document.querySelectorAll('[data-get-coins]').forEach((a) => { a.hidden = canPay; });
+  }
+
+  function payAndStart() {
+    if (S.running) return;
+    if (credit > 0) credit -= 1;
+    else if (Coins && !Coins.spend()) { renderCoinGate(); return; }
+    startGame();
+  }
+
+  if (Coins) Coins.onChange(() => { if (!S.running) renderCoinGate(); });
+  startBtn.addEventListener('click', payAndStart);
+  againBtn.addEventListener('click', payAndStart);
+  renderCoinGate();
 
   screen.tabIndex = 0;
   window.addEventListener('resize', resize);

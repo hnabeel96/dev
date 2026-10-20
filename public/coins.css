@@ -1,0 +1,49 @@
+/* Coin counter shown on every page (front page header and both games). */
+.coin-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 12px 0 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 210, 63, 0.55);
+  background: rgba(40, 24, 6, 0.55);
+  color: #ffe58a;
+  font: 400 0.72rem/1 'Press Start 2P', monospace;
+  font-variant-numeric: tabular-nums;
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow: 0 0 12px rgba(255, 210, 63, 0.18);
+}
+
+.coin-chip:hover { border-color: #ffd23f; }
+.coin-chip:focus-visible { outline: 2px solid #ffd23f; outline-offset: 3px; }
+
+.coin-icon {
+  position: relative;
+  flex: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff6c8 0%, #ffd23f 38%, #c98a00 100%);
+  box-shadow: inset 0 0 0 2px #e8a800, 0 0 8px rgba(255, 210, 63, 0.6);
+}
+
+.coin-icon::after {
+  content: '';
+  position: absolute;
+  inset: 5px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(140, 90, 0, 0.6);
+}
+
+.coin-chip.bump { animation: coinBump 0.45s ease-out; }
+.coin-chip.empty { border-color: rgba(255, 79, 163, 0.7); color: #ff9cc9; }
+
+@keyframes coinBump {
+  30% { transform: scale(1.18); box-shadow: 0 0 24px rgba(255, 210, 63, 0.7); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .coin-chip.bump { animation: none; }
+}

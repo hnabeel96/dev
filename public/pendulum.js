@@ -15,6 +15,8 @@
   const bestScoreEl = document.getElementById('best-score');
   const gameoverOverlay = document.getElementById('gameover-overlay');
   const restartBtn = document.getElementById('restart-btn');
+  const getCoinsLink = document.getElementById('get-coins');
+  const Coins = window.Coins;
   const soundToggleBtn = document.getElementById('sound-toggle');
   const soundIcon = document.getElementById('sound-icon');
 
@@ -555,15 +557,27 @@
     }
 
     restartLockUntil = performance.now() + 600; // the losing tap shouldn't instantly restart
-    gameoverOverlay.classList.remove('hidden');
+    showCoinGate();
   }
 
   // Event Listeners for Controls
   let restartLockUntil = 0;
+
+  // One coin = one game. With no coins left, the gate points back to the coin machine.
+  function showCoinGate() {
+    const hasCoin = !Coins || Coins.balance() > 0;
+    restartBtn.hidden = !hasCoin;
+    if (getCoinsLink) getCoinsLink.hidden = hasCoin;
+    gameoverOverlay.classList.remove('hidden');
+  }
+
   function tryRestart() {
     if (performance.now() < restartLockUntil) return;
+    if (Coins && !Coins.spend()) { showCoinGate(); return; }
     startGame();
   }
+
+  if (Coins) Coins.onChange(() => { if (!isPlaying) showCoinGate(); });
 
   restartBtn.addEventListener('click', (e) => {
     e.stopPropagation();
@@ -572,7 +586,7 @@
   });
 
   arenaContainer.addEventListener('pointerdown', (e) => {
-    if (e.target.closest('button')) return;
+    if (e.target.closest('button, a')) return;
     e.preventDefault();
     initAudio();
     if (!isPlaying) {
@@ -893,7 +907,9 @@
   // Initialization
   window.addEventListener('resize', resizeCanvas);
   resizeCanvas();
-  startGame(); // no start screen: the pendulum is already swinging when the page opens
+  // A coin inserted at the cabinet starts the game straight away; otherwise insert one here.
+  if (!Coins || Coins.takeCredit('pendulum')) startGame();
+  else { updateHUD(); showCoinGate(); }
   requestAnimationFrame(render);
 
 })();

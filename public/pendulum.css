@@ -817,3 +817,51 @@ html, body {
   .scoreline { gap: 10px; }
   .canvas-container { border-width: 8px; }
 }
+
+/* Coin gate (v7) */
+.game-header { grid-template-columns: auto 1fr auto auto auto; }
+.game-overlay .coin-gate { display: grid; place-items: center; gap: 14px; }
+
+.insert-btn,
+.get-coins {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 22px;
+  border-radius: 8px;
+  font: 400 clamp(0.75rem, 2.6vw, 0.95rem) 'Press Start 2P', monospace;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.insert-btn {
+  border: 0;
+  color: #160b2b;
+  background: #ffd23f;
+  box-shadow: 0 5px 0 #8a6200, 0 0 26px rgba(255, 210, 63, 0.55);
+  animation: insertBlink 1.2s steps(1, end) infinite;
+}
+
+.insert-btn:active { transform: translateY(4px); box-shadow: 0 1px 0 #8a6200; }
+
+.get-coins {
+  color: #ffe58a;
+  border: 2px solid #ffd23f;
+  background: rgba(40, 24, 6, 0.7);
+}
+
+.insert-btn .coin-icon, .get-coins .coin-icon { width: 26px; height: 26px; }
+.insert-btn .coin-icon::after, .get-coins .coin-icon::after { inset: 7px; }
+.insert-btn:focus-visible, .get-coins:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
+
+@keyframes insertBlink { 50% { filter: brightness(0.8); } }
+
+@media (max-width: 480px) {
+  .game-header .coin-chip { height: 30px; padding: 0 9px 0 6px; font-size: 0.6rem; gap: 6px; }
+  .game-header .coin-chip .coin-icon { width: 14px; height: 14px; }
+  .game-header .coin-chip .coin-icon::after { inset: 3.5px; }
+  .scoreline .arcade-best { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) { .insert-btn { animation: none; } }
+.insert-btn[hidden], .get-coins[hidden] { display: none; }

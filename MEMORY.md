@@ -130,6 +130,14 @@
     - Front-page Edge Rush cabinet attract mode now shows four paddles sliding to meet the ball (`arcade.css?v=2`).
     - Verified with headless Chromium (desktop + phone, no page errors) and a bot run that tracked the ball: 11 hits in 15s with no lives lost.
 
+43. Coins: one coin = one game, with a coin machine in the arcade hall:
+    - New shared `coins.js` (window.Coins) and `coins.css`, loaded on the front page and both games. Balance in localStorage `pineappCoins`; a cabinet hands its game a one-play credit in sessionStorage `pineappCredit`. Coins are per-browser and have no value outside the site.
+    - Front page: a "Coins" change machine is the first machine in the aisle. Its yellow button dispenses a random payout (1:30%, 2:28%, 3:20%, 4:11%, 5:7%, 10 jackpot:4%) with coins dropping into a tray, an LED readout and clink sounds. A coin counter sits in the header. New visitors start with 0 coins.
+    - Clicking a cabinet spends a coin (coin drops into its slot) and opens the game. With 0 coins the cabinet refuses (slot flashes, shake), a message points to the coin machine and the machine's button pulses.
+    - Games: a coin inserted at the cabinet starts the first game. Otherwise, and after every game over, the screen shows Insert coin (spends 1) or, when empty, Get coins (back to `index.html#coin-machine`).
+    - Ad rewards later: call `Coins.grant(n, 'ad')` or `Coins.dispense('ad')` from the rewarded-ad callback; counters update via `Coins.onChange`.
+    - Verified end to end in headless Chromium: refuse at 0, dispense, spend at cabinet, replay costs 1, Get coins at 0, cabinet credit not double-charged.
+
 ## Resume checklist
 
 1. Work from `C:\Users\Nabeel\Desktop\dev\website`.

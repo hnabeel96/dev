@@ -16,12 +16,14 @@
   <meta name="theme-color" content="#120a24">
   <title>pineapp.win | Browser Games</title>
   <link rel="stylesheet" href="styles.css?v=8">
-  <link rel="stylesheet" href="arcade.css?v=2">
+  <link rel="stylesheet" href="arcade.css?v=3">
+  <link rel="stylesheet" href="coins.css?v=1">
 </head>
 <body class="arcade-page">
   <header>
     <a class="brand" href="#top">✦ pineapp.win</a>
     <nav>
+      <a class="coin-chip" id="coin-chip" href="#coin-machine" aria-label="Your coins"><span class="coin-icon" aria-hidden="true"></span><span data-coin-count>00</span></a>
       <a href="about.html">About</a>
       <a href="privacy.html">Privacy Policy</a>
     </nav>
@@ -39,12 +41,29 @@
           <span class="sign__line">Small games.</span>
           <span class="sign__line sign__line--b">Big fun.</span>
         </h1>
-        <p class="sign__copy">Quick, original browser games crafted for you to enjoy anytime, anywhere. Pick a machine.</p>
+        <p class="sign__copy">Quick, original browser games crafted for you to enjoy anytime, anywhere. Grab some coins, then pick a machine.</p>
       </div>
 
       <div class="aisle" id="aisle" aria-label="Arcade machines">
+        <!-- Coin machine: dispenses a random handful of coins. Later: watch an ad here to get coins. -->
+        <div class="changer" id="coin-machine" style="--glow:#ffd23f; --glow-rgb:255,210,63">
+          <span class="cab__marquee"><span class="cab__title">Coins</span></span>
+          <span class="changer__face">
+            <span class="changer__display" aria-hidden="true"><span id="changer-readout">PUSH</span></span>
+            <button type="button" class="changer__btn" id="dispense" aria-label="Get coins from the coin machine" title="Get coins">
+              <span class="changer__btn-cap" aria-hidden="true"></span>
+            </button>
+            <span class="changer__plate" aria-hidden="true">1 coin<br>= 1 game</span>
+          </span>
+          <span class="changer__chute" aria-hidden="true">
+            <span class="changer__mouth"></span>
+            <span class="changer__tray" id="tray"></span>
+          </span>
+          <span class="cab__pool" aria-hidden="true"></span>
+        </div>
+
         <!-- Cabinet 1: Chrono Pendulum -->
-        <a class="cab cab--pendulum" href="pendulum.html" style="--glow:#36e4ff; --glow-rgb:54,228,255" aria-label="Play Chrono Pendulum">
+        <a class="cab cab--pendulum" href="pendulum.html" data-game="pendulum" style="--glow:#36e4ff; --glow-rgb:54,228,255" aria-label="Play Chrono Pendulum">
           <span class="cab__marquee"><span class="cab__title">Chrono<br>Pendulum</span></span>
           <span class="cab__bezel">
             <span class="cab__screen">
@@ -66,7 +85,7 @@
         </a>
 
         <!-- Cabinet 2: Edge Rush -->
-        <a class="cab cab--edge" href="edge-rush.html" style="--glow:#b6ff3b; --glow-rgb:182,255,59" aria-label="Play Edge Rush">
+        <a class="cab cab--edge" href="edge-rush.html" data-game="edge-rush" style="--glow:#b6ff3b; --glow-rgb:182,255,59" aria-label="Play Edge Rush">
           <span class="cab__marquee"><span class="cab__title">Edge<br>Rush</span></span>
           <span class="cab__bezel">
             <span class="cab__screen">
@@ -107,6 +126,8 @@
           <span class="cab__pool" aria-hidden="true"></span>
         </div>
       </div>
+
+      <p class="hall-toast" id="hall-toast" role="status" aria-live="polite"></p>
 
       <!-- People standing on the floor, watching the machines -->
       <div class="crowd" aria-hidden="true">
@@ -151,6 +172,7 @@
     <span>Contact: <a href="mailto:pineappwin@gmail.com">pineappwin@gmail.com</a></span>
   </footer>
 
-  <script src="arcade.js?v=1"></script>
+  <script src="coins.js?v=1"></script>
+  <script src="arcade.js?v=2"></script>
 </body>
 </html>

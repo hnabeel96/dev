@@ -15,7 +15,8 @@
   <meta name="theme-color" content="#120a24">
   <meta name="description" content="Chrono Pendulum — a precision timing arcade game with metallic pendulum physics and instant reflex hits on pineapp.win.">
   <title>Chrono Pendulum | pineapp.win</title>
-  <link rel="stylesheet" href="pendulum.css?v=6">
+  <link rel="stylesheet" href="pendulum.css?v=7">
+  <link rel="stylesheet" href="coins.css?v=1">
 </head>
 <body>
   <div class="game-wrapper">
@@ -30,6 +31,7 @@
         <span class="shield-pip active"></span>
         <span class="shield-pip active"></span>
       </div>
+      <a class="coin-chip" href="index.html#coin-machine" aria-label="Your coins"><span class="coin-icon" aria-hidden="true"></span><span data-coin-count>00</span></a>
       <div class="header-controls">
         <button type="button" id="sound-toggle" class="control-btn" aria-label="Toggle sound" title="Toggle sound">
           <span id="sound-icon">🔊</span>
@@ -42,14 +44,18 @@
       <section class="canvas-container" id="arena-container" aria-label="Tap or press space when the ball is inside the circle">
         <canvas id="game-canvas"></canvas>
 
-        <!-- Wordless game over: tap anywhere or the button to swing again -->
+        <!-- Coin gate: shown before the first game (if no coin was inserted at the cabinet) and after each game over -->
         <div class="game-overlay hidden" id="gameover-overlay">
-          <button type="button" id="restart-btn" class="restart-btn" aria-label="Play again" title="Play again">↺</button>
+          <div class="coin-gate">
+            <button type="button" id="restart-btn" class="insert-btn"><span class="coin-icon" aria-hidden="true"></span><span>Insert coin</span></button>
+            <a class="get-coins" id="get-coins" href="index.html#coin-machine" hidden><span class="coin-icon" aria-hidden="true"></span><span>Get coins</span></a>
+          </div>
         </div>
       </section>
     </main>
   </div>
 
-  <script src="pendulum.js?v=5"></script>
+  <script src="coins.js?v=1"></script>
+  <script src="pendulum.js?v=6"></script>
 </body>
 </html>
