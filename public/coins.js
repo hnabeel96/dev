@@ -105,14 +105,17 @@
     /** Spend a coin at a cabinet and carry one play over to that game's page. */
     insertFor(game) {
       if (!Coins.spend()) return false;
-      write(sessionStorage, CREDIT_KEY, game);
+      // Kept for 2 minutes: long enough for the game page to load, short enough not to linger.
+      write(localStorage, CREDIT_KEY, JSON.stringify({ game, at: Date.now() }));
       return true;
     },
 
     /** On a game page: use the play paid for at the cabinet, if there is one. */
     takeCredit(game) {
-      if (read(sessionStorage, CREDIT_KEY, '') !== game) return false;
-      try { sessionStorage.removeItem(CREDIT_KEY); } catch (e) { /* ignore */ }
+      let credit = null;
+      try { credit = JSON.parse(read(localStorage, CREDIT_KEY, 'null')); } catch (e) { credit = null; }
+      if (!credit || credit.game !== game || Date.now() - credit.at > 2 * 60 * 1000) return false;
+      try { localStorage.removeItem(CREDIT_KEY); } catch (e) { /* ignore */ }
       return true;
     },
 

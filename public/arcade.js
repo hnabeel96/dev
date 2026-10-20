@@ -34,8 +34,35 @@
     clink: () => beep(2200 + Math.random() * 500, 0.09, 'sine', 0.06),
     buzz: () => beep(130, 0.25, 'sawtooth', 0.05),
     refuse: () => { beep(220, 0.12, 'square', 0.06); beep(165, 0.18, 'square', 0.06, 0.12); },
-    jackpot: () => [523, 659, 784, 1047].forEach((f, i) => beep(f, 0.14, 'square', 0.06, i * 0.09))
+    jackpot: () => [523, 659, 784, 1047].forEach((f, i) => beep(f, 0.14, 'square', 0.06, i * 0.09)),
+    kaching: kaching
   };
+
+  // Cash-register "ka-ching": a short metallic clack (drawer), then a bright bell that rings out.
+  function kaching() {
+    try {
+      const Ctx = window.AudioContext || window.webkitAudioContext;
+      if (!Ctx) return;
+      audioCtx = audioCtx || new Ctx();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      const c = audioCtx, t = c.currentTime;
+      // "ka": filtered noise burst
+      const n = Math.floor(c.sampleRate * 0.05), buf = c.createBuffer(1, n, c.sampleRate), d = buf.getChannelData(0);
+      for (let i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / n, 3);
+      const src = c.createBufferSource(), bp = c.createBiquadFilter(), ng = c.createGain();
+      src.buffer = buf; bp.type = 'bandpass'; bp.frequency.value = 3200; bp.Q.value = 1.2; ng.gain.value = 0.35;
+      src.connect(bp).connect(ng).connect(c.destination); src.start(t);
+      // "ching": bell partials (slightly inharmonic, like a real bell), long decay
+      [[2093, 0.12, 0.9], [2637, 0.07, 0.7], [3951, 0.05, 0.5], [5274, 0.03, 0.35]].forEach(([f, v, dur]) => {
+        const o = c.createOscillator(), g = c.createGain();
+        o.type = 'sine'; o.frequency.value = f;
+        g.gain.setValueAtTime(0.0001, t + 0.06);
+        g.gain.exponentialRampToValueAtTime(v, t + 0.065);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + 0.06 + dur);
+        o.connect(g).connect(c.destination); o.start(t + 0.06); o.stop(t + 0.1 + dur);
+      });
+    } catch (e) { /* sound is optional */ }
+  }
 
   // ---------------------------------------------------------------- coin counter + toast
   const chip = document.getElementById('coin-chip');
@@ -147,6 +174,7 @@
 
     setTimeout(() => {
       coins.forEach((c) => c.classList.add('collect'));
+      sound.kaching();
       document.querySelectorAll('[data-coin-count]').forEach((el) => { el.textContent = Coins.format(Coins.balance()); });
       bumpChip();
       say(`${amount} ${amount === 1 ? 'coin' : 'coins'} added. 1 coin = 1 game. Unused coins vanish in 24 hours.`);
