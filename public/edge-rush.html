@@ -12,28 +12,55 @@
   </script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Edge Rush, a fast browser reflex game on pineapp.win.">
+  <meta name="description" content="Edge Rush, a four-paddle arcade reflex game on pineapp.win. Switch paddles and keep the ball in the box.">
+  <meta name="theme-color" content="#120a24">
   <title>Edge Rush | pineapp.win</title>
-  <link rel="stylesheet" href="edge-rush.css?v=2">
+  <link rel="stylesheet" href="edge-rush.css?v=4">
+  <link rel="stylesheet" href="coins.css?v=1">
 </head>
 <body>
-  <main class="game-shell">
-    <a class="back" href="index.html">← Back to games</a>
-    <section class="game-head">
-      <div><p class="kicker">PINEAPP.WIN ORIGINAL</p><h1>Edge Rush</h1></div>
-      <div class="scoreboard"><div><span>Score</span><strong id="score">0</strong></div><div><span>Best</span><strong id="best">0</strong></div></div>
-    </section>
-    <section class="instructions"><span>Click the section the ball reaches.</span><span>Each hit gets faster.</span></section>
-    <section id="game" class="game" aria-label="Edge Rush game area">
-      <div id="edge-top" class="edge edge-top" aria-label="Top edge"></div>
-      <div id="edge-right" class="edge edge-right" aria-label="Right edge"></div>
-      <div id="edge-bottom" class="edge edge-bottom" aria-label="Bottom edge"></div>
-      <div id="edge-left" class="edge edge-left" aria-label="Left edge"></div>
-      <div id="ball" class="ball" aria-hidden="true"></div>
-      <div id="overlay" class="overlay"><div><p class="kicker">READY?</p><h2>Stay on the edge.</h2><p>Click Start, then catch the ball at the border.</p><button id="start" type="button">Start game <span>→</span></button></div></div>
-    </section>
-    <p id="message" class="message" aria-live="polite">Click start when you’re ready.</p>
-  </main>
-  <script src="edge-rush.js?v=2"></script>
+  <div class="cabinet">
+    <header class="cab-top">
+      <a class="icon-btn" href="index.html" aria-label="Back to games" title="Back to games">←</a>
+      <div class="scoreline" aria-live="polite">
+        <strong class="score" id="score" aria-label="Score">000000</strong>
+        <span class="best" aria-label="Best score"><span aria-hidden="true">★</span> <span id="best">000000</span></span>
+      </div>
+      <div class="lives" id="lives" role="img" aria-label="3 lives left">
+        <span class="life"></span><span class="life"></span><span class="life"></span>
+      </div>
+      <a class="coin-chip" href="index.html#coin-machine" aria-label="Your coins"><span class="coin-icon" aria-hidden="true"></span><span data-coin-count>00</span></a>
+      <button type="button" class="icon-btn" id="sound" aria-label="Toggle sound" title="Toggle sound">🔊</button>
+    </header>
+
+    <main class="bezel">
+      <h1 class="visually-hidden">Edge Rush</h1>
+      <section class="screen" id="screen" aria-label="Edge Rush. Pick a paddle with W A S D or by tapping its side, then slide it with the arrow keys or by dragging.">
+        <canvas id="arena"></canvas>
+
+        <div class="attract" id="start-card">
+          <p class="attract__title">Edge Rush</p>
+          <div class="attract__how">
+            <p><span class="key">Tap</span> a side to take its paddle</p>
+            <p><span class="key">Drag</span> to slide it</p>
+            <p class="desk"><span class="key">W</span><span class="key">A</span><span class="key">S</span><span class="key">D</span> pick a paddle</p>
+            <p class="desk"><span class="key">←</span><span class="key">→</span><span class="key">↑</span><span class="key">↓</span> slide it</p>
+          </div>
+          <button type="button" class="start-btn" id="start"><span class="coin-icon" aria-hidden="true"></span><span id="start-label">Insert coin</span></button>
+          <a class="get-coins" href="index.html#coin-machine" data-get-coins hidden><span class="coin-icon" aria-hidden="true"></span><span>Get coins</span></a>
+        </div>
+
+        <div class="attract hidden" id="over-card">
+          <p class="attract__title attract__title--over">Game over</p>
+          <p class="final" id="final">000000</p>
+          <button type="button" class="start-btn" id="again"><span class="coin-icon" aria-hidden="true"></span><span>Insert coin</span></button>
+          <a class="get-coins" href="index.html#coin-machine" data-get-coins hidden><span class="coin-icon" aria-hidden="true"></span><span>Get coins</span></a>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="coins.js?v=2"></script>
+  <script src="edge-rush.js?v=4"></script>
 </body>
 </html>

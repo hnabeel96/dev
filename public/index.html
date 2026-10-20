@@ -13,69 +13,147 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="Play original, instant browser games on pineapp.win — crafted for quick breaks and seamless fun anywhere.">
+  <meta name="theme-color" content="#120a24">
   <title>pineapp.win | Browser Games</title>
   <link rel="stylesheet" href="styles.css?v=8">
+  <link rel="stylesheet" href="arcade.css?v=4">
+  <link rel="stylesheet" href="coins.css?v=1">
 </head>
-<body>
+<body class="arcade-page">
   <header>
     <a class="brand" href="#top">✦ pineapp.win</a>
     <nav>
+      <a class="coin-chip" id="coin-chip" href="#coin-machine" aria-label="Your coins"><span class="coin-icon" aria-hidden="true"></span><span data-coin-count>00</span></a>
       <a href="about.html">About</a>
       <a href="privacy.html">Privacy Policy</a>
     </nav>
   </header>
 
   <main id="top">
-    <section class="hero" id="arcade">
-      <div class="hero-content">
-        <p class="eyebrow">PLAY. DISCOVER. REPEAT.</p>
-        <h1>Small games.<br><em>Big fun.</em></h1>
-        <p class="hero-copy">Quick, original browser games crafted for you to enjoy anytime, anywhere.</p>
+    <!-- The arcade hall: you are standing on the floor, looking at the cabinets -->
+    <section class="hall" aria-labelledby="hall-title">
+      <div class="hall__ceiling" aria-hidden="true"></div>
+      <div class="hall__wall" aria-hidden="true"></div>
+      <div class="hall__floor" aria-hidden="true"></div>
+
+      <div class="sign">
+        <h1 id="hall-title" class="sign__neon">
+          <span class="sign__line">Small games.</span>
+          <span class="sign__line sign__line--b">Big fun.</span>
+        </h1>
+        <p class="sign__copy">Quick, original browser games crafted for you to enjoy anytime, anywhere. Grab some coins, then pick a machine.</p>
       </div>
 
-      <!-- Scrollable Arcade Selector (Chrono Pendulum default, popping scroll buttons) -->
-      <aside class="arcade-container" aria-label="Arcade game selector">
-        <div class="arcade-selector-frame">
-          <!-- Popping Scroll Buttons -->
-          <button type="button" class="arcade-scroll-btn prev-btn" id="arcade-prev" aria-label="Previous game" title="Previous game">‹</button>
-          <button type="button" class="arcade-scroll-btn next-btn" id="arcade-next" aria-label="Next game" title="Next game">›</button>
-
-          <!-- Scrollable Track with snap alignment -->
-          <div class="arcade-track" id="arcade-track" tabindex="0" aria-label="Arcade game track">
-            <!-- Game 1: Chrono Pendulum (Default) -->
-            <a class="arcade-card card-pendulum" href="pendulum.html" data-index="0" aria-label="Play Chrono Pendulum">
-              <div class="arcade-screen">
-                <div class="pendulum-graphic" aria-hidden="true">
-                  <div class="pendulum-pivot-point"></div>
-                  <div class="pendulum-chrome-rod"></div>
-                  <div class="pendulum-chrome-bob"></div>
-                </div>
-              </div>
-              <div class="arcade-footer">
-                <h2 class="game-name">Chrono Pendulum</h2>
-                <span class="button arcade-play-btn">Play now <span>→</span></span>
-              </div>
-            </a>
-
-            <!-- Game 2: Edge Rush -->
-            <a class="arcade-card card-edgerush" href="edge-rush.html" data-index="1" aria-label="Play Edge Rush">
-              <div class="arcade-screen">
-                <span class="game-icon">🟢</span>
-              </div>
-              <div class="arcade-footer">
-                <h2 class="game-name">Edge Rush</h2>
-                <span class="button arcade-play-btn">Play now <span>→</span></span>
-              </div>
-            </a>
-          </div>
-
-          <!-- Position Indicators -->
-          <div class="arcade-indicators" id="arcade-indicators" aria-label="Arcade game indicators">
-            <button type="button" class="arcade-dot active" data-index="0" aria-label="Jump to Chrono Pendulum"></button>
-            <button type="button" class="arcade-dot" data-index="1" aria-label="Jump to Edge Rush"></button>
-          </div>
+      <div class="aisle" id="aisle" aria-label="Arcade machines">
+        <!-- Coin machine: dispenses a random handful of coins. Later: watch an ad here to get coins. -->
+        <div class="changer" id="coin-machine" style="--glow:#ffd23f; --glow-rgb:255,210,63">
+          <span class="cab__marquee"><span class="cab__title">Coins</span></span>
+          <span class="changer__face">
+            <span class="changer__display" aria-hidden="true"><span id="changer-readout">PUSH</span></span>
+            <button type="button" class="changer__btn" id="dispense" aria-label="Get coins from the coin machine" title="Get coins">
+              <span class="changer__btn-cap" aria-hidden="true"></span>
+            </button>
+            <span class="changer__plate" aria-hidden="true">1 coin<br>= 1 game</span>
+          </span>
+          <span class="changer__chute" aria-hidden="true">
+            <span class="changer__mouth"></span>
+            <span class="changer__tray" id="tray"></span>
+          </span>
+          <span class="cab__pool" aria-hidden="true"></span>
         </div>
-      </aside>
+
+        <!-- Cabinet 1: Chrono Pendulum -->
+        <a class="cab cab--pendulum" href="pendulum.html" data-game="pendulum" style="--glow:#36e4ff; --glow-rgb:54,228,255" aria-label="Play Chrono Pendulum">
+          <span class="cab__marquee"><span class="cab__title">Chrono<br>Pendulum</span></span>
+          <span class="cab__bezel">
+            <span class="cab__screen">
+              <span class="attract attract--pendulum" aria-hidden="true">
+                <span class="pend__target"><span class="pend__ring"></span></span>
+                <span class="pend__arm"><span class="pend__bob"></span></span>
+                <span class="pend__pivot"></span>
+              </span>
+              <span class="cab__start" aria-hidden="true">Press start</span>
+            </span>
+          </span>
+          <span class="cab__panel" aria-hidden="true">
+            <span class="stick"></span><span class="pbtn"></span><span class="pbtn pbtn--b"></span>
+          </span>
+          <span class="cab__body" aria-hidden="true">
+            <span class="coin-door"><span class="coin-slot"></span><span class="coin-label">Insert coin</span></span>
+          </span>
+          <span class="cab__pool" aria-hidden="true"></span>
+        </a>
+
+        <!-- Cabinet 2: Edge Rush -->
+        <a class="cab cab--edge" href="edge-rush.html" data-game="edge-rush" style="--glow:#b6ff3b; --glow-rgb:182,255,59" aria-label="Play Edge Rush">
+          <span class="cab__marquee"><span class="cab__title">Edge<br>Rush</span></span>
+          <span class="cab__bezel">
+            <span class="cab__screen">
+              <span class="attract attract--edge" aria-hidden="true">
+                <span class="edge__tile edge__tile--t"></span>
+                <span class="edge__tile edge__tile--r"></span>
+                <span class="edge__tile edge__tile--b"></span>
+                <span class="edge__tile edge__tile--l"></span>
+                <span class="edge__ball"></span>
+              </span>
+              <span class="cab__start" aria-hidden="true">Press start</span>
+            </span>
+          </span>
+          <span class="cab__panel" aria-hidden="true">
+            <span class="stick"></span><span class="pbtn"></span><span class="pbtn pbtn--b"></span>
+          </span>
+          <span class="cab__body" aria-hidden="true">
+            <span class="coin-door"><span class="coin-slot"></span><span class="coin-label">Insert coin</span></span>
+          </span>
+          <span class="cab__pool" aria-hidden="true"></span>
+        </a>
+
+        <!-- Cabinet 3: next machine, still being wired up -->
+        <div class="cab cab--soon" style="--glow:#ff4fa3; --glow-rgb:255,79,163" aria-label="New game coming soon">
+          <span class="cab__marquee"><span class="cab__title">Coming<br>soon</span></span>
+          <span class="cab__bezel">
+            <span class="cab__screen">
+              <span class="attract attract--static" aria-hidden="true"></span>
+              <span class="cab__soon-text" aria-hidden="true">Being<br>wired up</span>
+            </span>
+          </span>
+          <span class="cab__panel" aria-hidden="true">
+            <span class="stick"></span><span class="pbtn"></span><span class="pbtn pbtn--b"></span>
+          </span>
+          <span class="cab__body" aria-hidden="true">
+            <span class="coin-door"><span class="coin-slot"></span><span class="coin-label">Out of order</span></span>
+          </span>
+          <span class="cab__pool" aria-hidden="true"></span>
+        </div>
+      </div>
+
+      <p class="hall-toast" id="hall-toast" role="status" aria-live="polite"></p>
+
+      <!-- People standing on the floor, watching the machines -->
+      <div class="crowd" aria-hidden="true">
+        <svg class="onlooker onlooker--l" viewBox="0 0 200 260" preserveAspectRatio="xMidYMax meet">
+          <defs>
+            <linearGradient id="rimL" x1="1" y1="0" x2="0" y2="0">
+              <stop offset="0" stop-color="#36e4ff" stop-opacity=".9"/>
+              <stop offset=".12" stop-color="#36e4ff" stop-opacity=".25"/>
+              <stop offset=".3" stop-color="#36e4ff" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <path d="M100 18c26 0 44 20 44 47 0 22-11 39-27 46v14c38 6 66 22 78 46 6 12 5 89 5 89H0s-1-77 5-89c12-24 40-40 78-46v-14c-16-7-27-24-27-46 0-27 18-47 44-47z" fill="#07040f"/>
+          <path d="M100 18c26 0 44 20 44 47 0 22-11 39-27 46v14c38 6 66 22 78 46 6 12 5 89 5 89H0s-1-77 5-89c12-24 40-40 78-46v-14c-16-7-27-24-27-46 0-27 18-47 44-47z" fill="url(#rimL)"/>
+        </svg>
+        <svg class="onlooker onlooker--r" viewBox="0 0 200 260" preserveAspectRatio="xMidYMax meet">
+          <defs>
+            <linearGradient id="rimR" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#ff4fa3" stop-opacity=".85"/>
+              <stop offset=".12" stop-color="#ff4fa3" stop-opacity=".22"/>
+              <stop offset=".3" stop-color="#ff4fa3" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <path d="M98 10c24 0 41 19 41 44 0 13-4 24-10 32 9 3 14 10 14 18 0 4-1 8-3 11 40 7 54 24 58 48 3 18 2 97 2 97H0s-1-79 2-97c4-24 18-41 58-48-2-3-3-7-3-11 0-8 5-15 14-18-6-8-10-19-10-32 0-25 17-44 37-44z" fill="#07040f"/>
+          <path d="M98 10c24 0 41 19 41 44 0 13-4 24-10 32 9 3 14 10 14 18 0 4-1 8-3 11 40 7 54 24 58 48 3 18 2 97 2 97H0s-1-79 2-97c4-24 18-41 58-48-2-3-3-7-3-11 0-8 5-15 14-18-6-8-10-19-10-32 0-25 17-44 37-44z" fill="url(#rimR)"/>
+        </svg>
+      </div>
     </section>
 
     <section class="ad-slot">
@@ -94,6 +172,7 @@
     <span>Contact: <a href="mailto:pineappwin@gmail.com">pineappwin@gmail.com</a></span>
   </footer>
 
-  <script src="script.js?v=6"></script>
+  <script src="coins.js?v=2"></script>
+  <script src="arcade.js?v=3"></script>
 </body>
 </html>

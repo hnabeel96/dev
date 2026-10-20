@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500;700&family=Press+Start+2P&family=Space+Grotesk:wght@400;500;600;700;800&display=swap');
 
 :root {
   --bg: #0b0f0d;
@@ -655,3 +655,213 @@ html, body {
     font-size: 1.15rem;
   }
 }
+
+/* ==========================================================================
+   Wordless layout (v5): no HUD, no start screen, the game fills the page.
+   ========================================================================== */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.nav-back.icon-only {
+  width: 38px;
+  height: 38px;
+  justify-content: center;
+  font: 700 1.3rem/1 'Space Grotesk', sans-serif;
+  border: 1px solid var(--border-light);
+  border-radius: 4px;
+  background: var(--surface);
+  letter-spacing: 0;
+}
+
+.nav-back.icon-only:focus-visible,
+.control-btn:focus-visible,
+.restart-btn:focus-visible {
+  outline: 2px solid var(--lime);
+  outline-offset: 3px;
+}
+
+.game-header .shields-row {
+  margin-top: 0;
+  gap: 8px;
+}
+
+.game-header .shield-pip {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+}
+
+.canvas-container {
+  height: clamp(420px, calc(100dvh - 110px), 820px);
+}
+
+.game-overlay {
+  align-items: center;
+  justify-content: center;
+  background: rgba(8, 12, 10, 0.72);
+}
+
+.restart-btn {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  border: 2px solid var(--lime);
+  background: rgba(217, 243, 106, 0.12);
+  color: var(--lime);
+  font: 700 3rem/1 'Space Grotesk', sans-serif;
+  cursor: pointer;
+  box-shadow: 0 0 24px var(--lime-glow), inset 0 0 18px rgba(217, 243, 106, 0.18);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.restart-btn:hover {
+  transform: rotate(-90deg) scale(1.06);
+  box-shadow: 0 0 36px var(--lime-glow-strong), inset 0 0 18px rgba(217, 243, 106, 0.25);
+}
+
+@media (max-width: 680px) {
+  .canvas-container { height: calc(100dvh - 96px); min-height: 360px; }
+}
+
+@media (max-width: 480px) {
+  .canvas-container { height: calc(100dvh - 70px); min-height: 340px; }
+  .game-header .shield-pip { width: 11px; height: 11px; }
+  .nav-back.icon-only, .control-btn { width: 34px; height: 34px; }
+}
+
+/* ==========================================================================
+   Arcade cabinet look (v6): matches the arcade-hall front page.
+   This machine's colour on the front page is cyan.
+   ========================================================================== */
+
+html, body {
+  background:
+    radial-gradient(ellipse 60% 40% at 50% 0%, rgba(54, 228, 255, 0.10), transparent 70%),
+    radial-gradient(ellipse 80% 60% at 50% 110%, rgba(120, 60, 220, 0.35), transparent 70%),
+    #120a24;
+}
+
+.game-header {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  gap: 14px;
+  border-bottom: 0;
+  margin-bottom: 10px;
+}
+
+.game-header .header-controls { justify-self: end; }
+
+.scoreline {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 18px;
+  font-family: 'Press Start 2P', monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+.arcade-score {
+  font-size: clamp(0.95rem, 3.4vw, 1.3rem);
+  font-weight: 400;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(54, 228, 255, 0.85);
+}
+
+.arcade-best {
+  font-size: clamp(0.55rem, 2vw, 0.72rem);
+  color: #ffd23f;
+  text-shadow: 0 0 8px rgba(255, 210, 63, 0.6);
+}
+
+.nav-back.icon-only,
+.control-btn {
+  background: #1a1030;
+  border-color: #3a2a66;
+  color: #f4efff;
+}
+
+/* The arena is the CRT inside a cabinet bezel */
+.canvas-container {
+  border: 14px solid #120b24;
+  border-radius: 22px / 26px;
+  background: radial-gradient(ellipse at 50% 45%, #0d1b33 0%, #04060f 85%);
+  box-shadow:
+    inset 0 0 0 3px #000,
+    inset 0 0 40px rgba(0, 0, 0, 0.9),
+    0 0 0 3px #36e4ff,
+    0 0 36px rgba(54, 228, 255, 0.35);
+}
+
+.canvas-container::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    radial-gradient(ellipse 80% 40% at 30% 10%, rgba(255, 255, 255, 0.06), transparent 70%),
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.22) 0 2px, transparent 2px 4px);
+  z-index: 5;
+}
+
+.game-overlay { z-index: 6; background: rgba(6, 4, 16, 0.72); }
+
+@media (max-width: 480px) {
+  .game-header { gap: 8px; }
+  .scoreline { gap: 10px; }
+  .canvas-container { border-width: 8px; }
+}
+
+/* Coin gate (v7) */
+.game-header { grid-template-columns: auto 1fr auto auto auto; }
+.game-overlay .coin-gate { display: grid; place-items: center; gap: 14px; }
+
+.insert-btn,
+.get-coins {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 22px;
+  border-radius: 8px;
+  font: 400 clamp(0.75rem, 2.6vw, 0.95rem) 'Press Start 2P', monospace;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.insert-btn {
+  border: 0;
+  color: #160b2b;
+  background: #ffd23f;
+  box-shadow: 0 5px 0 #8a6200, 0 0 26px rgba(255, 210, 63, 0.55);
+  animation: insertBlink 1.2s steps(1, end) infinite;
+}
+
+.insert-btn:active { transform: translateY(4px); box-shadow: 0 1px 0 #8a6200; }
+
+.get-coins {
+  color: #ffe58a;
+  border: 2px solid #ffd23f;
+  background: rgba(40, 24, 6, 0.7);
+}
+
+.insert-btn .coin-icon, .get-coins .coin-icon { width: 26px; height: 26px; }
+.insert-btn .coin-icon::after, .get-coins .coin-icon::after { inset: 7px; }
+.insert-btn:focus-visible, .get-coins:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
+
+@keyframes insertBlink { 50% { filter: brightness(0.8); } }
+
+@media (max-width: 480px) {
+  .game-header .coin-chip { height: 30px; padding: 0 9px 0 6px; font-size: 0.6rem; gap: 6px; }
+  .game-header .coin-chip .coin-icon { width: 14px; height: 14px; }
+  .game-header .coin-chip .coin-icon::after { inset: 3.5px; }
+  .scoreline .arcade-best { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) { .insert-btn { animation: none; } }
+.insert-btn[hidden], .get-coins[hidden] { display: none; }

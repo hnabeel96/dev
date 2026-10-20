@@ -110,11 +110,44 @@
     - Upgraded `privacy.html` with glassmorphic policy cards (`.policy-card`), category tags, and external resource action buttons.
     - Added active navigation tab highlight (`nav a.active`) and bumped to `styles.css?v=8`.
 
+40. Created branch `feature/arcade-theme` from `main` and turned the front page into an arcade hall:
+    - `index.html` hero/carousel replaced by a room scene: neon wall sign ("Small games. Big fun."), a row of three cabinets (Chrono Pendulum, Edge Rush, and a "Coming soon" machine showing static), perspective arcade carpet, light pooling under each machine, and two onlooker silhouettes in the foreground (desktop only).
+    - Each cabinet has a backlit marquee, CRT screen with a live attract-mode animation of its game, control panel and coin door. Screens power on in sequence on load; hover/focus lifts the machine; click plays a synthesized coin chime and flashes the screen before opening the game.
+    - New `arcade.css?v=1` and `arcade.js?v=1` (index only); `styles.css` is still shared by About/Privacy. Removed the unused carousel `script.js`.
+    - Phones and narrow windows: the cabinets become a swipeable aisle with snap; arrow keys move between machines. Reduced motion stops all animation.
+    - Verified with headless Chromium at 1440x900, 1280x720 and 390x844 (no horizontal page scroll, links open the games).
+
+41. Chrono Pendulum game page made wordless (`pendulum.html`, `pendulum.css?v=5`, `pendulum.js?v=4`):
+    - Removed the HUD (title, score, best, speed), start screen, rules, tap hint, text popups and game-over summary. The game starts swinging as soon as the page opens.
+    - Header keeps only an icon back button, three life pips and the sound toggle. Game over shows a single ↺ button (tap anywhere or Space also restarts, after a 0.6s guard).
+    - New "tap now" cue: the target ring glows and thickens when the ball overlaps it, and turns gold with a ripple when the ball is fully inside.
+    - Swing is centred vertically now that the arena fills the screen. Scoring and best score still run in the background but are not shown.
+
+42. Arcade cabinet look for both game pages, score back on Chrono Pendulum, and Edge Rush rebuilt:
+    - Both game pages now match the arcade hall: purple room background, the arena framed as a CRT inside a cabinet bezel in that machine's colour (Pendulum cyan, Edge Rush lime), and an arcade score line in Press Start 2P (6-digit zero-padded score, ★ best).
+    - Chrono Pendulum (`pendulum.css?v=6`, `pendulum.js?v=5`): score and best are shown again; still no other text.
+    - Edge Rush (`edge-rush.html`, `edge-rush.css?v=3`, `edge-rush.js?v=3`), new game: a square box with four paddles, one fixed to each side. Only the active paddle moves. Pick a paddle with W/A/S/D or by tapping/clicking near its side; slide it with the arrow keys, by dragging, or (mouse) by moving. Inactive paddles stay put but still block the ball. +1 per hit, ball speeds up 3.5% per hit (cap 1.25 box/s), paddles shrink slightly with score. Ball reaching a wall costs a life (3 lives), then re-serves from the centre. Best score kept in `edgeRushBest`, sound toggle in `edgeRushSound`.
+    - Front-page Edge Rush cabinet attract mode now shows four paddles sliding to meet the ball (`arcade.css?v=2`).
+    - Verified with headless Chromium (desktop + phone, no page errors) and a bot run that tracked the ball: 11 hits in 15s with no lives lost.
+
+43. Coins: one coin = one game, with a coin machine in the arcade hall:
+    - New shared `coins.js` (window.Coins) and `coins.css`, loaded on the front page and both games. Balance in localStorage `pineappCoins`; a cabinet hands its game a one-play credit in sessionStorage `pineappCredit`. Coins are per-browser and have no value outside the site.
+    - Front page: a "Coins" change machine is the first machine in the aisle. Its yellow button dispenses a random payout (1:30%, 2:28%, 3:20%, 4:11%, 5:7%, 10 jackpot:4%) with coins dropping into a tray, an LED readout and clink sounds. A coin counter sits in the header. New visitors start with 0 coins.
+    - Clicking a cabinet spends a coin (coin drops into its slot) and opens the game. With 0 coins the cabinet refuses (slot flashes, shake), a message points to the coin machine and the machine's button pulses.
+    - Games: a coin inserted at the cabinet starts the first game. Otherwise, and after every game over, the screen shows Insert coin (spends 1) or, when empty, Get coins (back to `index.html#coin-machine`).
+    - Ad rewards later: call `Coins.grant(n, 'ad')` or `Coins.dispense('ad')` from the rewarded-ad callback; counters update via `Coins.onChange`.
+    - Verified end to end in headless Chromium: refuse at 0, dispense, spend at cabinet, replay costs 1, Get coins at 0, cabinet credit not double-charged.
+
+44. Coin rules tightened (`coins.js?v=2`, `arcade.js?v=3`, `arcade.css?v=4`):
+    - The coin machine only pays out when the wallet is at 0. With coins left, its button is dimmed, the readout says SPEND, and pressing it buzzes with a message.
+    - Coins expire 24 hours after the last payout (timestamp in localStorage `pineappCoinsAt`). The wallet is checked on every read and a timer wipes the counter if a page is open at expiry. `Coins.grant()` (machine or future ads) restarts the 24-hour clock.
+    - Verified in headless Chromium: refuse while holding coins, refill at 0, wiped after 25h, live wipe on an open page.
+
 ## Resume checklist
 
 1. Work from `C:\Users\Nabeel\Desktop\dev\website`.
 2. The live source is tracked on GitHub at `hnabeel96/dev`, branch `main`.
-3. Edge Rush is launched from `edge-rush.html`, `edge-rush.css`, and `edge-rush.js`.
+3. Edge Rush (four-paddle version) is launched from `edge-rush.html`, `edge-rush.css`, and `edge-rush.js`.
 4. Chrono Pendulum is launched from `pendulum.html`, `pendulum.css`, and `pendulum.js`.
 5. Before handing off after later changes, append a numbered entry to this file, then commit and push it with the website changes.
 
@@ -123,5 +156,5 @@
 - Branding is pineapp.win.
 - Website description and copy updated to focus on customer/player experience.
 - Google Analytics (`G-WJCZS9H72H`) is integrated on all site pages (`index.html`, `edge-rush.html`, `pendulum.html`, `about.html`, `privacy.html`).
-- Working on branch `feature/addcontact`.
+- `feature/arcade-theme` merged into `main` (PR) on 2026-10-20.
 - Update this file after each material work step so another agent can resume from the current state.
