@@ -558,6 +558,7 @@
 
     restartLockUntil = performance.now() + 600; // the losing tap shouldn't instantly restart
     showCoinGate();
+    setTimeout(() => { if (!isPlaying && !restartBtn.hidden) restartBtn.focus({ preventScroll: true }); }, 650);
   }
 
   // Event Listeners for Controls
@@ -589,10 +590,7 @@
     if (e.target.closest('button, a')) return;
     e.preventDefault();
     initAudio();
-    if (!isPlaying) {
-      tryRestart();
-      return;
-    }
+    if (!isPlaying) return; // a new game only starts from the Insert coin button
     handleStrike();
   });
 
@@ -601,7 +599,7 @@
       e.preventDefault();
       initAudio();
       if (!isPlaying) {
-        tryRestart();
+        // a new game only starts from the Insert coin button (Enter on the focused button still works)
       } else {
         handleStrike();
       }

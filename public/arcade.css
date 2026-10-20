@@ -194,14 +194,14 @@
    -------------------------------------------------------------------------- */
 .aisle {
   /* 1em = one cabinet unit; a cabinet is 16em wide. Scales with viewport height. */
-  font-size: clamp(9px, min(1.42vh, 1.02vw), 14.5px);
+  font-size: clamp(9px, min(1.42vh, 0.88vw), 14.5px);
   margin-top: auto;
   margin-bottom: calc(var(--floor-h) * 0.42);
   padding-top: 3.5em;
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  gap: 3.4em;
+  gap: 2.6em;
   position: relative;
   z-index: 1;
 }
@@ -226,6 +226,7 @@
 .cab:nth-child(3) { --d: 1.3s; }
 .cab:nth-child(4) { --d: 1.55s; }
 .cab:nth-child(5) { --d: 1.8s; }
+.cab:nth-child(6) { --d: 2.05s; }
 
 /* Backlit marquee on top */
 .cab__marquee {
@@ -726,6 +727,130 @@
 
 .cab--hoop .stick::after { background: radial-gradient(circle at 35% 30%, #fff 0%, #ff7a1f 30%, #8a2d00 100%); }
 
+
+/* Hedgie Bonk: hedgehogs pop out of holes, the hammer finds them */
+.hb__field {
+  position: absolute;
+  left: 6%;
+  right: 6%;
+  top: 46%;
+  bottom: 16%;
+  border-radius: 0.6em;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(255, 246, 214, 0.5) 0 0.12em, transparent 0.16em) 0 0 / 2.2em 2.2em,
+    linear-gradient(180deg, #2f9a4c, #1f6e36);
+  box-shadow: inset 0 0 0 0.2em #ffcf33;
+}
+
+.hb__hole {
+  position: absolute;
+  top: 34%;
+  width: 24%;
+  height: 34%;
+  overflow: hidden;
+  z-index: 2;
+}
+
+/* the dark hole the hog rises out of */
+.hb__hole::after {
+  content: '';
+  position: absolute;
+  left: 4%;
+  right: 4%;
+  bottom: 0;
+  height: 26%;
+  border-radius: 50%;
+  background: #050205;
+  box-shadow: 0 0 0 0.16em #241a1e;
+  z-index: -1;
+}
+
+.hb__hole--a { left: 10%; }
+.hb__hole--b { left: 38%; }
+.hb__hole--c { left: 66%; }
+
+.hb__hog {
+  position: absolute;
+  left: 14%;
+  right: 14%;
+  bottom: 10%;
+  height: 72%;
+  border-radius: 50% 50% 42% 42%;
+  background:
+    radial-gradient(circle at 36% 58%, #0e0806 0 5%, transparent 6%),
+    radial-gradient(circle at 64% 58%, #0e0806 0 5%, transparent 6%),
+    radial-gradient(circle at 50% 72%, #0e0806 0 6%, transparent 7%),
+    radial-gradient(ellipse 46% 40% at 50% 66%, #f1d0a3 0 98%, transparent 100%),
+    repeating-conic-gradient(from 0deg at 50% 70%, #3a2416 0 7deg, #6b4429 7deg 14deg);
+  transform: translateY(110%);
+  animation: 3s ease-out infinite;
+}
+
+.hb__hole--a .hb__hog { animation-name: hogA; }
+.hb__hole--b .hb__hog { animation-name: hogB; }
+.hb__hole--c .hb__hog { animation-name: hogC; }
+
+@keyframes hogA {
+  0%   { transform: translateY(110%); }
+  6%, 16% { transform: translateY(0); }
+  18%  { transform: translateY(0) scaleY(0.55); }
+  26%, 100% { transform: translateY(110%); }
+}
+@keyframes hogB {
+  0%, 66% { transform: translateY(110%); }
+  72%, 82% { transform: translateY(0); }
+  84%  { transform: translateY(0) scaleY(0.55); }
+  92%, 100% { transform: translateY(110%); }
+}
+@keyframes hogC {
+  0%, 33% { transform: translateY(110%); }
+  39%, 49% { transform: translateY(0); }
+  51%  { transform: translateY(0) scaleY(0.55); }
+  59%, 100% { transform: translateY(110%); }
+}
+
+/* Plastic hammer: hovers, then bonks the hog that's up */
+.hb__hammer {
+  position: absolute;
+  top: 24%;
+  width: 3.6em;
+  height: 1.6em;
+  margin-left: -1.8em;
+  border-radius: 0.5em;
+  background: repeating-linear-gradient(90deg, #ea2430 0 0.5em, #ff4b52 0.5em 0.8em);
+  box-shadow: inset 0 0 0 0.18em #ffd23a;
+  transform-origin: 50% -275%;
+  animation: hammerBonk 3s ease-in-out infinite;
+  z-index: 3;
+}
+
+.hb__hammer::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 100%;
+  width: 0.45em;
+  height: 4.4em;
+  margin-left: -0.22em;
+  border-radius: 0.2em;
+  background: linear-gradient(0deg, #ffd23a, #e0b020 70%, #2a7bff 70%);
+}
+
+@keyframes hammerBonk {
+  0%       { left: 50%; transform: rotate(24deg); }
+  10%      { left: 22%; transform: rotate(24deg); }
+  16%      { left: 22%; transform: rotate(-6deg) translateY(1.4em); }
+  22%      { left: 22%; transform: rotate(24deg); }
+  43%      { left: 78%; transform: rotate(24deg); }
+  49%      { left: 78%; transform: rotate(-6deg) translateY(1.4em); }
+  55%      { left: 78%; transform: rotate(24deg); }
+  76%      { left: 50%; transform: rotate(24deg); }
+  82%      { left: 50%; transform: rotate(-6deg) translateY(1.4em); }
+  88%, 100% { left: 50%; transform: rotate(24deg); }
+}
+
+.cab--hedgie .stick::after { background: radial-gradient(circle at 35% 30%, #fff 0%, #ffcf33 30%, #8a6a00 100%); }
+
 /* Coming soon: a screen of static */
 .attract--static {
   opacity: 0.5;
@@ -1108,7 +1233,7 @@
 /* --------------------------------------------------------------------------
    Smaller screens: walk down the aisle by swiping
    -------------------------------------------------------------------------- */
-@media (max-width: 1360px) {
+@media (max-width: 1700px) {
   .crowd { display: none; }
 }
 
@@ -1171,6 +1296,8 @@
   .pend__ring,
   .hoop__ball,
   .hoop__net,
+  .hb__hog,
+  .hb__hammer,
   .edge__ball,
   .edge__tile {
     animation: none !important;
@@ -1180,6 +1307,8 @@
   .pend__arm { transform: rotate(18deg); }
   .edge__ball { left: 47%; top: 11%; }
   .hoop__ball { left: 50%; top: 30%; }
+  .hb__hole--b .hb__hog { transform: translateY(0); }
+  .hb__hammer { left: 50%; transform: rotate(24deg); }
   .edge__tile--t { left: 47%; background: var(--neon-lime); }
   .edge__tile--b { left: 56%; }
   .edge__tile--l { top: 46%; }

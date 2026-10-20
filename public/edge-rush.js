@@ -151,6 +151,7 @@
     renderCoinGate();
     overCard.classList.remove('hidden');
     S.overAt = performance.now();
+    setTimeout(() => { if (!S.running && !againBtn.hidden) againBtn.focus({ preventScroll: true }); }, 500);
   }
 
   function miss(side) {
@@ -417,13 +418,7 @@
 
   window.addEventListener('keydown', (e) => {
     const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
-    if ((k === ' ' || k === 'Enter') && !S.running) {
-      if (e.target.closest && e.target.closest('a, button')) return; // let the focused control handle it
-      e.preventDefault();
-      if (!overCard.classList.contains('hidden') && performance.now() - (S.overAt || 0) < 500) return;
-      payAndStart();
-      return;
-    }
+    if ((k === ' ' || k === 'Enter') && !S.running) return; // a new game only starts from the Insert coin button
     if (PICK[k]) { setActive(PICK[k]); e.preventDefault(); return; }
     if (k.startsWith('Arrow')) { S.keys.add(k); e.preventDefault(); }
   });

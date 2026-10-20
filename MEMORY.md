@@ -155,12 +155,18 @@
     - The cabinet-to-game credit now lives in localStorage `pineappCredit` as {game, at} and is only honoured for 2 minutes (sessionStorage was unreliable across page loads in some viewers).
     - Hoop Rush: a coin inserted at the cabinet starts the game immediately, skipping the start card. Sound wakes on the first touch or key, since browsers block audio until then.
 
+48. Added Hedgie Bonk (branch `feature/hedgie-bonk`) as the second game, after Hoop Rush:
+    - `hedgie-bonk.html` is Eko's Hedgie Bonk artifact (three.js r128 + postprocessing from cdnjs/jsDelivr) moved onto the site with its gameplay unchanged. Added: Google tag, meta description, back button and coin counter bottom-left (score bezels own the top), coins. A cabinet coin starts play immediately. Without one the cabinet waits in attract mode (ticker: INSERT COIN). After game over a bonk inserts a coin. When empty, the ticker says to get coins and a Get coins button appears. Best score key `hedgieBonkBest`.
+    - Front page: pink Hedgie Bonk cabinet with an attract screen of hedgehogs popping from three holes and a plastic hammer bonking them. "Coming soon" machine changed to violet. Six machines fit in one row (`arcade.css?v=7`: cabinet unit capped at 0.88vw, gap 2.6em). Onlookers only shown at 1700px+.
+
+49. New rounds need an explicit coin: after game over, only the Insert coin button starts the next round in every game (taps, bonks and Space no longer restart and silently spend a coin). Hedgie Bonk got an Insert coin button (bottom centre, swaps with Get coins when empty) and its ticker now reads INSERT COIN TO PLAY AGAIN. The button takes keyboard focus after game over, so Enter works. (`pendulum.js?v=7`, `edge-rush.js?v=5`.)
+
 ## Resume checklist
 
 1. Work from `C:\Users\Nabeel\Desktop\dev\website`.
 2. The live source is tracked on GitHub at `hnabeel96/dev`, branch `main`.
 3. Edge Rush (four-paddle version) is launched from `edge-rush.html`, `edge-rush.css`, and `edge-rush.js`.
-4. Hoop Rush is `hoop-rush.html` (single file). Chrono Pendulum is launched from `pendulum.html`, `pendulum.css`, and `pendulum.js`.
+4. Hoop Rush is `hoop-rush.html` and Hedgie Bonk is `hedgie-bonk.html` (single files). Chrono Pendulum is launched from `pendulum.html`, `pendulum.css`, and `pendulum.js`.
 5. Before handing off after later changes, append a numbered entry to this file, then commit and push it with the website changes.
 
 ## Current state
