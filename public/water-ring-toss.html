@@ -1,0 +1,643 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WJCZS9H72H"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-WJCZS9H72H');
+  </script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Water ring toss on pineapp.win: pump bubbles to float all eight rings onto the pegs, like the classic handheld water game.">
+<meta name="theme-color" content="#120a24">
+<title>Water Ring Toss | pineapp.win</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#fff1c4;
+  --ink:#3b1d4a;
+  --ink-soft:#7a5a86;
+  --shell-a:#ff86b0;
+  --shell-b:#ff4f8b;
+  --shell-c:#d8356f;
+  --btn:#ffd23f;
+  --btn-edge:#d99a00;
+  --ghost-bg:rgba(59,29,74,.08);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#1f1433; --ink:#ffe8f1; --ink-soft:#c8a9d6;
+    --shell-a:#ff6f9f; --shell-b:#e8407d; --shell-c:#b52a5f;
+    --ghost-bg:rgba(255,232,241,.1);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#1f1433; --ink:#ffe8f1; --ink-soft:#c8a9d6;
+  --shell-a:#ff6f9f; --shell-b:#e8407d; --shell-c:#b52a5f;
+  --ghost-bg:rgba(255,232,241,.1);
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);height:100%}
+*,*::before,*::after{box-sizing:inherit}
+body{
+  margin:0;min-height:100%;background:var(--bg);color:var(--ink);
+  font-family:"Fredoka","Trebuchet MS","Segoe UI",system-ui,sans-serif;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:14px;padding:16px 12px;
+  -webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;
+}
+.toy{
+  width:min(92vw,380px,calc((100dvh - 250px) * 0.72));
+  min-width:260px;
+  background:linear-gradient(160deg,var(--shell-a),var(--shell-b) 45%,var(--shell-c));
+  border-radius:38px 38px 48px 48px;
+  padding:12px 12px 16px;
+  box-shadow:
+    inset 0 3px 0 rgba(255,255,255,.45),
+    inset 0 -6px 0 rgba(0,0,0,.12),
+    0 18px 40px rgba(120,20,60,.28);
+  position:relative;
+}
+.label{
+  display:flex;justify-content:space-between;align-items:baseline;
+  color:#fff;padding:2px 10px 8px;
+  text-shadow:0 2px 0 rgba(0,0,0,.15);
+}
+.label h1{margin:0;font-size:1.25rem;font-weight:700;letter-spacing:.01em}
+.label .time{font-size:1rem;font-weight:600;font-variant-numeric:tabular-nums}
+.window{
+  position:relative;border-radius:20px;overflow:hidden;
+  border:3px solid rgba(255,255,255,.55);
+  box-shadow:inset 0 0 0 2px rgba(0,0,0,.08),0 2px 0 rgba(0,0,0,.08);
+  background:#7fe3e8;
+}
+canvas{display:block;width:100%;aspect-ratio:320/420;touch-action:none}
+.controls{
+  display:grid;grid-template-columns:auto 1fr auto;align-items:center;
+  gap:10px;padding:16px 8px 0;
+}
+.pump{
+  width:76px;height:76px;border-radius:50%;border:0;cursor:pointer;
+  background:radial-gradient(circle at 35% 30%,#fff6c9 0 12%,var(--btn) 38%,#f2b600 100%);
+  box-shadow:0 7px 0 var(--btn-edge),0 10px 14px rgba(0,0,0,.2);
+  transition:transform .06s,box-shadow .06s;
+  touch-action:none;-webkit-touch-callout:none;
+}
+.pump.down{transform:translateY(6px);box-shadow:0 1px 0 var(--btn-edge),0 3px 6px rgba(0,0,0,.2)}
+.pump:focus-visible{outline:3px solid #fff;outline-offset:4px}
+.count{text-align:center;color:#fff;text-shadow:0 2px 0 rgba(0,0,0,.15);line-height:1.1}
+.count b{font-size:1.9rem;font-weight:700;font-variant-numeric:tabular-nums}
+.count span{display:block;font-size:.85rem;opacity:.9}
+.below{text-align:center;max-width:34ch;display:flex;flex-direction:column;gap:10px;align-items:center}
+.below p{margin:0;color:var(--ink-soft);font-size:.95rem;line-height:1.45}
+.ghost{
+  font:inherit;font-weight:600;font-size:.95rem;color:var(--ink);
+  background:var(--ghost-bg);border:0;border-radius:999px;padding:9px 18px;cursor:pointer;
+}
+.ghost:focus-visible{outline:3px solid var(--shell-b);outline-offset:3px}
+.win{
+  position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;
+  gap:8px;background:rgba(20,70,90,.45);color:#fff;text-align:center;padding:20px;
+  -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);
+}
+.win.show{display:flex}
+.win h2{margin:0;font-size:1.7rem;font-weight:700;text-shadow:0 2px 0 rgba(0,0,0,.2)}
+.win p{margin:0;font-size:1.05rem}
+.win button{
+  margin-top:8px;font:inherit;font-weight:700;font-size:1rem;color:#3b1d4a;
+  background:var(--btn);border:0;border-radius:999px;padding:10px 22px;cursor:pointer;
+  box-shadow:0 4px 0 var(--btn-edge);
+}
+@media (prefers-reduced-motion: reduce){.pump{transition:none}}
+
+/* pineapp.win arcade: the toy sits on the arcade floor at night */
+:root:root{--bg:#120a24;--ink:#f4efff;--ink-soft:#b9a9cf;--ghost-bg:rgba(255,255,255,.08);color-scheme:dark}
+body{background:radial-gradient(ellipse 60% 40% at 50% 0%,rgba(79,139,255,.14),transparent 70%),radial-gradient(ellipse 80% 60% at 50% 110%,rgba(120,60,220,.35),transparent 70%),var(--bg);padding-top:64px}
+.site-top{position:fixed;z-index:5;top:max(10px,env(safe-area-inset-top,0px));left:max(12px,env(safe-area-inset-left,0px));right:max(12px,env(safe-area-inset-right,0px));display:flex;justify-content:space-between;align-items:center}
+.site-back{width:38px;height:38px;display:grid;place-items:center;border-radius:8px;border:1px solid #3a2a66;background:#1a1030;color:var(--ink);font:700 20px/1 "Fredoka",sans-serif;text-decoration:none}
+.site-back:hover{border-color:#4f8bff}
+.site-back:focus-visible{outline:3px solid #ffd23f;outline-offset:3px}
+.toy{box-shadow:inset 0 3px 0 rgba(255,255,255,.45),inset 0 -6px 0 rgba(0,0,0,.12),0 18px 40px rgba(0,0,0,.5),0 0 60px rgba(79,139,255,.22)}
+/* coin gate over the tank */
+.gate{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:rgba(20,40,70,.55);color:#fff;text-align:center;padding:20px;-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
+.gate[hidden]{display:none}
+.gate h2{margin:0;font-size:1.6rem;font-weight:700;text-shadow:0 2px 0 rgba(0,0,0,.25)}
+.insert,.get{display:inline-flex;align-items:center;gap:10px;font:400 .8rem "Press Start 2P",monospace;border-radius:999px;padding:14px 20px;cursor:pointer;text-decoration:none}
+.insert{color:#3b1d4a;background:var(--btn);border:0;box-shadow:0 5px 0 var(--btn-edge),0 0 22px rgba(255,210,63,.5)}
+.insert:active{transform:translateY(4px);box-shadow:0 1px 0 var(--btn-edge)}
+.get{color:#ffe58a;background:rgba(40,24,6,.75);border:2px solid var(--btn)}
+.insert[hidden],.get[hidden]{display:none}
+.insert:focus-visible,.get:focus-visible{outline:3px solid #fff;outline-offset:4px}
+.insert .coin-icon,.get .coin-icon{width:20px;height:20px}
+.insert .coin-icon::after,.get .coin-icon::after{inset:5px}
+</style>
+<link rel="stylesheet" href="coins.css?v=1">
+<script src="coins.js?v=3"></script>
+</head>
+<body>
+<div class="site-top">
+  <a class="site-back" href="index.html" aria-label="Back to games" title="Back to games">←</a>
+  <a class="coin-chip" href="index.html#coin-machine" aria-label="Your coins"><span class="coin-icon" aria-hidden="true"></span><span data-coin-count>00</span></a>
+</div>
+<div class="toy">
+  <div class="label">
+    <h1>Water ring toss</h1>
+    <span class="time" id="time" aria-label="Time">0:00</span>
+  </div>
+  <div class="window">
+    <canvas id="tank" aria-label="Water tank with two pegs and floating rings"></canvas>
+    <div class="win" id="win" role="dialog" aria-live="polite">
+      <h2>All rings on!</h2>
+      <p id="winTime"></p>
+      <p id="winBest"></p>
+      <button class="insert" type="button" data-insert><span class="coin-icon" aria-hidden="true"></span><span>Insert coin</span></button>
+      <a class="get" href="index.html#coin-machine" data-get hidden><span class="coin-icon" aria-hidden="true"></span><span>Get coins</span></a>
+    </div>
+    <div class="gate" id="gate" hidden>
+      <button class="insert" type="button" data-insert><span class="coin-icon" aria-hidden="true"></span><span data-insert-label>Insert coin</span></button>
+      <a class="get" href="index.html#coin-machine" data-get hidden><span class="coin-icon" aria-hidden="true"></span><span>Get coins</span></a>
+    </div>
+  </div>
+  <div class="controls">
+    <button class="pump" id="pumpL" aria-label="Left pump"></button>
+    <div class="count" aria-live="polite"><b id="on">0</b><b>/8</b><span>rings on</span></div>
+    <button class="pump" id="pumpR" aria-label="Right pump"></button>
+  </div>
+</div>
+<div class="below">
+  <p>Tap the buttons to pump bubbles and float the rings onto the pegs. Short pumps work better than holding. On a keyboard, use A and L.</p>
+  <p id="best"></p>
+</div>
+
+<script>
+(() => {
+const W = 320, H = 420, SURF = 30, FLOOR = H - 14, WALL = 8;
+const NZ = 30, RIDGE = 34;
+const G = 110, DRAG = 1.7;
+const RW = 36, HALF = RW / 2, RIM = 5.5;
+const PEG_R = 3.2;
+const N = 8;
+const COLORS = ['#ffd23f','#6fd24a','#ff7a3d','#9b5cff','#ff4d6d','#ffd23f','#6fd24a','#ff7a3d'];
+
+function floorY(x){
+  const half = W/2 - NZ;
+  const t = Math.max(0, 1 - Math.abs(x - W/2) / half);
+  return FLOOR - RIDGE * t;
+}
+function floorSlope(x){
+  const half = W/2 - NZ;
+  if (Math.abs(x - W/2) >= half) return 0;
+  return (x > W/2 ? 1 : -1) * RIDGE / half;
+}
+
+const PEGS = [{x: W*0.34, tip: H*0.42}, {x: W*0.66, tip: H*0.42}];
+PEGS.forEach(p => p.base = floorY(p.x));
+
+const tilt = 0.22;
+const jets = [
+  {x: NZ - 4, y: FLOOR + 4, dx: Math.sin(tilt), dy: -Math.cos(tilt), held:false, level:0, holdT:0, puff:0},
+  {x: W - NZ + 4, y: FLOOR + 4, dx: -Math.sin(tilt), dy: -Math.cos(tilt), held:false, level:0, holdT:0, puff:0},
+];
+
+function shade(hex, f){
+  const n = parseInt(hex.slice(1), 16);
+  const r = Math.round(((n>>16)&255)*f), g = Math.round(((n>>8)&255)*f), b = Math.round((n&255)*f);
+  return `rgb(${r},${g},${b})`;
+}
+
+let rings = [];
+function scatter(){
+  rings = [];
+  const order = [...Array(N).keys()].sort(() => Math.random() - 0.5);
+  for (let i = 0; i < N; i++){
+    const x = 30 + i * (W - 60) / (N - 1) + (Math.random() - 0.5) * 10;
+    const c = COLORS[order[i]];
+    rings.push({
+      x, y: floorY(x) - 30 - Math.random()*120,
+      vx: (Math.random()-0.5)*20, vy: 0,
+      a: (Math.random()-0.5)*1.2, av: 0,
+      peg: -1, color: c, dark: shade(c, 0.68)
+    });
+  }
+}
+
+const bubbles = [];
+function spawnBubble(j, speed){
+  if (bubbles.length > 320) return;
+  const spread = (Math.random() - 0.5) * 0.5;
+  const px = -j.dy, py = j.dx;
+  const s = speed * (0.7 + Math.random()*0.6);
+  bubbles.push({
+    x: j.x + (Math.random()-0.5)*6, y: j.y - 4,
+    vx: (j.dx + px*spread) * s, vy: (j.dy + py*spread) * s,
+    r: 1.4 + Math.random()*3.2, ph: Math.random()*6.28
+  });
+}
+
+const f1 = {x:0,y:0,inf:0}, f2 = {x:0,y:0,inf:0};
+function jetForce(px, py, out){
+  out.x = 0; out.y = 0; out.inf = 0;
+  for (const j of jets){
+    const s = j.level * (1 + j.puff * 0.9);
+    if (s < 0.01) continue;
+    const rx = px - j.x, ry = py - j.y;
+    const along = rx*j.dx + ry*j.dy;
+    if (along < -8) continue;
+    const al = Math.max(0, along);
+    const perp = rx*(-j.dy) + ry*j.dx;
+    const fall = Math.exp(-al / 300);
+    // narrow core jet
+    const sig = 12 + al * 0.3;
+    const lat = Math.exp(-perp*perp / (2*sig*sig));
+    // broad stirring current
+    const sig2 = 60 + al * 0.5;
+    const lat2 = Math.exp(-perp*perp / (2*sig2*sig2));
+    const m = s * fall * (560*lat + 150*lat2);
+    const spread = (perp / sig2) * 0.5;
+    out.x += m * (j.dx + (-j.dy) * spread);
+    out.y += m * (j.dy + j.dx * spread);
+    out.inf += s * fall * (lat + 0.4*lat2);
+  }
+}
+
+const normA = a => { let r = ((a + Math.PI/2) % Math.PI + Math.PI) % Math.PI - Math.PI/2; return r; };
+
+function step(dt){
+  // jets
+  for (const j of jets){
+    if (j.held){
+      j.holdT += dt;
+      const target = Math.max(0.28, 1 - Math.max(0, j.holdT - 0.25) * 1.4);
+      j.level += (target - j.level) * Math.min(1, dt*14);
+    } else {
+      j.level += (0 - j.level) * Math.min(1, dt*6);
+    }
+    j.puff = Math.max(0, j.puff - dt*5);
+    const rate = j.level * 200 * (1 + j.puff);
+    let n = rate * dt;
+    while (n > 0){ if (Math.random() < n) spawnBubble(j, 260 + 200*j.level); n -= 1; }
+  }
+  if (Math.random() < dt * 1.2){
+    const x = 20 + Math.random()*(W-40);
+    bubbles.push({x, y: floorY(x) - 2, vx:0, vy:-20, r:1 + Math.random()*1.4, ph:Math.random()*6});
+  }
+
+  // stack order per peg
+  for (let p = 0; p < PEGS.length; p++){
+    const on = rings.filter(r => r.peg === p).sort((a,b) => b.y - a.y);
+    on.forEach((r,i) => r.stackY = PEGS[p].base - 4 - i*6.5);
+  }
+
+  for (const r of rings){
+    const c = Math.cos(r.a), s = Math.sin(r.a);
+    const lx = c*HALF, ly = s*HALF;
+    jetForce(r.x + lx, r.y + ly, f1);
+    jetForce(r.x - lx, r.y - ly, f2);
+    const ax = (f1.x + f2.x) * 0.5;
+    const ay = (f1.y + f2.y) * 0.5;
+    const torque = (lx*f1.y - ly*f1.x) + (-lx*f2.y + ly*f2.x);
+    const alpha = torque / (RW*RW/12) * 0.45;
+    const turb = (f1.inf + f2.inf) * 0.5;
+
+    if (r.peg >= 0){
+      const p = PEGS[r.peg];
+      r.vy += (ay + G + (Math.random()-0.5)*turb*300) * dt;
+      r.vy *= Math.exp(-DRAG*dt);
+      r.y += r.vy * dt;
+      r.vx += (ax*0.15 + (p.x - r.x)*90) * dt;
+      r.vx *= Math.exp(-7*dt);
+      r.x += r.vx * dt;
+      const lim = HALF - RIM - PEG_R - 1;
+      if (r.x < p.x - lim){ r.x = p.x - lim; r.vx = 0; }
+      if (r.x > p.x + lim){ r.x = p.x + lim; r.vx = 0; }
+      let na = normA(r.a);
+      r.av += (alpha*0.3 - na*45) * dt;
+      r.av *= Math.exp(-6*dt);
+      na += r.av * dt;
+      if (na > 0.3){ na = 0.3; r.av = 0; } else if (na < -0.3){ na = -0.3; r.av = 0; }
+      r.a = na;
+      if (r.y > r.stackY){ r.y = r.stackY; if (r.vy > 0) r.vy *= -0.1; }
+      if (r.y < p.tip - 6){ r.peg = -1; }
+      continue;
+    }
+
+    const prevY = r.y;
+    r.vx += (ax + (Math.random()-0.5)*turb*520) * dt;
+    r.vy += (ay + G + (Math.random()-0.5)*turb*520) * dt;
+    r.av += (alpha + (Math.random()-0.5)*turb*45) * dt;
+    r.vx *= Math.exp(-DRAG*dt);
+    r.vy *= Math.exp(-DRAG*dt);
+    r.av *= Math.exp(-2.4*dt);
+    r.x += r.vx * dt; r.y += r.vy * dt; r.a += r.av * dt;
+
+    // threading onto a peg
+    if (r.vy > 0){
+      for (let pi = 0; pi < PEGS.length; pi++){
+        const p = PEGS[pi];
+        if (prevY < p.tip && r.y >= p.tip){
+          const ca = Math.abs(Math.cos(r.a));
+          const hole = (HALF - RIM + 1) * ca - PEG_R;
+          if (ca > 0.55 && Math.abs(r.x - p.x) < hole){
+            r.peg = pi; r.a = normA(r.a); r.vx *= 0.3;
+            break;
+          }
+        }
+      }
+      if (r.peg >= 0) continue;
+    }
+
+    // floor contact at both ends
+    const cc = Math.cos(r.a), ss = Math.sin(r.a);
+    let touching = false;
+    for (const sign of [1, -1]){
+      const ex = r.x + sign*cc*HALF, ey = r.y + sign*ss*HALF;
+      const pen = ey + 3 - floorY(ex);
+      if (pen > 0){
+        touching = true;
+        r.y -= pen * 0.6;
+        r.a += -(sign*cc) * pen * 0.02;
+        if (r.vy > 0) r.vy *= 0.3;
+        r.av *= 0.85;
+      }
+    }
+    if (touching){
+      const sl = floorSlope(r.x);
+      r.vx += G * sl * 1.3 * dt;
+      r.vx *= 0.985;
+      r.av -= Math.sin(2*(r.a - Math.atan(sl))) * 6 * dt;
+    }
+
+    // walls
+    const ex = Math.abs(Math.cos(r.a))*HALF + 3;
+    if (r.x - ex < WALL){ r.x = WALL + ex; r.vx = Math.abs(r.vx)*0.3; }
+    if (r.x + ex > W - WALL){ r.x = W - WALL - ex; r.vx = -Math.abs(r.vx)*0.3; }
+    // water surface
+    const ey = Math.abs(Math.sin(r.a))*HALF + 3;
+    if (r.y - ey < SURF + 4){ r.y = SURF + 4 + ey; r.vy = Math.abs(r.vy)*0.1; }
+  }
+
+  // ring-ring separation (free rings only)
+  for (let i = 0; i < rings.length; i++){
+    const a = rings[i]; if (a.peg >= 0) continue;
+    for (let k = i+1; k < rings.length; k++){
+      const b = rings[k]; if (b.peg >= 0) continue;
+      const dx = b.x - a.x, dy = (b.y - a.y) * 2.2;
+      const d = Math.hypot(dx, dy), min = RW * 0.8;
+      if (d < min && d > 0.01){
+        const push = (min - d) * 0.25;
+        const nx = dx/d, ny = dy/d;
+        a.x -= nx*push; b.x += nx*push;
+        a.y -= ny*push/2.2; b.y += ny*push/2.2;
+        const mvx = (a.vx + b.vx)/2, mvy = (a.vy + b.vy)/2;
+        a.vx += (mvx - a.vx)*0.05; b.vx += (mvx - b.vx)*0.05;
+        a.vy += (mvy - a.vy)*0.05; b.vy += (mvy - b.vy)*0.05;
+      }
+    }
+  }
+
+  // bubbles
+  for (let i = bubbles.length - 1; i >= 0; i--){
+    const b = bubbles[i];
+    b.vy -= 200 * dt;
+    b.vx *= Math.exp(-2.2*dt); b.vy *= Math.exp(-1.4*dt);
+    b.ph += dt*9;
+    b.x += (b.vx + Math.sin(b.ph)*14) * dt;
+    b.y += b.vy * dt;
+    if (b.y < SURF + b.r || b.x < 0 || b.x > W){ bubbles.splice(i,1); ripple = Math.min(4, ripple + 0.04); }
+  }
+  ripple *= Math.exp(-1.2*dt);
+}
+
+// ---------- rendering ----------
+const canvas = document.getElementById('tank');
+const ctx = canvas.getContext('2d');
+let scale = 1, ripple = 0, tNow = 0;
+
+function resize(){
+  const rect = canvas.getBoundingClientRect();
+  const dpr = Math.min(window.devicePixelRatio || 1, 3);
+  canvas.width = Math.max(1, Math.round(rect.width * dpr));
+  canvas.height = Math.max(1, Math.round(rect.height * dpr));
+  scale = canvas.width / W;
+}
+new ResizeObserver(resize).observe(canvas);
+
+function drawRingArc(r, part){
+  ctx.save();
+  ctx.translate(r.x, r.y);
+  ctx.rotate(r.a);
+  const rx = HALF - RIM/2, ry = 4.4;
+  if (part !== 'front'){
+    ctx.lineWidth = RIM; ctx.strokeStyle = r.dark;
+    ctx.beginPath(); ctx.ellipse(0, 0, rx, ry, 0, Math.PI, Math.PI*2); ctx.stroke();
+  }
+  if (part !== 'back'){
+    ctx.lineWidth = RIM; ctx.strokeStyle = r.color;
+    ctx.beginPath(); ctx.ellipse(0, 0, rx, ry, 0, 0, Math.PI); ctx.stroke();
+    ctx.lineWidth = 1.4; ctx.strokeStyle = 'rgba(255,255,255,.6)';
+    ctx.beginPath(); ctx.ellipse(0, 0.6, rx, ry, 0, 0.45, Math.PI - 0.9); ctx.stroke();
+  }
+  ctx.restore();
+}
+
+function drawPeg(p){
+  const g = ctx.createLinearGradient(p.x - PEG_R, 0, p.x + PEG_R, 0);
+  g.addColorStop(0, '#d9eef0'); g.addColorStop(0.4, '#ffffff'); g.addColorStop(1, '#a9cfd4');
+  ctx.fillStyle = g;
+  ctx.beginPath();
+  ctx.moveTo(p.x - PEG_R, p.base);
+  ctx.lineTo(p.x - PEG_R, p.tip + PEG_R);
+  ctx.arc(p.x, p.tip + PEG_R, PEG_R, Math.PI, 0);
+  ctx.lineTo(p.x + PEG_R, p.base);
+  ctx.closePath(); ctx.fill();
+  ctx.fillStyle = '#e9f7f8';
+  ctx.beginPath(); ctx.ellipse(p.x, p.base, 11, 3.5, 0, 0, Math.PI*2); ctx.fill();
+}
+
+function draw(){
+  ctx.setTransform(scale, 0, 0, scale, 0, 0);
+  // air gap
+  ctx.fillStyle = '#e6fbfd';
+  ctx.fillRect(0, 0, W, H);
+  // water with wavy surface
+  const A = 1.2 + ripple;
+  ctx.beginPath();
+  ctx.moveTo(0, H);
+  for (let x = 0; x <= W; x += 8){
+    const y = SURF + Math.sin(x*0.05 + tNow*2) * A + Math.sin(x*0.11 - tNow*3.1) * A * 0.5;
+    ctx.lineTo(x, y);
+  }
+  ctx.lineTo(W, H); ctx.closePath();
+  const wg = ctx.createLinearGradient(0, SURF, 0, H);
+  wg.addColorStop(0, '#8fe9ee'); wg.addColorStop(1, '#27a8bb');
+  ctx.fillStyle = wg; ctx.fill();
+  ctx.strokeStyle = 'rgba(255,255,255,.7)'; ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  for (let x = 0; x <= W; x += 8){
+    const y = SURF + Math.sin(x*0.05 + tNow*2) * A + Math.sin(x*0.11 - tNow*3.1) * A * 0.5;
+    x ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+  }
+  ctx.stroke();
+
+  // floor tray
+  ctx.fillStyle = '#b8ecef';
+  ctx.beginPath(); ctx.moveTo(0, H);
+  for (let x = 0; x <= W; x += 4) ctx.lineTo(x, floorY(x));
+  ctx.lineTo(W, H); ctx.closePath(); ctx.fill();
+  ctx.strokeStyle = 'rgba(255,255,255,.6)'; ctx.lineWidth = 1.2;
+  ctx.beginPath();
+  for (let x = 0; x <= W; x += 4) x ? ctx.lineTo(x, floorY(x)) : ctx.moveTo(x, floorY(x));
+  ctx.stroke();
+
+  // nozzles
+  for (const j of jets){
+    ctx.fillStyle = '#1d7f8f';
+    ctx.beginPath(); ctx.ellipse(j.x, FLOOR + 2, 9, 5, 0, Math.PI, Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#0f5664';
+    ctx.beginPath(); ctx.ellipse(j.x, FLOOR - 1, 4, 1.8, 0, 0, Math.PI*2); ctx.fill();
+  }
+
+  // pegs with threaded rings wrapped around them
+  PEGS.forEach((p, pi) => {
+    const on = rings.filter(r => r.peg === pi);
+    on.forEach(r => drawRingArc(r, 'back'));
+    drawPeg(p);
+    on.forEach(r => drawRingArc(r, 'front'));
+  });
+
+  // free rings
+  for (const r of rings) if (r.peg < 0) drawRingArc(r, 'all');
+
+  // bubbles
+  for (const b of bubbles){
+    ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, Math.PI*2);
+    ctx.fillStyle = 'rgba(255,255,255,.18)'; ctx.fill();
+    ctx.strokeStyle = 'rgba(255,255,255,.75)'; ctx.lineWidth = 0.9; ctx.stroke();
+    ctx.fillStyle = 'rgba(255,255,255,.9)';
+    ctx.beginPath(); ctx.arc(b.x - b.r*0.35, b.y - b.r*0.35, b.r*0.28, 0, Math.PI*2); ctx.fill();
+  }
+
+  // plastic glare
+  const gl = ctx.createLinearGradient(0, 0, W, H);
+  gl.addColorStop(0.08, 'rgba(255,255,255,0)');
+  gl.addColorStop(0.14, 'rgba(255,255,255,.16)');
+  gl.addColorStop(0.2, 'rgba(255,255,255,0)');
+  ctx.fillStyle = gl; ctx.fillRect(0, 0, W, H);
+}
+
+// ---------- game state ----------
+const elOn = document.getElementById('on');
+const elTime = document.getElementById('time');
+const elWin = document.getElementById('win');
+const elBest = document.getElementById('best');
+let started = false, won = false, elapsed = 0, lastOn = -1, paid = false;
+
+function readBest(){ try { const v = parseFloat(localStorage.getItem('water-ring-toss-best')); return isFinite(v) ? v : null; } catch(e){ return null; } }
+function writeBest(v){ try { localStorage.setItem('water-ring-toss-best', String(v)); } catch(e){} }
+const fmt = s => { s = Math.floor(s); return Math.floor(s/60) + ':' + String(s%60).padStart(2,'0'); };
+function showBest(){ const b = readBest(); elBest.textContent = b != null ? 'Best time ' + fmt(b) : ''; }
+
+function reset(){
+  scatter(); bubbles.length = 0;
+  started = false; won = false; elapsed = 0; lastOn = -1;
+  elTime.textContent = '0:00';
+  elWin.classList.remove('show');
+  for (const j of jets){ j.level = 0; j.puff = 0; j.held = false; }
+  showBest();
+}
+
+function checkWin(){
+  const on = rings.filter(r => r.peg >= 0).length;
+  if (on !== lastOn){ elOn.textContent = on; lastOn = on; }
+  if (!won && started && on === N && rings.every(r => Math.abs(r.vy) < 8 && r.y >= r.stackY - 1.5)){
+    won = true;
+    const best = readBest();
+    const isBest = best == null || elapsed < best;
+    if (isBest) writeBest(elapsed);
+    document.getElementById('winTime').textContent = 'Time ' + fmt(elapsed);
+    document.getElementById('winBest').textContent = isBest ? 'New best time' : 'Best ' + fmt(best);
+    paid = false;
+    coinGate();
+    elWin.classList.add('show');
+    showBest();
+    setTimeout(() => { const b = elWin.querySelector('[data-insert]'); if (!b.hidden) b.focus({ preventScroll: true }); }, 400);
+  }
+}
+
+// ---------- input ----------
+const pumpEls = [document.getElementById('pumpL'), document.getElementById('pumpR')];
+function press(i){
+  const j = jets[i];
+  if (j.held || won || !paid) return; // pumps only work during a paid round
+  j.held = true; j.holdT = 0; j.puff = 1; j.level = Math.max(j.level, 0.65);
+  for (let k = 0; k < 22; k++) spawnBubble(j, 380);
+  ripple = Math.min(4, ripple + 0.8);
+  pumpEls[i].classList.add('down');
+  if (!started){ started = true; elapsed = 0; }
+}
+function release(i){ jets[i].held = false; pumpEls[i].classList.remove('down'); }
+
+pumpEls.forEach((el, i) => {
+  el.addEventListener('pointerdown', e => { e.preventDefault(); try { el.setPointerCapture(e.pointerId); } catch(_){} press(i); });
+  ['pointerup','pointercancel','lostpointercapture'].forEach(t => el.addEventListener(t, () => release(i)));
+  el.addEventListener('contextmenu', e => e.preventDefault());
+  el.addEventListener('keydown', e => { if ((e.key === ' ' || e.key === 'Enter') && !e.repeat){ e.preventDefault(); press(i); } });
+  el.addEventListener('keyup', e => { if (e.key === ' ' || e.key === 'Enter') release(i); });
+});
+const keyMap = {a:0, A:0, ArrowLeft:0, l:1, L:1, ArrowRight:1};
+window.addEventListener('keydown', e => { if (e.key in keyMap && !e.repeat){ e.preventDefault(); press(keyMap[e.key]); } });
+window.addEventListener('keyup', e => { if (e.key in keyMap) release(keyMap[e.key]); });
+window.addEventListener('blur', () => { release(0); release(1); });
+
+// ---------- coins (pineapp.win): 1 coin = 1 round, until all rings are on ----------
+const Coins = window.Coins;
+let credit = Coins ? (Coins.takeCredit('water-ring-toss') ? 1 : 0) : 1;
+const elGate = document.getElementById('gate');
+function canPay(){ return credit > 0 || !Coins || Coins.balance() > 0; }
+function coinGate(){
+  const ok = canPay();
+  document.querySelectorAll('[data-insert]').forEach(b => b.hidden = !ok);
+  document.querySelectorAll('[data-get]').forEach(a => a.hidden = ok);
+  const lbl = document.querySelector('[data-insert-label]'); if (lbl) lbl.textContent = credit > 0 ? 'Press start' : 'Insert coin';
+}
+function payAndPlay(){
+  if (paid) return;
+  if (credit > 0) credit--;
+  else if (Coins && !Coins.spend()) { coinGate(); return; }
+  reset(); paid = true; elGate.hidden = true; coinGate();
+}
+document.querySelectorAll('[data-insert]').forEach(b => b.addEventListener('click', payAndPlay));
+if (Coins) Coins.onChange(() => { if (!paid) coinGate(); });
+
+// ---------- loop ----------
+let last = performance.now(), acc = 0;
+const DT = 1/120;
+function frame(now){
+  let d = (now - last) / 1000; last = now;
+  if (d > 0.1) d = 0.1;
+  acc += d; tNow += d;
+  let n = 0;
+  while (acc >= DT && n < 12){ step(DT); acc -= DT; n++; }
+  if (started && !won){ elapsed += d; elTime.textContent = fmt(elapsed); }
+  checkWin();
+  draw();
+  requestAnimationFrame(frame);
+}
+reset();
+resize();
+coinGate();
+// A coin inserted at the cabinet drops you straight into a round; otherwise insert one here.
+if (credit > 0) payAndPlay(); else elGate.hidden = false;
+requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
