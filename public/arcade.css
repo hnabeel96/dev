@@ -192,7 +192,7 @@
    -------------------------------------------------------------------------- */
 .aisle {
   /* 1em = one cabinet unit; a cabinet is 16em wide. Scales with viewport height. */
-  font-size: clamp(10px, 1.42vh, 14.5px);
+  font-size: clamp(9px, min(1.42vh, 1.02vw), 14.5px);
   margin-top: auto;
   margin-bottom: calc(var(--floor-h) * 0.42);
   padding-top: 3.5em;
@@ -223,6 +223,7 @@
 .cab:nth-child(2) { --d: 1.05s; }
 .cab:nth-child(3) { --d: 1.3s; }
 .cab:nth-child(4) { --d: 1.55s; }
+.cab:nth-child(5) { --d: 1.8s; }
 
 /* Backlit marquee on top */
 .cab__marquee {
@@ -633,6 +634,96 @@
   97%, 100% { top: 46%; }
 }
 
+
+/* Hoop Rush: a ball arcs up and drops through the net */
+.attract--hoop { --ball: 2.3em; }
+
+.hoop__board {
+  position: absolute;
+  left: 50%;
+  top: 9%;
+  width: 46%;
+  height: 32%;
+  transform: translateX(-50%);
+  border: 0.22em solid rgba(255, 255, 255, 0.85);
+  border-radius: 0.2em;
+  background: rgba(120, 160, 255, 0.08);
+  box-shadow: 0 0 0.8em rgba(255, 255, 255, 0.25);
+}
+
+.hoop__board::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 12%;
+  width: 40%;
+  height: 34%;
+  transform: translateX(-50%);
+  border: 0.18em solid #ff7a1f;
+}
+
+.hoop__rim {
+  position: absolute;
+  left: 50%;
+  top: 41%;
+  width: 30%;
+  height: 0.9em;
+  transform: translateX(-50%);
+  border: 0.24em solid #ff5b1c;
+  border-radius: 50%;
+  box-shadow: 0 0 0.7em rgba(255, 91, 28, 0.7);
+  z-index: 3;
+}
+
+.hoop__net {
+  position: absolute;
+  left: 50%;
+  top: 43%;
+  width: 28%;
+  height: 20%;
+  transform: translateX(-50%);
+  clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%);
+  background:
+    repeating-linear-gradient(60deg, rgba(240, 240, 248, 0.75) 0 1px, transparent 1px 0.55em),
+    repeating-linear-gradient(-60deg, rgba(240, 240, 248, 0.75) 0 1px, transparent 1px 0.55em);
+  transform-origin: 50% 0;
+  animation: netSwish 2.4s ease-out infinite;
+  z-index: 2;
+}
+
+.hoop__ball {
+  position: absolute;
+  width: var(--ball);
+  height: var(--ball);
+  margin: calc(var(--ball) / -2) 0 0 calc(var(--ball) / -2);
+  border-radius: 50%;
+  background:
+    linear-gradient(90deg, transparent 47%, rgba(30, 14, 6, 0.85) 47% 53%, transparent 53%),
+    linear-gradient(0deg, transparent 47%, rgba(30, 14, 6, 0.85) 47% 53%, transparent 53%),
+    radial-gradient(circle at 35% 30%, #ffb07a 0%, #e8661f 45%, #8e3508 100%);
+  box-shadow: 0 0 0.9em rgba(255, 140, 40, 0.55);
+  animation: shot 2.4s linear infinite;
+  z-index: 1;
+}
+
+/* Up from the bottom left, over the rim, down through the net */
+@keyframes shot {
+  0%   { left: 14%; top: 92%; opacity: 0; transform: rotate(0deg); animation-timing-function: ease-out; }
+  6%   { opacity: 1; }
+  38%  { left: 40%; top: 14%; transform: rotate(200deg); animation-timing-function: ease-in; }
+  56%  { left: 50%; top: 36%; transform: rotate(300deg); animation-timing-function: linear; }
+  70%  { left: 50%; top: 62%; opacity: 1; transform: rotate(340deg); }
+  78%, 100% { left: 50%; top: 74%; opacity: 0; transform: rotate(360deg); }
+}
+
+@keyframes netSwish {
+  0%, 54%, 100% { transform: translateX(-50%) scaleY(1); }
+  62% { transform: translateX(-50%) scaleY(1.22) scaleX(0.9); }
+  72% { transform: translateX(-50%) scaleY(0.96); }
+}
+
+.cab--hoop .stick::after { background: radial-gradient(circle at 35% 30%, #fff 0%, #ff7a1f 30%, #8a2d00 100%); }
+
 /* Coming soon: a screen of static */
 .attract--static {
   opacity: 0.5;
@@ -984,8 +1075,9 @@
   filter: drop-shadow(0 -0.2em 1.2em rgba(0, 0, 0, 0.6));
 }
 
-.onlooker--l { left: max(1vw, calc(50% - 46em - 230px)); height: 92%; }
-.onlooker--r { right: max(0vw, calc(50% - 46em - 250px)); }
+/* Standing at the edges of the room, just in front of the row (never over the coin tray) */
+.onlooker--l { left: -60px; height: 80%; }
+.onlooker--r { right: -60px; height: 88%; }
 
 /* --------------------------------------------------------------------------
    Rest of the page, tinted to match the room
@@ -1014,7 +1106,7 @@
 /* --------------------------------------------------------------------------
    Smaller screens: walk down the aisle by swiping
    -------------------------------------------------------------------------- */
-@media (max-width: 1100px) {
+@media (max-width: 1360px) {
   .crowd { display: none; }
 }
 
@@ -1075,6 +1167,8 @@
   .cab__pool,
   .pend__arm,
   .pend__ring,
+  .hoop__ball,
+  .hoop__net,
   .edge__ball,
   .edge__tile {
     animation: none !important;
@@ -1083,6 +1177,7 @@
   .cab__screen::before { display: none; }
   .pend__arm { transform: rotate(18deg); }
   .edge__ball { left: 47%; top: 11%; }
+  .hoop__ball { left: 50%; top: 30%; }
   .edge__tile--t { left: 47%; background: var(--neon-lime); }
   .edge__tile--b { left: 56%; }
   .edge__tile--l { top: 46%; }

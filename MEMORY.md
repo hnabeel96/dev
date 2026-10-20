@@ -143,12 +143,17 @@
     - Coins expire 24 hours after the last payout (timestamp in localStorage `pineappCoinsAt`). The wallet is checked on every read and a timer wipes the counter if a page is open at expiry. `Coins.grant()` (machine or future ads) restarts the 24-hour clock.
     - Verified in headless Chromium: refuse while holding coins, refill at 0, wiped after 25h, live wipe on an open page.
 
+45. Added Hoop Rush (branch `feature/hoop-rush`) as the first game in the arcade hall:
+    - `hoop-rush.html` is Eko's existing Hoop Rush artifact (three.js r128 from cdnjs, 60-second basketball cabinet) moved onto the site unchanged, plus: Google tag, meta description, an arcade top bar (back to the hall, coin counter) and the coin gate (cabinet credit shows Press start; otherwise Insert coin spends 1; Get coins when empty). Best score key `hoopRushBest`.
+    - Front page: Hoop Rush cabinet (amber) is the first game, right after the coin machine, with an attract screen of a ball arcing through a net (`arcade.css?v=5`). Cabinet size now also scales with window width so five machines fit in one row. Onlookers moved to the room edges and only shown at 1360px+.
+    - The 3D game itself could not be run in Claude's sandbox (cdnjs blocked there); everything around it was checked in headless Chromium.
+
 ## Resume checklist
 
 1. Work from `C:\Users\Nabeel\Desktop\dev\website`.
 2. The live source is tracked on GitHub at `hnabeel96/dev`, branch `main`.
 3. Edge Rush (four-paddle version) is launched from `edge-rush.html`, `edge-rush.css`, and `edge-rush.js`.
-4. Chrono Pendulum is launched from `pendulum.html`, `pendulum.css`, and `pendulum.js`.
+4. Hoop Rush is `hoop-rush.html` (single file). Chrono Pendulum is launched from `pendulum.html`, `pendulum.css`, and `pendulum.js`.
 5. Before handing off after later changes, append a numbered entry to this file, then commit and push it with the website changes.
 
 ## Current state
